@@ -1,20 +1,16 @@
-import {getRequestConfig as createRequestConfig} from 'next-intl/server';
+import {getRequestConfig} from 'next-intl/server';
+import {hasLocale} from 'next-intl';
 import {routing} from './routing';
-
-export const getRequestConfig = createRequestConfig(async ({requestLocale}) => {
-  const resolvedLocale = await requestLocale;
-
-  // Nếu không có locale => throw error (bắt buộc để TypeScript hiểu luôn là string)
-  if (!resolvedLocale || !routing.locales.includes(resolvedLocale as any)) {
-    throw new Error(`Unsupported locale: ${resolvedLocale}`);
-  }
-
-  const messages = (await import(`../../messages/${resolvedLocale}.json`)).default;
-
+ 
+export default getRequestConfig(async ({requestLocale}) => {
+  // Typically corresponds to the `[locale]` segment
+  const requested = await requestLocale;
+  const locale = hasLocale(routing.locales, requested)
+    ? requested
+    : routing.defaultLocale;
+ 
   return {
-    locale: resolvedLocale, // ✅ chắc chắn là string
-    messages
+    locale,
+    messages: (await import(`../../messages/${locale}.json`)).default
   };
 });
-export default getRequestConfig;
-
