@@ -28,10 +28,11 @@ export default function TogetherAppPage() {
         <p>
           {t('contactEmail')}{' '}
           <a href="mailto:dxh125@gmail.com" className="text-blue-600 underline">
-            Hieu Do Developer mail
+            Hieu Do Developer
           </a>
         </p>
         <p>{t('contactAddress')}</p>
+        <p>{t('contactPhone')}</p>
       </div>
 
       {/* FAQ Section */}
