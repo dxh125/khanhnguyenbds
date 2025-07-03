@@ -28,7 +28,7 @@ export default function TogetherAppPage() {
         <p>
           {t('contactEmail')}{' '}
           <a href="mailto:dxh125@gmail.com" className="text-blue-600 underline">
-            Hieu Do Developer
+            dxh125@gmail.com
           </a>
         </p>
         <p>{t('contactAddress')}</p>
