@@ -1,0 +1,73 @@
+{
+  "HomePage": {
+    "title": "Khánh Nguyên – Thủ công mỹ nghệ & Phần mềm",
+    "description": "Chúng tôi kết hợp giữa tinh hoa thủ công truyền thống và công nghệ hiện đại để mang lại giá trị bền vững trên toàn cầu.",
+    "readMore": "Tìm hiểu thêm",
+    "contactUs": "Liên hệ",
+    "explore": "Khám phá tính năng"
+  },
+  "Navbar": {
+    "home": "Trang chủ",
+    "about": "Giới thiệu",
+    "products": "Sản phẩm",
+    "allProducts": "Tất cả sản phẩm",
+    "togetherApp": "Ứng dụng Together",
+    "contact": "Liên hệ"
+  },
+  "TogetherApp": {
+  "title": "Together – Ứng dụng đếm ngày yêu & kỷ niệm tình yêu",
+  "description": "Together giúp các cặp đôi ghi nhớ ngày yêu, kỷ niệm, chuyến đi và cùng nhau xây dựng hành trình hạnh phúc.",
+  "download": "Tải về trên Google Play"
+},
+"support": {
+    "title": "Hỗ trợ ứng dụng Together",
+    "description": "Nếu bạn có bất kỳ câu hỏi nào, đừng ngần ngại liên hệ. Chúng tôi luôn sẵn sàng hỗ trợ!",
+    "contactTitle": "Liên hệ",
+    "contactEmail": "Email:",
+    "contactAddress": "Địa chỉ: 1212 CT1 Nam Xa La, Phúc La, Hà Đông, Hà Nội, Việt Nam",
+    "faqTitle": "Câu hỏi thường gặp (FAQ)",
+    "faq": [
+      {
+        "question": "Làm sao để bắt đầu sử dụng ứng dụng?",
+        "answer": "Chỉ cần tải ứng dụng, nhập tên hiển thị và tạo hoặc tham gia cặp đôi bằng mã ghép đôi."
+      },
+      {
+        "question": "Tôi có thể đổi ngày kỷ niệm không?",
+        "answer": "Có, bạn có thể chỉnh sửa ngày bắt đầu trong phần cài đặt hoặc hồ sơ cá nhân."
+      },
+      {
+        "question": "Làm sao để chia sẻ kỷ niệm với người yêu?",
+        "answer": "Từ màn hình chính, nhấn nút chia sẻ để tạo ảnh kỷ niệm và gửi đi."
+      },
+      {
+        "question": "Ứng dụng có miễn phí không?",
+        "answer": "Có, Together App hoàn toàn miễn phí. Một số tính năng cao cấp có thể được bổ sung sau."
+      },
+      {
+        "question": "Tôi bị mất dữ liệu, làm sao khôi phục?",
+        "answer": "Nếu bạn đã đăng nhập bằng tài khoản, dữ liệu được lưu trên đám mây. Chỉ cần đăng nhập lại."
+      },
+      {
+        "question": "Tôi có thể thay đổi hình nền hoặc giao diện không?",
+        "answer": "Có, hãy vào Trình chỉnh giao diện (Theme Editor) để chọn hình nền và màu sắc yêu thích."
+      },
+      {
+        "question": "Tôi có thể dùng ứng dụng trên nhiều thiết bị không?",
+        "answer": "Có, chỉ cần đăng nhập cùng một tài khoản để đồng bộ dữ liệu trên các thiết bị."
+      },
+      {
+        "question": "Làm sao để kết nối với người yêu?",
+        "answer": "Người tạo cặp đôi sẽ nhận được mã. Người còn lại nhập mã đó để tham gia."
+      },
+      {
+        "question": "Làm sao để xoá cặp đôi?",
+        "answer": "Vào phần cài đặt ghép đôi và chọn 'Xoá cặp đôi'. Bạn sẽ được yêu cầu xác nhận."
+      },
+      {
+        "question": "Tôi muốn góp ý hay báo lỗi thì làm sao?",
+        "answer": "Vui lòng gửi email tới support@togetherapp.vn. Chúng tôi luôn trân trọng phản hồi của bạn!"
+      }
+    ]
+  }
+
+}

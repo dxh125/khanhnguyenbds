@@ -1,0 +1,71 @@
+{
+  "HomePage": {
+    "title": "Khánh Nguyên – Handicrafts & Software",
+    "description": "We combine traditional craftsmanship with modern technology to bring sustainable value worldwide.",
+    "readMore": "Read More",
+    "contactUs": "Contact Us",
+    "explore": "Explore The Features"
+  },
+  "Navbar": {
+  "home": "Home",
+  "about": "About",
+  "products": "Products",
+  "allProducts": "All Products",
+  "togetherApp": "Together App",
+  "contact": "Contact"
+},
+"TogetherApp": {
+  "title": "Together – Love Day & Couple Memories App",
+  "description": "Together helps couples track love days, memories, trips, and build a meaningful relationship journey.",
+  "download": "Download on Google Play"
+},"support": {
+    "title": "Together App Support",
+    "description": "If you have any questions, feel free to reach out. We're here to help!",
+    "contactTitle": "Contact",
+    "contactEmail": "Email:",
+    "contactAddress": "Address: 1212 CT1 Nam Xa La, Phúc La, Hà Đông, Hà Nội, Việt Nam",
+    "faqTitle": "Frequently Asked Questions (FAQ)",
+    "faq": [
+      {
+        "question": "How do I start using the app?",
+        "answer": "Just download the app, enter your display name, and create or join a couple with a code."
+      },
+      {
+        "question": "Can I change the anniversary date?",
+        "answer": "Yes, you can edit the start date from the settings or profile screen."
+      },
+      {
+        "question": "How to share the anniversary with my partner?",
+        "answer": "From the main screen, tap the share button to generate a commemorative image to share."
+      },
+      {
+        "question": "Is the app free?",
+        "answer": "Yes, Together App is completely free. Premium features may be added later."
+      },
+      {
+        "question": "I lost my data. How do I recover it?",
+        "answer": "If you signed in with an account, your data is backed up to the cloud. Just sign in again."
+      },
+      {
+        "question": "Can I change the background or theme?",
+        "answer": "Yes, go to Theme Editor to pick your favorite background and colors."
+      },
+      {
+        "question": "Can I use the app on multiple devices?",
+        "answer": "Yes, sign in with the same account to sync your data across devices."
+      },
+      {
+        "question": "How do I connect with my partner?",
+        "answer": "The creator of the couple will receive a code. The other user enters this code to join."
+      },
+      {
+        "question": "How do I delete a couple?",
+        "answer": "Go to pairing settings and select 'Delete couple'. Confirmation will be required."
+      },
+      {
+        "question": "How can I send feedback or report a bug?",
+        "answer": "Please email us at support@togetherapp.vn. We welcome all feedback!"
+      }
+    ]
+  }
+}
