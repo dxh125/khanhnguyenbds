@@ -69,6 +69,32 @@
         "answer": "Vui lòng gửi email tới dxh125@gmail.com. Chúng tôi luôn trân trọng phản hồi của bạn!"
       }
     ]
+  },"Privacy": {
+    "title": "Chính sách quyền riêng tư",
+    "intro": "Chính sách này áp dụng cho ứng dụng Together – được phát triển và xuất bản bởi Hieu Do, dưới tài khoản nhà phát triển dxh125@gmail.com. Địa chỉ của chúng tôi: 1212 CT1 Nam Xa La, Phúc La, Hà Đông, Hà Nội, Việt Nam. Tài liệu này giải thích cách chúng tôi thu thập, sử dụng và bảo vệ thông tin cá nhân của bạn.",
+    "infoTitle": "1. Thông tin chúng tôi thu thập",
+    "info1": "Thông tin cá nhân (tên, email, v.v.)",
+    "info2": "Thông tin thiết bị và cách sử dụng",
+    "info3": "Dữ liệu xác thực và thông báo Firebase",
+    "info4": "Quyền truy cập máy ảnh (chỉ khi tải ảnh lên)",
+    "usageTitle": "2. Cách chúng tôi sử dụng thông tin",
+    "usage1": "Cung cấp và cải thiện dịch vụ",
+    "usage2": "Gửi thông báo (nếu bạn cho phép)",
+    "usage3": "Xác thực tài khoản",
+    "usage4": "Cá nhân hóa trải nghiệm",
+    "sharingTitle": "3. Chia sẻ dữ liệu",
+    "sharing1": "Tuân thủ pháp luật",
+    "sharing2": "Bảo vệ người dùng",
+    "sharing3": "Dùng với dịch vụ đáng tin cậy như Firebase",
+    "securityTitle": "4. Bảo mật dữ liệu",
+    "security": "Chúng tôi áp dụng các biện pháp bảo mật để bảo vệ dữ liệu khỏi truy cập trái phép.",
+    "cameraTitle": "5. Quyền truy cập máy ảnh",
+    "camera": "Ứng dụng chỉ yêu cầu máy ảnh khi bạn muốn tải ảnh lên. Không ghi hình/ghi âm nếu không có sự đồng ý.",
+    "rightsTitle": "6. Quyền của bạn",
+    "rights": "Bạn có thể yêu cầu truy cập, chỉnh sửa hoặc xóa dữ liệu cá nhân. Liên hệ chúng tôi nếu cần.",
+    "contactTitle": "7. Liên hệ",
+    "contact": "Vui lòng liên hệ dx1252@gmail.com nếu có thắc mắc về quyền riêng tư.",
+    "updated": "Cập nhật lần cuối: 30/05/2025"
   }
 
 }

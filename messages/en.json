@@ -68,5 +68,32 @@
         "answer": "Please email us at dxh125@gmail.com . We welcome all feedback!"
       }
     ]
+  },
+  "Privacy": {
+    "title": "Privacy Policy",
+    "intro": "This Privacy Policy applies to the Together app, developed by Hieu Do.under the developer account dxh125@gmail.com. Our address is 1212 CT1 Nam Xa La, Phuc La, Ha Dong, Ha Noi, Vietnam. This document explains how we collect, use, and protect your personal information.",
+    "infoTitle": "1. Information We Collect",
+    "info1": "Personal identifiers (name, email, etc.)",
+    "info2": "Device and usage information",
+    "info3": "Firebase Authentication and messaging tokens",
+    "info4": "Camera access (only when uploading images)",
+    "usageTitle": "2. How We Use Information",
+    "usage1": "Provide and improve our services",
+    "usage2": "Send notifications (if allowed)",
+    "usage3": "Authenticate your account",
+    "usage4": "Personalize content",
+    "sharingTitle": "3. Data Sharing",
+    "sharing1": "Comply with legal obligations",
+    "sharing2": "Protect user safety",
+    "sharing3": "Use with trusted services like Firebase",
+    "securityTitle": "4. Data Security",
+    "security": "We apply security measures to protect your data from unauthorized access or misuse.",
+    "cameraTitle": "5. Camera Permission",
+    "camera": "Camera access is used only when uploading avatars or media. No audio/video is recorded without consent.",
+    "rightsTitle": "6. Your Rights",
+    "rights": "You can access, modify, or delete your data. Contact us for support.",
+    "contactTitle": "7. Contact Us",
+    "contact": "Email us at dx1252@gmail.com for any privacy-related concerns.",
+    "updated": "Last updated: May 30, 2025"
   }
 }
