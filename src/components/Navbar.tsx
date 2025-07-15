@@ -1,85 +1,198 @@
-'use client';
+"use client";
 
-import {useTranslations} from 'next-intl';
-import {Link, usePathname} from '@/i18n/navigation';
-import clsx from 'clsx';
+import Link from "next/link";
+import { useEffect, useState } from "react";
+import { usePathname } from "next/navigation";
+import { Menu, X } from "lucide-react";
 
-const Navbar = () => {
-  const t = useTranslations('Navbar');
+const navItems = [
+  { label: "Mua", submenu: ["Căn hộ", "Nhà phố", "Biệt thự"] },
+  { label: "Thuê", submenu: ["Căn hộ", "Nhà nguyên căn", "Phòng trọ"] },
+  { label: "Dự án", submenu: ["Sắp mở bán", "Đã bàn giao", "Chưa xác thực"] },
+  { label: "Chuyên viên" },
+  { label: "Trang tin" },
+  { label: "Về Rever" },
+];
+
+export default function Navbar() {
   const pathname = usePathname();
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [user, setUser] = useState<any>(null);
+  const [language, setLanguage] = useState("vi");
+  const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
+  const [dropdownTimer, setDropdownTimer] = useState<NodeJS.Timeout | null>(null);
+
+  useEffect(() => {
+    const storedUser = localStorage.getItem("user");
+    if (storedUser) setUser(JSON.parse(storedUser));
+    const storedLang = localStorage.getItem("language");
+    if (storedLang) setLanguage(storedLang);
+  }, []);
+
+  const changeLanguage = (lang: string) => {
+    localStorage.setItem("language", lang);
+    setLanguage(lang);
+  };
+
+  const handleLogout = () => {
+    localStorage.removeItem("user");
+    window.location.reload();
+  };
+
+  const handleMouseEnter = (label: string) => {
+    if (dropdownTimer) clearTimeout(dropdownTimer);
+    setActiveDropdown(label);
+  };
+
+  const handleMouseLeave = () => {
+    const timer = setTimeout(() => setActiveDropdown(null), 150);
+    setDropdownTimer(timer);
+  };
 
   return (
-    <header className="bg-white shadow sticky top-0 z-50">
-      <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between h-16">
-        <div className="text-xl font-bold text-teal-800">Khánh Nguyên</div>
+    <header className="bg-white border-b sticky top-0 z-50">
+      <div className="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
+        <Link href="/" className="text-red-600 font-bold text-xl border border-red-600 px-2 py-1">
+          R
+        </Link>
 
-        <ul className="flex space-x-6 items-center">
-          <li>
-            <Link
-              href="/"
-              className={clsx(
-                'text-sm font-medium hover:text-teal-700 transition',
-                pathname === '/' ? 'text-teal-800' : 'text-gray-700'
-              )}
+        {/* Desktop Menu */}
+        <nav className="hidden md:flex space-x-6 items-center text-sm font-medium text-gray-800">
+          {navItems.map((item) => (
+            <div
+              key={item.label}
+              className="relative"
+              onMouseEnter={() => handleMouseEnter(item.label)}
+              onMouseLeave={handleMouseLeave}
             >
-              {t('home')}
-            </Link>
-          </li>
+              <button className="hover:text-red-600 flex items-center gap-1">
+                {item.label} {item.submenu && <span>▼</span>}
+              </button>
 
-          <li>
-            <Link
-              href="/about"
-              className={clsx(
-                'text-sm font-medium hover:text-teal-700 transition',
-                pathname === '/about' ? 'text-teal-800' : 'text-gray-700'
+              {item.submenu && activeDropdown === item.label && (
+                <div className="absolute top-full left-0 w-40 bg-white border shadow rounded mt-2 z-50">
+                  {item.submenu.map((sub, i) => (
+                    <Link
+                      key={i}
+                      href={`/search?type=${encodeURIComponent(sub.toLowerCase())}`}
+                      className="block px-4 py-2 text-sm hover:bg-gray-100"
+                    >
+                      {sub}
+                    </Link>
+                  ))}
+                </div>
               )}
-            >
-              {t('about')}
-            </Link>
-          </li>
-
-          {/* Dropdown - updated colors */}
-          <li className="relative group">
-            <button
-              className={clsx(
-                'text-sm font-medium hover:text-teal-700 transition',
-                pathname.startsWith('/products') ? 'text-teal-800' : 'text-gray-700'
-              )}
-            >
-              {t('products')}
-            </button>
-
-            <div className="absolute left-0 top-full mt-2 w-48 bg-white border rounded shadow-md opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
-              <Link
-                href="/products"
-                className="block px-4 py-2 text-sm text-gray-800 hover:bg-gray-100"
-              >
-                {t('allProducts')}
-              </Link>
-              <Link
-                href="/together-app"
-                className="block px-4 py-2 text-sm text-gray-800 hover:bg-gray-100"
-              >
-                {t('togetherApp')}
-              </Link>
             </div>
-          </li>
+          ))}
 
-          <li>
-            <Link
-              href="/contact"
-              className={clsx(
-                'text-sm font-medium hover:text-teal-700 transition',
-                pathname === '/contact' ? 'text-teal-800' : 'text-gray-700'
+          {/* User login/logout */}
+          {user ? (
+            <div className="relative group" onMouseLeave={handleMouseLeave}>
+              <button onMouseEnter={() => handleMouseEnter("user")} className="hover:text-red-600">
+                👋 {user.name}
+              </button>
+              {activeDropdown === "user" && (
+                <div className="absolute right-0 mt-2 w-40 bg-white border shadow rounded z-50">
+                  <Link href="/my-properties" className="block px-4 py-2 text-sm hover:bg-gray-100">
+                    Tin của tôi
+                  </Link>
+                  <button
+                    onClick={handleLogout}
+                    className="block w-full text-left px-4 py-2 text-sm hover:bg-gray-100"
+                  >
+                    Đăng xuất
+                  </button>
+                </div>
               )}
-            >
-              {t('contact')}
-            </Link>
-          </li>
-        </ul>
-      </nav>
+            </div>
+          ) : (
+            <>
+              <Link href="/login" className="hover:text-red-600">Đăng nhập</Link>
+              <Link
+                href="/register"
+                className="text-sm px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700 ml-2"
+              >
+                Đăng ký
+              </Link>
+            </>
+          )}
+
+          <Link
+            href="/post"
+            className="border border-red-600 text-red-600 px-4 py-1 rounded hover:bg-red-50"
+          >
+            Ký gửi nhà đất
+          </Link>
+
+          {/* Language */}
+          <div
+            className="relative"
+            onMouseEnter={() => handleMouseEnter("lang")}
+            onMouseLeave={handleMouseLeave}
+          >
+            <button className="border px-2 py-1 rounded flex items-center gap-1">
+              {language === "vi" ? "🇻🇳 VI" : "🇺🇸 EN"} ▼
+            </button>
+            {activeDropdown === "lang" && (
+              <div className="absolute right-0 mt-2 w-32 bg-white border shadow rounded z-50">
+                <button
+                  onClick={() => changeLanguage("vi")}
+                  className="block px-4 py-2 text-sm w-full text-left hover:bg-gray-100"
+                >
+                  🇻🇳 Tiếng Việt
+                </button>
+                <button
+                  onClick={() => changeLanguage("en")}
+                  className="block px-4 py-2 text-sm w-full text-left hover:bg-gray-100"
+                >
+                  🇺🇸 English
+                </button>
+              </div>
+            )}
+          </div>
+
+        </nav>
+
+        {/* Mobile menu icon */}
+        <button onClick={() => setMobileMenuOpen(!mobileMenuOpen)} className="md:hidden">
+          {mobileMenuOpen ? <X /> : <Menu />}
+        </button>
+      </div>
+
+      {/* Mobile menu */}
+      {mobileMenuOpen && (
+        <div className="md:hidden bg-white px-4 py-4 space-y-2 border-t">
+          {navItems.map((item) => (
+            <div key={item.label}>
+              <span className="font-medium block mb-1">{item.label}</span>
+              {item.submenu &&
+                item.submenu.map((sub, i) => (
+                  <Link
+                    href={`/search?type=${encodeURIComponent(sub.toLowerCase())}`}
+                    key={i}
+                    className="block pl-4 py-1 text-sm text-gray-600"
+                  >
+                    {sub}
+                  </Link>
+                ))}
+            </div>
+          ))}
+          <hr />
+          {user ? (
+            <>
+              <p className="font-medium">👋 {user.name}</p>
+              <Link href="/my-properties" className="block py-1 text-sm">Tin của tôi</Link>
+              <button onClick={handleLogout} className="block py-1 text-sm text-left">Đăng xuất</button>
+            </>
+          ) : (
+            <>
+              <Link href="/login" className="block py-1 text-sm">Đăng nhập</Link>
+              <Link href="/register" className="block py-1 text-sm text-red-600 font-medium">Đăng ký</Link>
+            </>
+          )}
+          <Link href="/post" className="block py-1 text-sm text-red-600 font-medium">Ký gửi nhà đất</Link>
+        </div>
+      )}
     </header>
   );
-};
-
-export default Navbar;
+}
