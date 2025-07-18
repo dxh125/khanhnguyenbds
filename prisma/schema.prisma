@@ -1,0 +1,30 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+model Property {
+  id           String   @id @default(auto()) @map("_id") @db.ObjectId
+  title        String
+  description  String
+  price        Float
+  area         Float
+  address      String
+  ward         String?
+  district     String?
+  city         String?
+  propertyType String
+  status       String
+  bedrooms     Int?
+  bathrooms    Int?
+  floors       Int?
+  legal        String?
+  direction    String?
+  images       String[]
+  postedAt     DateTime @default(now())
+  userId       String?
+}

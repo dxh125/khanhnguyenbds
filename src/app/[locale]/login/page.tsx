@@ -28,6 +28,7 @@ export default function LoginPage() {
       );
 
       router.push("/");
+      window.location.reload(); // ✅ Thêm dòng này để cập nhật Navbar
     } catch (err: any) {
       if (err.code === "auth/user-not-found") {
         setError("Tài khoản không tồn tại");

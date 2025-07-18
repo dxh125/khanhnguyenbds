@@ -23,10 +23,17 @@ export default function Navbar() {
   const [dropdownTimer, setDropdownTimer] = useState<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
-    const storedUser = localStorage.getItem("user");
-    if (storedUser) setUser(JSON.parse(storedUser));
-    const storedLang = localStorage.getItem("language");
-    if (storedLang) setLanguage(storedLang);
+    const loadUser = () => {
+      const storedUser = localStorage.getItem("user");
+      setUser(storedUser ? JSON.parse(storedUser) : null);
+
+      const storedLang = localStorage.getItem("language");
+      if (storedLang) setLanguage(storedLang);
+    };
+
+    loadUser();
+    window.addEventListener("storage", loadUser);
+    return () => window.removeEventListener("storage", loadUser);
   }, []);
 
   const changeLanguage = (lang: string) => {
@@ -85,7 +92,6 @@ export default function Navbar() {
             </div>
           ))}
 
-          {/* User login/logout */}
           {user ? (
             <div className="relative group" onMouseLeave={handleMouseLeave}>
               <button onMouseEnter={() => handleMouseEnter("user")} className="hover:text-red-600">
@@ -124,7 +130,6 @@ export default function Navbar() {
             Ký gửi nhà đất
           </Link>
 
-          {/* Language */}
           <div
             className="relative"
             onMouseEnter={() => handleMouseEnter("lang")}
@@ -150,7 +155,6 @@ export default function Navbar() {
               </div>
             )}
           </div>
-
         </nav>
 
         {/* Mobile menu icon */}
@@ -179,12 +183,26 @@ export default function Navbar() {
           ))}
           <hr />
           {user ? (
-            <>
-              <p className="font-medium">👋 {user.name}</p>
-              <Link href="/my-properties" className="block py-1 text-sm">Tin của tôi</Link>
-              <button onClick={handleLogout} className="block py-1 text-sm text-left">Đăng xuất</button>
-            </>
+            <div className="relative group" onMouseLeave={handleMouseLeave}>
+              <button onMouseEnter={() => handleMouseEnter("user")} className="hover:text-red-600">
+                👋 {user.name}
+              </button>
+              {activeDropdown === "user" && (
+                <div className="absolute right-0 mt-2 w-40 bg-white border shadow rounded z-50">
+                  <Link href="/my-properties" className="block px-4 py-2 text-sm hover:bg-gray-100">
+                    Tin của tôi
+                  </Link>
+                  <button
+                    onClick={handleLogout}
+                    className="block w-full text-left px-4 py-2 text-sm hover:bg-gray-100"
+                  >
+                    Đăng xuất
+                  </button>
+                </div>
+              )}
+            </div>
           ) : (
+
             <>
               <Link href="/login" className="block py-1 text-sm">Đăng nhập</Link>
               <Link href="/register" className="block py-1 text-sm text-red-600 font-medium">Đăng ký</Link>
