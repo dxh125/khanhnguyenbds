@@ -9,18 +9,14 @@ import PropertyCard from "@/components/PropertyCard";
 import FeatureSection from "@/components/FeatureSection";
 import FeaturedProjects from "@/components/FeaturedProjects";
 
-
-
-
 interface Property {
   _id?: string;
-  id?: number;
   title: string;
-  price: string;
-  area: string;
-  date: string;
-  type: string;
-  image: string;
+  price: number;
+  area: number;
+  postedAt: string;
+  propertyType: string;
+  images: string[];
   status?: string;
 }
 
@@ -44,15 +40,13 @@ export default function HomePage() {
   const parseNumber = (val: string) => parseFloat(val.replace(/[^\d.]/g, "")) || 0;
 
   const filtered = properties.filter((p) => {
-    const price = parseNumber(p.price);
-    const area = parseNumber(p.area);
     return (
-      (!filter || p.type === filter) &&
+      (!filter || p.propertyType === filter) &&
       (!search || p.title.toLowerCase().includes(search.toLowerCase())) &&
-      (!priceFrom || price >= parseNumber(priceFrom)) &&
-      (!priceTo || price <= parseNumber(priceTo)) &&
-      (!areaFrom || area >= parseNumber(areaFrom)) &&
-      (!areaTo || area <= parseNumber(areaTo))
+      (!priceFrom || p.price >= parseNumber(priceFrom)) &&
+      (!priceTo || p.price <= parseNumber(priceTo)) &&
+      (!areaFrom || p.area >= parseNumber(areaFrom)) &&
+      (!areaTo || p.area <= parseNumber(areaTo))
     );
   });
 
@@ -100,12 +94,11 @@ export default function HomePage() {
           </div>
         </div>
       </section>
+
       <FeatureSection />
       <FeaturedProjects />
 
-
       <div className="max-w-7xl mx-auto p-4 grid grid-cols-1 md:grid-cols-4 gap-6">
-        {/* 👇 Đây là nơi gọi SidebarFilter component */}
         <SidebarFilter
           filter={filter}
           setFilter={setFilter}
@@ -121,7 +114,6 @@ export default function HomePage() {
           setAreaTo={setAreaTo}
         />
 
-        {/* Danh sách bất động sản */}
         <section className="md:col-span-3">
           <div className="flex justify-between items-center mb-4">
             <h2 className="text-2xl font-semibold">Danh sách bất động sản</h2>
@@ -141,7 +133,7 @@ export default function HomePage() {
           ) : (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
               {filtered.map((property) => (
-                <PropertyCard key={property._id || property.id} property={property} />
+                <PropertyCard key={property._id} property={property} />
               ))}
             </div>
           )}
