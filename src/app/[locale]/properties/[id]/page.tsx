@@ -2,48 +2,58 @@
 
 import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
-import axios from "axios";
 
 interface Property {
-  _id?: string;
+  _id: string;
   title: string;
-  price: string;
-  area: string;
-  date: string;
-  type: string;
-  image: string;
+  price: number;
+  area: number;
+  postedAt: string;
+  propertyType: string;
+  images: string[];
   status?: string;
-  ownerId?: string;
+  userId?: string;
 }
 
 export default function PropertyDetailPage() {
   const params = useParams();
-  const id = params?.id?.toString();
+  const id = Array.isArray(params?.id) ? params.id[0] : params?.id;
   const [property, setProperty] = useState<Property | null>(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     if (!id) return;
-    axios
-      .get(`http://localhost:5000/api/properties/${id}`)
-      .then((res) => setProperty(res.data))
-      .catch((err) => console.error("Lỗi khi lấy chi tiết:", err));
+
+    fetch(`/api/properties/${id}`)
+      .then((res) => {
+        if (!res.ok) throw new Error("Không tìm thấy dữ liệu");
+        return res.json();
+      })
+      .then((data: Property) => setProperty(data))
+      .catch((err) => console.error("Lỗi khi lấy chi tiết BĐS:", err))
+      .finally(() => setLoading(false));
   }, [id]);
 
-  if (!property) return <div className="p-6 text-center">Đang tải thông tin bất động sản...</div>;
+  if (loading) return <div className="p-6 text-center">Đang tải thông tin bất động sản...</div>;
+  if (!property) return <div className="p-6 text-center text-red-600">Không tìm thấy bất động sản</div>;
+
+  const formattedDate = new Date(property.postedAt).toLocaleDateString("vi-VN");
 
   return (
-    <div className="max-w-4xl mx-auto p-6">
+    <div className="max-w-4xl mx-auto p-6 bg-white shadow rounded-lg">
       <h1 className="text-3xl font-bold mb-4">{property.title}</h1>
+
       <img
-        src={property.image}
+        src={property.images?.length ? property.images[0] : "/placeholder.jpg"}
         alt={property.title}
         className="w-full h-96 object-cover rounded mb-6"
       />
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-gray-700">
-        <p><strong>💰 Giá:</strong> {property.price}</p>
-        <p><strong>📏 Diện tích:</strong> {property.area}</p>
-        <p><strong>🏷️ Loại:</strong> {property.type}</p>
-        <p><strong>📅 Ngày đăng:</strong> {property.date}</p>
+
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-gray-700 text-lg">
+        <p><strong>💰 Giá:</strong> {property.price.toLocaleString("vi-VN", { style: "currency", currency: "VND" })}</p>
+        <p><strong>📏 Diện tích:</strong> {property.area} m²</p>
+        <p><strong>🏷️ Loại:</strong> {property.propertyType}</p>
+        <p><strong>📅 Ngày đăng:</strong> {formattedDate}</p>
         {property.status && <p><strong>📌 Trạng thái:</strong> {property.status}</p>}
       </div>
     </div>

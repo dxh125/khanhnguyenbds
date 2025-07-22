@@ -1,7 +1,7 @@
 import Link from "next/link";
 
 interface Property {
-  _id?: string;
+  id: string; // ✅ sửa lại từ _id → id
   title: string;
   price: number;
   area: number;
@@ -38,7 +38,7 @@ export default function PropertyCard({ property }: PropertyCardProps) {
         <p className="text-gray-700 text-sm">Diện tích: {property.area} m²</p>
         <p className="text-gray-500 text-xs mb-2">Ngày đăng: {date}</p>
 
-        <Link href={`/properties/${property._id}`}>
+        <Link href={`/properties/${property.id}`}>
           <button className="mt-2 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 w-full">
             Xem chi tiết
           </button>

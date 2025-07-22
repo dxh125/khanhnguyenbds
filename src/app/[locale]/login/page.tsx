@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { signInWithEmailAndPassword } from "firebase/auth";
-import { auth } from "@/lib/firebase"; // Đảm bảo đã tạo file này
+import { auth } from "@/lib/firebase";
 
 export default function LoginPage() {
   const router = useRouter();
@@ -28,7 +28,7 @@ export default function LoginPage() {
       );
 
       router.push("/");
-      window.location.reload(); // ✅ Thêm dòng này để cập nhật Navbar
+      router.refresh(); // ✅ Làm mới layout, Navbar sẽ đọc lại user
     } catch (err: any) {
       if (err.code === "auth/user-not-found") {
         setError("Tài khoản không tồn tại");

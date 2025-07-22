@@ -10,7 +10,7 @@ import FeatureSection from "@/components/FeatureSection";
 import FeaturedProjects from "@/components/FeaturedProjects";
 
 interface Property {
-  _id?: string;
+  id: string; // ✅ sửa từ _id? → id
   title: string;
   price: number;
   area: number;
@@ -62,7 +62,10 @@ export default function HomePage() {
 
   return (
     <main className="flex-1 bg-white">
-      <section className="relative h-[480px] bg-cover bg-center" style={{ backgroundImage: "url('/banner.jpg')" }}>
+      <section
+        className="relative h-[480px] bg-cover bg-center"
+        style={{ backgroundImage: "url('/banner.jpg')" }}
+      >
         <div className="absolute inset-0 bg-black/50 flex flex-col justify-center items-center text-white px-4 text-center">
           <p className="text-sm mb-2">An tâm với 100% bất động sản xác thực tại Rever</p>
           <h1 className="text-4xl md:text-5xl font-bold mb-4">Lựa chọn căn nhà ưng ý của bạn</h1>
@@ -85,7 +88,9 @@ export default function HomePage() {
             </button>
           </div>
 
-          <p className="text-sm mt-4">Hiện có <strong>177,008</strong> nhà đất xác thực</p>
+          <p className="text-sm mt-4">
+            Hiện có <strong>177,008</strong> nhà đất xác thực
+          </p>
           <div className="mt-2 flex flex-wrap gap-2 justify-center text-sm">
             <span className="bg-white text-black px-3 py-1 rounded-full border">The Global City</span>
             <span className="bg-white text-black px-3 py-1 rounded-full border">Caraworld Cam Ranh</span>
@@ -133,7 +138,7 @@ export default function HomePage() {
           ) : (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
               {filtered.map((property) => (
-                <PropertyCard key={property._id} property={property} />
+                <PropertyCard key={property.id} property={property} />
               ))}
             </div>
           )}
