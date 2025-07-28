@@ -1,16 +1,17 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import Link from "next/link";
-import { fetchProperties } from "@/lib/api";
+import { useTranslations } from "next-intl";
 import { Search } from "lucide-react";
+
+import { fetchProperties } from "@/lib/api";
 import SidebarFilter from "@/components/SidebarFilter";
 import PropertyCard from "@/components/PropertyCard";
 import FeatureSection from "@/components/FeatureSection";
 import FeaturedProjects from "@/components/FeaturedProjects";
 
 interface Property {
-  id: string; // ✅ sửa từ _id? → id
+  id: string;
   title: string;
   price: number;
   area: number;
@@ -21,6 +22,8 @@ interface Property {
 }
 
 export default function HomePage() {
+  const t = useTranslations("Home");
+
   const [filter, setFilter] = useState("");
   const [search, setSearch] = useState("");
   const [priceFrom, setPriceFrom] = useState("");
@@ -67,30 +70,36 @@ export default function HomePage() {
         style={{ backgroundImage: "url('/banner.jpg')" }}
       >
         <div className="absolute inset-0 bg-black/50 flex flex-col justify-center items-center text-white px-4 text-center">
-          <p className="text-sm mb-2">An tâm với 100% bất động sản xác thực tại Rever</p>
-          <h1 className="text-4xl md:text-5xl font-bold mb-4">Lựa chọn căn nhà ưng ý của bạn</h1>
+          <p className="text-sm mb-2">{t("heroSub")}</p>
+          <h1 className="text-4xl md:text-5xl font-bold mb-4">{t("heroTitle")}</h1>
+
           <div className="flex gap-4 mb-4 text-lg">
-            <span className="border-b-2 border-white pb-1">Mua nhà</span>
-            <span className="opacity-80">Thuê nhà</span>
+            <span className="border-b-2 border-white pb-1">{t("buyTab")}</span>
+            <span className="opacity-80">{t("rentTab")}</span>
           </div>
 
           <div className="bg-white rounded-full flex items-center overflow-hidden w-full max-w-2xl">
             <Search className="text-gray-500 ml-4" />
             <input
               type="text"
-              placeholder="Tìm kiếm nhà đất khu vực TP Hồ Chí Minh"
+              placeholder={t("searchPlaceholder")}
               value={search}
               onChange={(e) => setSearch(e.target.value)}
               className="flex-1 px-4 py-3 text-black focus:outline-none"
             />
             <button className="bg-red-600 text-white px-6 py-3 font-semibold hover:bg-red-700">
-              Tìm kiếm
+              {t("searchButton")}
             </button>
           </div>
 
-          <p className="text-sm mt-4">
-            Hiện có <strong>177,008</strong> nhà đất xác thực
-          </p>
+          {/* <p className="text-sm mt-4">
+            {t.rich("listingCount", {
+              count: (chunks) => <strong>{chunks}</strong>
+            }, {
+              count: "177,008"
+            })}
+          </p> */}
+
           <div className="mt-2 flex flex-wrap gap-2 justify-center text-sm">
             <span className="bg-white text-black px-3 py-1 rounded-full border">The Global City</span>
             <span className="bg-white text-black px-3 py-1 rounded-full border">Caraworld Cam Ranh</span>
@@ -121,9 +130,11 @@ export default function HomePage() {
 
         <section className="md:col-span-3">
           <div className="flex justify-between items-center mb-4">
-            <h2 className="text-2xl font-semibold">Danh sách bất động sản</h2>
+            <h2 className="text-2xl font-semibold">{t("propertyListTitle")}</h2>
             {!loading && (
-              <p className="text-sm text-gray-500">Tìm thấy {filtered.length} kết quả</p>
+              <p className="text-sm text-gray-500">
+                {t("resultFound", { count: filtered.length })}
+              </p>
             )}
           </div>
 
@@ -134,7 +145,7 @@ export default function HomePage() {
               ))}
             </div>
           ) : filtered.length === 0 ? (
-            <p className="text-gray-600">Không tìm thấy bất động sản phù hợp.</p>
+            <p className="text-gray-600">{t("noResult")}</p>
           ) : (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
               {filtered.map((property) => (

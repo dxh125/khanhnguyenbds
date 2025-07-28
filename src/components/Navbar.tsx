@@ -2,37 +2,41 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { Menu, X } from "lucide-react";
+import { useTranslations } from "next-intl";
 
 const navItems = [
-  { label: "Mua", submenu: ["Căn hộ", "Nhà phố", "Biệt thự"] },
-  { label: "Thuê", submenu: ["Căn hộ", "Nhà nguyên căn", "Phòng trọ"] },
-  { label: "Dự án", submenu: ["Sắp mở bán", "Đã bàn giao", "Chưa xác thực"] },
-  { label: "Chuyên viên" },
-  { label: "Trang tin" },
-  { label: "Về Rever" },
+  { key: "buy", submenu: ["Căn hộ", "Nhà phố", "Biệt thự"] },
+  { key: "rent", submenu: ["Căn hộ", "Nhà nguyên căn", "Phòng trọ"] },
+  { key: "project", submenu: ["Sắp mở bán", "Đã bàn giao", "Chưa xác thực"] },
+  { key: "agent" },
+  { key: "news" },
+  { key: "about" },
 ];
 
 export default function Navbar() {
   const pathname = usePathname();
+  const router = useRouter();
+  const t = useTranslations("navbar");
+
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [user, setUser] = useState<any>(null);
-  const [language, setLanguage] = useState("vi");
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
   const [dropdownTimer, setDropdownTimer] = useState<NodeJS.Timeout | null>(null);
+
+  const currentLocale = pathname.split("/")[1] || "vi";
 
   useEffect(() => {
     const storedUser = localStorage.getItem("user");
     setUser(storedUser ? JSON.parse(storedUser) : null);
-
-    const storedLang = localStorage.getItem("language");
-    if (storedLang) setLanguage(storedLang);
-  }, [pathname]); // Cập nhật user mỗi khi route thay đổi
+  }, [pathname]);
 
   const changeLanguage = (lang: string) => {
-    localStorage.setItem("language", lang);
-    setLanguage(lang);
+    const segments = pathname.split("/");
+    segments[1] = lang;
+    const newPath = segments.join("/") || "/";
+    router.push(newPath);
   };
 
   const handleLogout = () => {
@@ -53,7 +57,7 @@ export default function Navbar() {
   return (
     <header className="bg-white border-b sticky top-0 z-50">
       <div className="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
-        <Link href="/" className="text-red-600 font-bold text-xl border border-red-600 px-2 py-1">
+        <Link href={`/${currentLocale}`} className="text-red-600 font-bold text-xl border border-red-600 px-2 py-1">
           R
         </Link>
 
@@ -61,20 +65,20 @@ export default function Navbar() {
         <nav className="hidden md:flex space-x-6 items-center text-sm font-medium text-gray-800">
           {navItems.map((item) => (
             <div
-              key={item.label}
+              key={item.key}
               className="relative"
-              onMouseEnter={() => handleMouseEnter(item.label)}
+              onMouseEnter={() => handleMouseEnter(item.key)}
               onMouseLeave={handleMouseLeave}
             >
               <button className="hover:text-red-600 flex items-center gap-1">
-                {item.label} {item.submenu && <span>▼</span>}
+                {t(item.key)} {item.submenu && <span>▼</span>}
               </button>
-              {item.submenu && activeDropdown === item.label && (
+              {item.submenu && activeDropdown === item.key && (
                 <div className="absolute top-full left-0 w-40 bg-white border shadow rounded mt-2 z-50">
                   {item.submenu.map((sub, i) => (
                     <Link
                       key={i}
-                      href={`/search?type=${encodeURIComponent(sub.toLowerCase())}`}
+                      href={`/${currentLocale}/search?type=${encodeURIComponent(sub.toLowerCase())}`}
                       className="block px-4 py-2 text-sm hover:bg-gray-100"
                     >
                       {sub}
@@ -94,35 +98,35 @@ export default function Navbar() {
               <button className="hover:text-red-600">👋 {user.name}</button>
               {activeDropdown === "user" && (
                 <div className="absolute right-0 mt-2 w-40 bg-white border shadow rounded z-50">
-                  <Link href="/my-properties" className="block px-4 py-2 text-sm hover:bg-gray-100">
-                    Tin của tôi
+                  <Link href={`/${currentLocale}/my-properties`} className="block px-4 py-2 text-sm hover:bg-gray-100">
+                    {t("myPosts")}
                   </Link>
                   <button
                     onClick={handleLogout}
                     className="block w-full text-left px-4 py-2 text-sm hover:bg-gray-100"
                   >
-                    Đăng xuất
+                    {t("logout")}
                   </button>
                 </div>
               )}
             </div>
           ) : (
             <>
-              <Link href="/login" className="hover:text-red-600">Đăng nhập</Link>
+              <Link href={`/${currentLocale}/login`} className="hover:text-red-600">{t("login")}</Link>
               <Link
-                href="/register"
+                href={`/${currentLocale}/register`}
                 className="text-sm px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700 ml-2"
               >
-                Đăng ký
+                {t("register")}
               </Link>
             </>
           )}
 
           <Link
-            href="/post"
+            href={`/${currentLocale}/post`}
             className="border border-red-600 text-red-600 px-4 py-1 rounded hover:bg-red-50"
           >
-            Ký gửi nhà đất
+            {t("post")}
           </Link>
 
           <div className="relative">
@@ -130,7 +134,7 @@ export default function Navbar() {
               onClick={() => setActiveDropdown(activeDropdown === "lang" ? null : "lang")}
               className="border px-2 py-1 rounded flex items-center gap-1"
             >
-              {language === "vi" ? "🇻🇳 VI" : "🇺🇸 EN"} ▼
+              {currentLocale === "vi" ? "🇻🇳 VI" : "🇺🇸 EN"} ▼
             </button>
             {activeDropdown === "lang" && (
               <div className="absolute right-0 mt-2 w-32 bg-white border shadow rounded z-50">
@@ -141,7 +145,7 @@ export default function Navbar() {
                   }}
                   className="block px-4 py-2 text-sm w-full text-left hover:bg-gray-100"
                 >
-                  🇻🇳 Tiếng Việt
+                  🇻🇳 {t("vi")}
                 </button>
                 <button
                   onClick={() => {
@@ -150,7 +154,7 @@ export default function Navbar() {
                   }}
                   className="block px-4 py-2 text-sm w-full text-left hover:bg-gray-100"
                 >
-                  🇺🇸 English
+                  🇺🇸 {t("en")}
                 </button>
               </div>
             )}
@@ -163,16 +167,16 @@ export default function Navbar() {
         </button>
       </div>
 
-      {/* Mobile menu */}
+      {/* Mobile Menu */}
       {mobileMenuOpen && (
         <div className="md:hidden bg-white px-4 py-4 space-y-2 border-t">
           {navItems.map((item) => (
-            <div key={item.label}>
-              <span className="font-medium block mb-1">{item.label}</span>
+            <div key={item.key}>
+              <span className="font-medium block mb-1">{t(item.key)}</span>
               {item.submenu &&
                 item.submenu.map((sub, i) => (
                   <Link
-                    href={`/search?type=${encodeURIComponent(sub.toLowerCase())}`}
+                    href={`/${currentLocale}/search?type=${encodeURIComponent(sub.toLowerCase())}`}
                     key={i}
                     className="block pl-4 py-1 text-sm text-gray-600"
                   >
@@ -184,16 +188,16 @@ export default function Navbar() {
           <hr />
           {user ? (
             <>
-              <Link href="/my-properties" className="block py-1 text-sm">Tin của tôi</Link>
-              <button onClick={handleLogout} className="block py-1 text-sm text-left">Đăng xuất</button>
+              <Link href={`/${currentLocale}/my-properties`} className="block py-1 text-sm">{t("myPosts")}</Link>
+              <button onClick={handleLogout} className="block py-1 text-sm text-left">{t("logout")}</button>
             </>
           ) : (
             <>
-              <Link href="/login" className="block py-1 text-sm">Đăng nhập</Link>
-              <Link href="/register" className="block py-1 text-sm text-red-600 font-medium">Đăng ký</Link>
+              <Link href={`/${currentLocale}/login`} className="block py-1 text-sm">{t("login")}</Link>
+              <Link href={`/${currentLocale}/register`} className="block py-1 text-sm text-red-600 font-medium">{t("register")}</Link>
             </>
           )}
-          <Link href="/post" className="block py-1 text-sm text-red-600 font-medium">Ký gửi nhà đất</Link>
+          <Link href={`/${currentLocale}/post`} className="block py-1 text-sm text-red-600 font-medium">{t("post")}</Link>
         </div>
       )}
     </header>

@@ -95,6 +95,60 @@
     "contactTitle": "7. Liên hệ",
     "contact": "Vui lòng liên hệ dx1252@gmail.com nếu có thắc mắc về quyền riêng tư.",
     "updated": "Cập nhật lần cuối: 30/05/2025"
+  },
+  "Property": {
+    "price": "Giá",
+    "area": "Diện tích",
+    "bedrooms": "Phòng ngủ",
+    "bathrooms": "Phòng tắm",
+    "floors": "Số tầng",
+    "direction": "Hướng",
+    "legal": "Pháp lý",
+    "type": "Loại hình",
+    "address": "Địa chỉ",
+    "postedAt": "Ngày đăng",
+    "propertyId": "Mã tin",
+    "basicInfo": "Thông tin cơ bản",
+    "description": "Mô tả chi tiết",
+    "overviewTitle": "Tổng quan",
+    "highlightsTitle": "Ưu điểm ngôi nhà"
+
+  },
+  "Home": {
+    "heroTitle": "Lựa chọn căn nhà ưng ý của bạn",
+    "heroSub": "An tâm với 100% bất động sản xác thực tại Rever",
+    "buyTab": "Mua nhà",
+    "rentTab": "Thuê nhà",
+    "searchPlaceholder": "Tìm kiếm nhà đất khu vực TP Hồ Chí Minh",
+    "searchButton": "Tìm kiếm",
+    
+    "propertyListTitle": "Danh sách bất động sản",
+    "resultFound": "Tìm thấy {{count}} kết quả",
+    "noResult": "Không tìm thấy bất động sản phù hợp."
+  },
+   "navbar": {
+    "buy": "Mua",
+    "rent": "Thuê",
+    "project": "Dự án",
+    "agent": "Chuyên viên",
+    "news": "Trang tin",
+    "about": "Về Rever",
+    "myPosts": "Tin của tôi",
+    "logout": "Đăng xuất",
+    "login": "Đăng nhập",
+    "register": "Đăng ký",
+    "post": "Ký gửi nhà đất",
+    "vi": "Tiếng Việt",
+    "en": "English"
+  },
+   "MyProperties": {
+    "title": "Tin của tôi",
+    "needLogin": "Bạn cần đăng nhập để xem tin của mình.",
+    "noProperties": "Bạn chưa có tin đăng nào.",
+    "edit": "Sửa",
+    "delete": "Xoá",
+    "confirmDelete": "Bạn có chắc muốn xoá tin này?",
+    "deleteError": "Không thể xoá tin."
   }
 
 }

@@ -1,61 +1,29 @@
-"use client";
+import { notFound } from "next/navigation";
+import OverviewSection from "@/components/property/OverviewSection";
+import BasicInfoSection from "@/components/property/BasicInfoSection";
+import HighlightsSection from "@/components/property/HighlightsSection";
+import { Property } from "@/types/property";
 
-import { useEffect, useState } from "react";
-import { useParams } from "next/navigation";
 
-interface Property {
-  _id: string;
-  title: string;
-  price: number;
-  area: number;
-  postedAt: string;
-  propertyType: string;
-  images: string[];
-  status?: string;
-  userId?: string;
+async function getProperty(id: string): Promise<Property | null> {
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000"; // fallback nếu chưa cấu hình
+  const res = await fetch(`${baseUrl}/api/properties/${id}`, {
+    cache: "no-store",
+  });
+
+  if (!res.ok) return null;
+  return res.json();
 }
 
-export default function PropertyDetailPage() {
-  const params = useParams();
-  const id = Array.isArray(params?.id) ? params.id[0] : params?.id;
-  const [property, setProperty] = useState<Property | null>(null);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    if (!id) return;
-
-    fetch(`/api/properties/${id}`)
-      .then((res) => {
-        if (!res.ok) throw new Error("Không tìm thấy dữ liệu");
-        return res.json();
-      })
-      .then((data: Property) => setProperty(data))
-      .catch((err) => console.error("Lỗi khi lấy chi tiết BĐS:", err))
-      .finally(() => setLoading(false));
-  }, [id]);
-
-  if (loading) return <div className="p-6 text-center">Đang tải thông tin bất động sản...</div>;
-  if (!property) return <div className="p-6 text-center text-red-600">Không tìm thấy bất động sản</div>;
-
-  const formattedDate = new Date(property.postedAt).toLocaleDateString("vi-VN");
+export default async function PropertyDetail({ params }: { params: { id: string } }) {
+  const property = await getProperty(params.id);
+  if (!property) return notFound();
 
   return (
-    <div className="max-w-4xl mx-auto p-6 bg-white shadow rounded-lg">
-      <h1 className="text-3xl font-bold mb-4">{property.title}</h1>
-
-      <img
-        src={property.images?.length ? property.images[0] : "/placeholder.jpg"}
-        alt={property.title}
-        className="w-full h-96 object-cover rounded mb-6"
-      />
-
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-gray-700 text-lg">
-        <p><strong>💰 Giá:</strong> {property.price.toLocaleString("vi-VN", { style: "currency", currency: "VND" })}</p>
-        <p><strong>📏 Diện tích:</strong> {property.area} m²</p>
-        <p><strong>🏷️ Loại:</strong> {property.propertyType}</p>
-        <p><strong>📅 Ngày đăng:</strong> {formattedDate}</p>
-        {property.status && <p><strong>📌 Trạng thái:</strong> {property.status}</p>}
-      </div>
+    <div className="max-w-6xl mx-auto px-4 py-6 space-y-8">
+      <OverviewSection property={property} />
+      <BasicInfoSection property={property} />
+      <HighlightsSection highlights={property.highlights} />
     </div>
   );
 }

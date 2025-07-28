@@ -25,6 +25,7 @@ model Property {
   legal        String?
   direction    String?
   images       String[]
+  highlights  String[] 
   postedAt     DateTime @default(now())
   userId       String?
 }
