@@ -4,15 +4,21 @@ import { NextIntlClientProvider } from "next-intl"; // ✅ từ next-intl gốc
 import { getMessages } from "next-intl/server";     // ✅ từ next-intl/server
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import { notFound } from "next/navigation";
+
 
 export default async function LocaleLayout({
   children,
-  params
+  params,
 }: {
   children: ReactNode;
   params: { locale: string };
 }) {
-  const messages = await getMessages();
+  const messages = await getMessages({ locale: params.locale }).catch(() => null);
+
+  if (!messages) {
+    notFound();
+  }
 
   return (
     <html lang={params.locale}>
