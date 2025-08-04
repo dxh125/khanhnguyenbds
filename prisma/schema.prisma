@@ -18,6 +18,7 @@ model Property {
   district     String?
   city         String?
   propertyType String
+  purpose      String
   status       String
   bedrooms     Int?
   bathrooms    Int?

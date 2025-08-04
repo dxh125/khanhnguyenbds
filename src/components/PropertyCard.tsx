@@ -1,11 +1,16 @@
+'use client';
+
 import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { propertyTypeLabelMap } from "@/constants/propertyTypeLabels";
+import FormattedPrice from "@/components/common/FormattedPrice"; // ✅ Đã dùng component format giá
 
 interface Property {
-  id: string; // ✅ sửa lại từ _id → id
+  id: string;
   title: string;
   price: number;
   area: number;
-  postedAt: string;
+  postedAt: string | Date;
   propertyType: string;
   images: string[];
   status?: string;
@@ -17,6 +22,12 @@ interface PropertyCardProps {
 
 export default function PropertyCard({ property }: PropertyCardProps) {
   const date = new Date(property.postedAt).toLocaleDateString("vi-VN");
+
+  const pathname = usePathname();
+  const locale = pathname.split("/")[1] || "vi";
+
+  const propertyTypeLabel =
+    propertyTypeLabelMap[locale]?.[property.propertyType] || property.propertyType;
 
   return (
     <div className="bg-white rounded-2xl shadow hover:shadow-lg transition-all overflow-hidden relative">
@@ -34,7 +45,10 @@ export default function PropertyCard({ property }: PropertyCardProps) {
 
       <div className="p-4">
         <h3 className="text-lg font-semibold mb-1 line-clamp-1">{property.title}</h3>
-        <p className="text-gray-700 text-sm">Giá: {property.price.toLocaleString()} VND</p>
+        <p className="text-gray-700 text-sm">Loại: {propertyTypeLabel}</p>
+        <p className="text-gray-700 text-sm">
+          Giá: <FormattedPrice price={property.price} /> VND
+        </p>
         <p className="text-gray-700 text-sm">Diện tích: {property.area} m²</p>
         <p className="text-gray-500 text-xs mb-2">Ngày đăng: {date}</p>
 

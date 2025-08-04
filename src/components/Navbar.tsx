@@ -7,11 +7,39 @@ import { Menu, X } from "lucide-react";
 import { useTranslations } from "next-intl";
 
 const navItems = [
-  { key: "buy", submenu: ["Căn hộ", "Nhà phố", "Biệt thự"] },
-  { key: "rent", submenu: ["Căn hộ", "Nhà nguyên căn", "Phòng trọ"] },
-  { key: "project", submenu: ["Sắp mở bán", "Đã bàn giao", "Chưa xác thực"] },
+  {
+    key: "buy",
+    submenu: [
+      { label: "Căn hộ", slug: "can-ho" },
+      { label: "Nhà riêng", slug: "nha-rieng" },
+      { label: "Đất nền", slug: "dat-nen" },
+    ],
+  },
+  {
+    key: "rent",
+    submenu: [
+      { label: "Căn hộ", slug: "can-ho" },
+      { label: "Nhà riêng", slug: "nha-rieng" },
+      { label: "Phòng trọ", slug: "phong-tro" },
+    ],
+  },
+  {
+    key: "project",
+    submenu: [
+      { label: "Vinhomes Riverside", slug: "vinhomes-riverside" },
+      { label: "EcoPark", slug: "ecopark" },
+      { label: "Masteri Thảo Điền", slug: "masteri-thao-dien" },
+    ],
+  },
+  {
+    key: "industry",
+    submenu: [
+      { label: "Đất nền", slug: "dat-nen" },
+      { label: "Nhà xưởng", slug: "nha-xuong" },
+      { label: "Khu công nghiệp", slug: "khu-cong-nghiep" },
+    ],
+  },
   { key: "agent" },
-  { key: "news" },
   { key: "about" },
 ];
 
@@ -54,6 +82,21 @@ export default function Navbar() {
     setDropdownTimer(timer);
   };
 
+  const handleNavClick = (mainKey: string, slug: string) => {
+    const base = `/${currentLocale}`;
+    if (mainKey === "buy") {
+      router.push(`${base}/buy/${slug}`);
+    } else if (mainKey === "rent") {
+      router.push(`${base}/rent/${slug}`);
+    } else if (mainKey === "industry") {
+      router.push(`${base}/industry/${slug}`);
+    } else if (mainKey === "project") {
+      router.push(`${base}/du-an?name=${slug}`);
+    }
+    setActiveDropdown(null);
+    setMobileMenuOpen(false);
+  };
+
   return (
     <header className="bg-white border-b sticky top-0 z-50">
       <div className="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
@@ -74,15 +117,15 @@ export default function Navbar() {
                 {t(item.key)} {item.submenu && <span>▼</span>}
               </button>
               {item.submenu && activeDropdown === item.key && (
-                <div className="absolute top-full left-0 w-40 bg-white border shadow rounded mt-2 z-50">
-                  {item.submenu.map((sub, i) => (
-                    <Link
+                <div className="absolute top-full left-0 w-48 bg-white border shadow rounded mt-2 z-50">
+                  {item.submenu.map((subItem, i) => (
+                    <button
                       key={i}
-                      href={`/${currentLocale}/search?type=${encodeURIComponent(sub.toLowerCase())}`}
-                      className="block px-4 py-2 text-sm hover:bg-gray-100"
+                      onClick={() => handleNavClick(item.key, subItem.slug)}
+                      className="block w-full text-left px-4 py-2 text-sm hover:bg-gray-100"
                     >
-                      {sub}
-                    </Link>
+                      {subItem.label}
+                    </button>
                   ))}
                 </div>
               )}
@@ -174,14 +217,14 @@ export default function Navbar() {
             <div key={item.key}>
               <span className="font-medium block mb-1">{t(item.key)}</span>
               {item.submenu &&
-                item.submenu.map((sub, i) => (
-                  <Link
-                    href={`/${currentLocale}/search?type=${encodeURIComponent(sub.toLowerCase())}`}
+                item.submenu.map((subItem, i) => (
+                  <button
                     key={i}
-                    className="block pl-4 py-1 text-sm text-gray-600"
+                    onClick={() => handleNavClick(item.key, subItem.slug)}
+                    className="block w-full text-left pl-4 py-1 text-sm text-gray-600"
                   >
-                    {sub}
-                  </Link>
+                    {subItem.label}
+                  </button>
                 ))}
             </div>
           ))}
