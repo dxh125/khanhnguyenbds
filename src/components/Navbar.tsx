@@ -89,9 +89,9 @@ export default function Navbar() {
     } else if (mainKey === "rent") {
       router.push(`${base}/rent/${slug}`);
     } else if (mainKey === "industry") {
-      router.push(`${base}/industry/${slug}`);
+      router.push(`${base}/industrials/${slug}`);
     } else if (mainKey === "project") {
-      router.push(`${base}/du-an?name=${slug}`);
+      router.push(`${base}/projects/${slug}`); // ✅ cập nhật đường dẫn mới
     }
     setActiveDropdown(null);
     setMobileMenuOpen(false);
@@ -172,6 +172,7 @@ export default function Navbar() {
             {t("post")}
           </Link>
 
+          {/* Language switch */}
           <div className="relative">
             <button
               onClick={() => setActiveDropdown(activeDropdown === "lang" ? null : "lang")}

@@ -1,134 +1,248 @@
-import { PrismaClient } from '@prisma/client';
-
+import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
 async function main() {
-  await prisma.property.createMany({
+  // 🔥 Xoá dữ liệu cũ
+  await prisma.property.deleteMany();
+  await prisma.project.deleteMany();
+
+  // ✅ Tạo danh sách dự án
+  await prisma.project.createMany({
     data: [
       {
-        title: "Nhà phố Quận 1",
-        description: "Nhà phố trung tâm Quận 1, diện tích lớn.",
-        price: 5000000000,
-        area: 80,
-        address: "123 Lê Lợi",
-        ward: "Bến Nghé",
-        district: "Quận 1",
-        city: "TP.HCM",
-        propertyType: "Nhà phố",
-        purpose: "buy",
-        status: "Đang bán",
-        images: ["https://images.pexels.com/photos/36762/scarlet-honeyeater-bird-red-feathers.jpg"],
-        highlights: ["Hướng Đông Nam", "Gần công viên", "Sổ hồng riêng"]
+        name: "EcoPark",
+        slug: "ecopark",
+        description: "Khu đô thị sinh thái xanh tại Hưng Yên.",
+        imageUrl: "https://example.com/ecopark.jpg",
       },
       {
-        title: "Căn hộ cao cấp Quận 7",
-        description: "Căn hộ cao cấp view sông tuyệt đẹp.",
-        price: 3500000000,
-        area: 65,
-        address: "456 Nguyễn Văn Linh",
-        ward: "Tân Phong",
-        district: "Quận 7",
-        city: "TP.HCM",
-        propertyType: "Căn hộ",
-        purpose: "buy",
-        status: "Đang bán",
-        images: ["https://images.pexels.com/photos/106399/pexels-photo-106399.jpeg"],
-        highlights: ["View sông", "Full nội thất", "An ninh 24/7"]
+        name: "Vinhomes Riverside",
+        slug: "vinhomes-riverside",
+        description: "Khu biệt thự cao cấp ven sông tại Long Biên, Hà Nội.",
+        imageUrl: "https://example.com/vinhomes.jpg",
       },
       {
-        title: "Đất nền Bình Chánh",
-        description: "Đất nền khu dân cư đông đúc, gần trường học.",
-        price: 1800000000,
-        area: 100,
-        address: "789 Tân Kiên",
-        ward: "Tân Kiên",
-        district: "Bình Chánh",
-        city: "TP.HCM",
-        propertyType: "Đất nền",
-        purpose: "buy",
-        status: "Đang bán",
-        images: ["https://images.pexels.com/photos/1643383/pexels-photo-1643383.jpeg"],
-        highlights: ["Gần chợ", "Hạ tầng hoàn chỉnh", "Sổ riêng"]
+        name: "Masteri Thảo Điền",
+        slug: "masteri-thao-dien",
+        description: "Căn hộ cao cấp tại Quận 2, TP.HCM.",
+        imageUrl: "https://example.com/masteri.jpg",
       },
-      {
-        title: "Phòng trọ Quận Bình Thạnh",
-        description: "Phòng trọ tiện nghi, phù hợp sinh viên.",
-        price: 3000000,
-        area: 20,
-        address: "135 Nơ Trang Long",
-        ward: "13",
-        district: "Bình Thạnh",
-        city: "TP.HCM",
-        propertyType: "Phòng trọ",
-        purpose: "rent",
-        status: "Cho thuê",
-        images: ["https://images.pexels.com/photos/271743/pexels-photo-271743.jpeg"],
-        highlights: ["Máy lạnh", "Wifi miễn phí", "Gần đại học"]
-      },
-      {
-        title: "Nhà nguyên căn Gò Vấp",
-        description: "Nhà mới xây, nội thất cơ bản, hẻm xe hơi.",
-        price: 15000000,
-        area: 60,
-        address: "25 Nguyễn Văn Nghi",
-        ward: "7",
-        district: "Gò Vấp",
-        city: "TP.HCM",
-        propertyType: "Nhà riêng",
-        purpose: "rent",
-        status: "Cho thuê",
-        images: ["https://images.pexels.com/photos/280222/pexels-photo-280222.jpeg"],
-        highlights: ["Sân thượng", "3 phòng ngủ", "Gần chợ Hạnh Thông Tây"]
-      },
-      {
-        title: "Căn hộ Vinhomes Central Park",
-        description: "Căn hộ cao cấp, tiện ích nội khu đầy đủ.",
-        price: 2800000000,
-        area: 70,
-        address: "720A Điện Biên Phủ",
-        ward: "22",
-        district: "Bình Thạnh",
-        city: "TP.HCM",
-        propertyType: "Căn hộ",
-        purpose: "buy",
-        status: "Đang bán",
-        images: ["https://images.pexels.com/photos/259588/pexels-photo-259588.jpeg"],
-        highlights: ["View Landmark 81", "Tầng cao", "Gym – Hồ bơi miễn phí"]
-      },
-      {
-        title: "Căn hộ dịch vụ Quận 3",
-        description: "Căn hộ dịch vụ cho thuê ngắn hạn hoặc dài hạn.",
-        price: 10000000,
-        area: 40,
-        address: "54 Võ Thị Sáu",
-        ward: "6",
-        district: "Quận 3",
-        city: "TP.HCM",
-        propertyType: "Căn hộ",
-        purpose: "rent",
-        status: "Cho thuê",
-        images: ["https://images.pexels.com/photos/271624/pexels-photo-271624.jpeg"],
-        highlights: ["Dọn phòng hàng tuần", "Lễ tân 24/7", "Trang bị đầy đủ"]
-      },
-      {
-        title: "Nhà xưởng KCN Tân Tạo",
-        description: "Nhà xưởng rộng, phù hợp sản xuất và kho bãi.",
-        price: 12000000000,
-        area: 500,
-        address: "KCN Tân Tạo",
-        ward: "Tân Tạo A",
-        district: "Bình Tân",
-        city: "TP.HCM",
-        propertyType: "Nhà xưởng",
-        purpose: "buy",
-        status: "Đang bán",
-        images: ["https://images.pexels.com/photos/2736834/pexels-photo-2736834.jpeg"],
-        highlights: ["Trạm điện 3 pha", "Xe container vào được", "Giấy tờ đầy đủ"]
-      }
-    ]
+    ],
   });
 
-  console.log('✅ Seed thành công');
+  // ✅ Tạo 12 bất động sản mẫu
+  await prisma.property.createMany({
+    data: [
+      // === Căn hộ ===
+      {
+        title: "Căn hộ 2PN view sông EcoPark",
+        description: "Căn hộ tầng 10, full nội thất, view sông.",
+        price: 3200000000,
+        area: 85,
+        address: "EcoPark, Văn Giang, Hưng Yên",
+        ward: "Xuân Quan",
+        district: "Văn Giang",
+        city: "Hưng Yên",
+        propertyType: "can-ho",
+        purpose: "buy",
+        status: "available",
+        bedrooms: 2,
+        bathrooms: 2,
+        floors: 10,
+        legal: "Sổ hồng",
+        direction: "Đông Nam",
+        images: [],
+        highlights: ["View sông", "Đầy đủ nội thất"],
+        projectSlug: "ecopark",
+      },
+      {
+        title: "Căn hộ Masteri Thảo Điền 3PN",
+        description: "Căn góc, view Landmark 81.",
+        price: 5500000000,
+        area: 100,
+        address: "159 Xa lộ Hà Nội, Quận 2",
+        ward: "Thảo Điền",
+        district: "Quận 2",
+        city: "TP.HCM",
+        propertyType: "can-ho",
+        purpose: "buy",
+        status: "available",
+        bedrooms: 3,
+        bathrooms: 2,
+        floors: 22,
+        legal: "Sổ hồng",
+        direction: "Tây Bắc",
+        images: [],
+        highlights: ["View Landmark 81", "Căn góc"],
+        projectSlug: "masteri-thao-dien",
+      },
+
+      // === Nhà riêng ===
+      {
+        title: "Nhà phố Vinhomes Riverside 5x20m",
+        description: "Nhà 3 tầng, sân vườn, gara ô tô.",
+        price: 12500000000,
+        area: 100,
+        address: "Long Biên, Hà Nội",
+        ward: "Việt Hưng",
+        district: "Long Biên",
+        city: "Hà Nội",
+        propertyType: "nha-rieng",
+        purpose: "buy",
+        status: "available",
+        bedrooms: 4,
+        bathrooms: 4,
+        floors: 3,
+        legal: "Sổ đỏ",
+        direction: "Nam",
+        images: [],
+        highlights: ["Gara ô tô", "Sân vườn"],
+        projectSlug: "vinhomes-riverside",
+      },
+      {
+        title: "Nhà riêng quận 12, gần Metro",
+        description: "Nhà mới xây, hẻm xe hơi, sổ hồng riêng.",
+        price: 3900000000,
+        area: 75,
+        address: "Quận 12, TP.HCM",
+        ward: "Tân Thới Hiệp",
+        district: "Quận 12",
+        city: "TP.HCM",
+        propertyType: "nha-rieng",
+        purpose: "buy",
+        status: "available",
+        bedrooms: 3,
+        bathrooms: 2,
+        floors: 2,
+        legal: "Sổ hồng",
+        direction: "Đông Bắc",
+        images: [],
+        highlights: ["Gần Metro", "Nhà mới xây"],
+        projectSlug: null,
+      },
+
+      // === Đất nền ===
+      {
+        title: "Đất nền khu công nghiệp Long Hậu",
+        description: "Nền vuông đẹp, đường 12m, đã có sổ.",
+        price: 2100000000,
+        area: 100,
+        address: "Long Hậu, Cần Giuộc, Long An",
+        ward: "Long Hậu",
+        district: "Cần Giuộc",
+        city: "Long An",
+        propertyType: "dat-nen",
+        purpose: "buy",
+        status: "available",
+        legal: "Sổ đỏ",
+        direction: "Tây",
+        images: [],
+        highlights: ["Đường rộng", "Khu dân cư hiện hữu"],
+        projectSlug: null,
+      },
+      {
+        title: "Đất nền khu công nghiệp Nhơn Trạch",
+        description: "Lô góc 2 mặt tiền, gần cảng.",
+        price: 3300000000,
+        area: 120,
+        address: "Nhơn Trạch, Đồng Nai",
+        propertyType: "dat-nen",
+        purpose: "buy",
+        status: "available",
+        legal: "Sổ đỏ",
+        direction: "Bắc",
+        images: [],
+        highlights: ["2 mặt tiền", "Gần cảng"],
+        projectSlug: null,
+      },
+
+      // === Phòng trọ ===
+      {
+        title: "Phòng trọ sinh viên Quận 10",
+        description: "Có gác, máy lạnh, vệ sinh riêng.",
+        price: 3500000,
+        area: 18,
+        address: "Đường 3/2, Quận 10",
+        propertyType: "phong-tro",
+        purpose: "rent",
+        status: "available",
+        bedrooms: 1,
+        bathrooms: 1,
+        floors: 1,
+        direction: "Nam",
+        images: [],
+        highlights: ["Có máy lạnh", "Vệ sinh riêng"],
+        projectSlug: null,
+      },
+      {
+        title: "Phòng trọ giá rẻ Thủ Đức",
+        description: "Khu an ninh, gần ĐH Quốc Gia.",
+        price: 2800000,
+        area: 16,
+        address: "Linh Trung, Thủ Đức",
+        propertyType: "phong-tro",
+        purpose: "rent",
+        status: "available",
+        direction: "Đông",
+        images: [],
+        highlights: ["Gần ĐHQG", "Khu an ninh"],
+        projectSlug: null,
+      },
+
+      // === Nhà xưởng ===
+      {
+        title: "Cho thuê nhà xưởng KCN Tân Bình",
+        description: "Diện tích 1000m², trần cao, container vào được.",
+        price: 120000000,
+        area: 1000,
+        address: "Tân Bình, TP.HCM",
+        propertyType: "nha-xuong",
+        purpose: "rent",
+        status: "available",
+        floors: 1,
+        legal: "Hợp đồng thuê",
+        direction: "Tây Bắc",
+        images: [],
+        highlights: ["Xe container vào", "KCN Tân Bình"],
+        projectSlug: null,
+      },
+      {
+        title: "Bán nhà xưởng tại KCN Sóng Thần",
+        description: "Sổ đỏ, 2 mặt tiền, DT 2000m²",
+        price: 15000000000,
+        area: 2000,
+        address: "Dĩ An, Bình Dương",
+        propertyType: "nha-xuong",
+        purpose: "buy",
+        status: "available",
+        direction: "Đông Nam",
+        legal: "Sổ đỏ",
+        images: [],
+        highlights: ["2 mặt tiền", "Gần quốc lộ 1K"],
+        projectSlug: null,
+      },
+
+      // === BĐS không thuộc dự án ===
+      {
+        title: "Căn hộ mini Quận 7, view sông",
+        description: "Full nội thất, ban công thoáng, lầu 3",
+        price: 2100000000,
+        area: 50,
+        address: "Tân Thuận Tây, Quận 7",
+        propertyType: "can-ho",
+        purpose: "buy",
+        status: "available",
+        bedrooms: 2,
+        bathrooms: 1,
+        direction: "Nam",
+        images: [],
+        highlights: ["View sông", "Giá tốt"],
+        projectSlug: null,
+      },
+    ],
+  });
+
+  console.log("✅ Seed dữ liệu thành công!");
 }
 
 main()
@@ -136,6 +250,6 @@ main()
     console.error(e);
     process.exit(1);
   })
-  .finally(() => {
-    prisma.$disconnect();
+  .finally(async () => {
+    await prisma.$disconnect();
   });

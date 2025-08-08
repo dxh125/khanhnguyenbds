@@ -26,7 +26,17 @@ model Property {
   legal        String?
   direction    String?
   images       String[]
-  highlights  String[] 
+  highlights   String[] 
   postedAt     DateTime @default(now())
   userId       String?
+  projectSlug  String?  // 👈 Dự án mà bất động sản thuộc về (nếu có)
+}
+
+model Project {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  name        String
+  slug        String   @unique               // ví dụ: ecopark, masteri-thao-dien
+  description String
+  imageUrl    String?                        // ảnh đại diện dự án (nếu có)
+  createdAt   DateTime @default(now())
 }
