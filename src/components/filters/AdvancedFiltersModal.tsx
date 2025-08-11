@@ -1,80 +1,124 @@
-// 📁 src/components/filters/AdvancedFiltersModal.tsx
-'use client';
-import { useRouter, usePathname, useSearchParams } from 'next/navigation';
-import { useState } from 'react';
+"use client";
+import React, { useState } from "react";
 
-const directions = ['Đông', 'Tây', 'Nam', 'Bắc', 'Đông Nam', 'Đông Bắc', 'Tây Nam', 'Tây Bắc'];
-const statuses = ['Đăng thường', 'Rever độc quyền', 'Đang GD'];
+export interface AdvancedFiltersValues {
+  bedrooms: string;
+  bathrooms: string;
+  direction: string;
+  status: string;
+}
 
-export default function AdvancedFiltersModal() {
-  const router = useRouter();
-  const pathname = usePathname();
-  const searchParams = useSearchParams();
+interface AdvancedFiltersModalProps {
+  initialValues?: Partial<AdvancedFiltersValues>;
+  onApply: (vals: AdvancedFiltersValues) => void;
+  onReset: () => void;
+}
 
-  const [bedrooms, setBedrooms] = useState<string[]>([]);
-  const [bathrooms, setBathrooms] = useState<string[]>([]);
-  const [status, setStatus] = useState<string[]>([]);
-  const [direction, setDirection] = useState<string[]>([]);
+export default function AdvancedFiltersModal({
+  initialValues,
+  onApply,
+  onReset,
+}: AdvancedFiltersModalProps) {
+  const [isOpen, setIsOpen] = useState(false);
+  const [values, setValues] = useState<AdvancedFiltersValues>({
+    bedrooms: initialValues?.bedrooms || "",
+    bathrooms: initialValues?.bathrooms || "",
+    direction: initialValues?.direction || "",
+    status: initialValues?.status || "",
+  });
 
-  const toggle = (list: string[], value: string, setList: (val: string[]) => void) => {
-    if (list.includes(value)) {
-      setList(list.filter((v) => v !== value));
-    } else {
-      setList([...list, value]);
-    }
+  const handleApply = () => {
+    onApply(values);
+    setIsOpen(false);
   };
 
-  const applyFilters = () => {
-    const params = new URLSearchParams(searchParams.toString());
-    if (bedrooms.length) params.set('bedrooms', bedrooms.join(','));
-    if (bathrooms.length) params.set('bathrooms', bathrooms.join(','));
-    if (status.length) params.set('status', status.join(','));
-    if (direction.length) params.set('direction', direction.join(','));
-    router.push(`${pathname}?${params.toString()}`);
+  const handleReset = () => {
+    setValues({ bedrooms: "", bathrooms: "", direction: "", status: "" });
+    onReset();
   };
 
   return (
-    <div className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-40 z-50 flex justify-center items-center">
-      <div className="bg-white p-6 rounded-xl w-[90%] max-w-2xl max-h-[90%] overflow-y-auto">
-        <div className="grid grid-cols-2 gap-4">
-          <div>
-            <h4 className="font-semibold mb-2">Chọn số phòng ngủ</h4>
-            {[1, 2, 3, 4, 5, '6+'].map((n) => (
-              <label key={n} className="block">
-                <input type="checkbox" onChange={() => toggle(bedrooms, `${n}`, setBedrooms)} /> {n} phòng ngủ
-              </label>
-            ))}
-          </div>
-          <div>
-            <h4 className="font-semibold mb-2">Chọn số phòng tắm</h4>
-            {[1, 2, 3, 4, 5, '6+'].map((n) => (
-              <label key={n} className="block">
-                <input type="checkbox" onChange={() => toggle(bathrooms, `${n}`, setBathrooms)} /> {n} phòng tắm
-              </label>
-            ))}
-          </div>
-          <div>
-            <h4 className="font-semibold mb-2">Chọn trạng thái</h4>
-            {statuses.map((s) => (
-              <label key={s} className="block">
-                <input type="checkbox" onChange={() => toggle(status, s, setStatus)} /> {s}
-              </label>
-            ))}
-          </div>
-          <div>
-            <h4 className="font-semibold mb-2">Chọn hướng</h4>
-            {directions.map((d) => (
-              <label key={d} className="block">
-                <input type="checkbox" onChange={() => toggle(direction, d, setDirection)} /> {d}
-              </label>
-            ))}
+    <div>
+      {/* Nút mở modal */}
+      <button
+        className="border px-3 py-1 rounded"
+        onClick={() => setIsOpen(true)}
+      >
+        Thêm bộ lọc
+      </button>
+
+      {/* Modal */}
+      {isOpen && (
+        <div className="fixed inset-0 bg-black bg-opacity-30 flex justify-center items-center z-50">
+          <div className="bg-white p-4 rounded shadow-lg w-full max-w-md">
+            <h2 className="text-lg font-semibold mb-4">Bộ lọc nâng cao</h2>
+
+            <input
+              className="border rounded px-2 py-1 w-full mb-2"
+              placeholder="Phòng ngủ"
+              value={values.bedrooms}
+              onChange={(e) =>
+                setValues({ ...values, bedrooms: e.target.value })
+              }
+            />
+
+            <input
+              className="border rounded px-2 py-1 w-full mb-2"
+              placeholder="Phòng tắm"
+              value={values.bathrooms}
+              onChange={(e) =>
+                setValues({ ...values, bathrooms: e.target.value })
+              }
+            />
+
+            <select
+              className="border rounded px-2 py-1 w-full mb-2"
+              value={values.direction}
+              onChange={(e) =>
+                setValues({ ...values, direction: e.target.value })
+              }
+            >
+              <option value="">Hướng nhà</option>
+              <option value="Đông">Đông</option>
+              <option value="Tây">Tây</option>
+              <option value="Nam">Nam</option>
+              <option value="Bắc">Bắc</option>
+              <option value="Đông Bắc">Đông Bắc</option>
+              <option value="Đông Nam">Đông Nam</option>
+              <option value="Tây Bắc">Tây Bắc</option>
+              <option value="Tây Nam">Tây Nam</option>
+            </select>
+
+            <select
+              className="border rounded px-2 py-1 w-full mb-4"
+              value={values.status}
+              onChange={(e) =>
+                setValues({ ...values, status: e.target.value })
+              }
+            >
+              <option value="">Tình trạng</option>
+              <option value="available">Đang bán/cho thuê</option>
+              <option value="sold">Đã bán/đã thuê</option>
+            </select>
+
+            {/* Nút hành động */}
+            <div className="flex justify-end gap-2">
+              <button
+                className="border px-3 py-1 rounded"
+                onClick={handleReset}
+              >
+                Reset
+              </button>
+              <button
+                className="bg-blue-500 text-white px-3 py-1 rounded"
+                onClick={handleApply}
+              >
+                Áp dụng
+              </button>
+            </div>
           </div>
         </div>
-        <div className="flex justify-end gap-3 mt-6">
-          <button onClick={applyFilters} className="px-4 py-2 bg-red-500 text-white rounded">Áp dụng</button>
-          <button onClick={() => router.push(pathname)} className="px-4 py-2 border rounded">Huỷ</button>
-        </div>
-      </div>
+      )}
     </div>
   );
 }

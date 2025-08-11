@@ -1,34 +1,27 @@
-'use client';
-import { useRouter, usePathname, useSearchParams } from 'next/navigation';
+"use client";
 
-const types = [
-  { label: 'Căn hộ', value: 'can-ho' },
-  { label: 'Nhà riêng', value: 'nha-rieng' },
-  { label: 'Đất nền', value: 'dat-nen' },
-];
+interface DropdownProps {
+  filters?: Record<string, string | string[] | undefined>;
+}
 
-export default function PropertyTypeDropdown() {
-  const router = useRouter();
-  const pathname = usePathname();
-  const searchParams = useSearchParams();
-  const current = searchParams.get('type') || '';
-
-  const handleSelect = (value: string) => {
-    const params = new URLSearchParams(searchParams.toString());
-    params.set('type', value);
-    router.push(`${pathname}?${params.toString()}`);
-  };
+export default function PropertyTypeDropdown({ filters }: DropdownProps) {
+  const currentValue = String(filters?.propertyType || "");
 
   return (
     <select
-      value={current}
-      onChange={(e) => handleSelect(e.target.value)}
-      className="border rounded px-3 py-2"
+      className="border rounded px-2 py-1"
+      defaultValue={currentValue}
+      onChange={(e) => {
+        const params = new URLSearchParams(window.location.search);
+        if (e.target.value) params.set("propertyType", e.target.value);
+        else params.delete("propertyType");
+        window.location.search = params.toString();
+      }}
     >
       <option value="">Loại hình</option>
-      {types.map((t) => (
-        <option key={t.value} value={t.value}>{t.label}</option>
-      ))}
+      <option value="can-ho">Căn hộ</option>
+      <option value="nha-rieng">Nhà riêng</option>
+      <option value="dat-nen">Đất nền</option>
     </select>
   );
 }

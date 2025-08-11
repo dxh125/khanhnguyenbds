@@ -37,7 +37,8 @@ export default async function BuyPage({ params, searchParams }: Props) {
       </h1>
 
       {/* Thanh lọc filter */}
-      <FilterBar initialFilters={searchParams} />
+      <FilterBar initialFilters={filters} purpose="buy" />
+
 
       {/* Danh sách bất động sản */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-6">

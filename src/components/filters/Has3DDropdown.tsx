@@ -1,31 +1,26 @@
-'use client';
-import { useRouter, usePathname, useSearchParams } from 'next/navigation';
+"use client";
 
-export default function Has3DDropdown() {
-  const router = useRouter();
-  const pathname = usePathname();
-  const searchParams = useSearchParams();
-  const current = searchParams.get('has3D') || '';
+interface DropdownProps {
+  filters?: Record<string, string | string[] | undefined>;
+}
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const params = new URLSearchParams(searchParams.toString());
-    if (e.target.checked) {
-      params.set('has3D', 'true');
-    } else {
-      params.delete('has3D');
-    }
-    router.push(`${pathname}?${params.toString()}`);
-  };
+export default function Has3DDropdown({ filters }: DropdownProps) {
+  const currentValue = String(filters?.has3D || "");
 
   return (
-    <label className="flex items-center gap-2 cursor-pointer">
-      <input
-        type="checkbox"
-        checked={current === 'true'}
-        onChange={handleChange}
-        className="form-checkbox"
-      />
-      Có 3D
-    </label>
+    <select
+      className="border rounded px-2 py-1"
+      defaultValue={currentValue}
+      onChange={(e) => {
+        const params = new URLSearchParams(window.location.search);
+        if (e.target.value) params.set("has3D", e.target.value);
+        else params.delete("has3D");
+        window.location.search = params.toString();
+      }}
+    >
+      <option value="">Có 3D</option>
+      <option value="true">Có</option>
+      <option value="false">Không</option>
+    </select>
   );
 }

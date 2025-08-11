@@ -33,7 +33,8 @@ export default async function RentPage({ params, searchParams }: Props) {
       </h1>
 
       {/* Thanh lọc */}
-      <FilterBar initialFilters={searchParams} />
+      <FilterBar initialFilters={filters} purpose="rent" />
+
 
       {/* Danh sách bất động sản */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-6">

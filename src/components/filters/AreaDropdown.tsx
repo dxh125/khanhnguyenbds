@@ -1,36 +1,29 @@
-'use client';
-import { useRouter, usePathname, useSearchParams } from 'next/navigation';
+"use client";
 
-const areaRanges = [
-  { label: 'Dưới 30 m²', value: '0-30' },
-  { label: '30 - 50 m²', value: '30-50' },
-  { label: '50 - 70 m²', value: '50-70' },
-  { label: '70 - 100 m²', value: '70-100' },
-  { label: 'Trên 100 m²', value: '100-9999' },
-];
+interface DropdownProps {
+  filters?: Record<string, string | string[] | undefined>;
+}
 
-export default function AreaDropdown() {
-  const router = useRouter();
-  const pathname = usePathname();
-  const searchParams = useSearchParams();
-  const current = searchParams.get('area') || '';
-
-  const handleSelect = (value: string) => {
-    const params = new URLSearchParams(searchParams.toString());
-    params.set('area', value);
-    router.push(`${pathname}?${params.toString()}`);
-  };
+export default function AreaDropdown({ filters }: DropdownProps) {
+  const currentValue = String(filters?.area || "");
 
   return (
     <select
-      value={current}
-      onChange={(e) => handleSelect(e.target.value)}
-      className="border rounded px-3 py-2"
+      className="border rounded px-2 py-1"
+      defaultValue={currentValue}
+      onChange={(e) => {
+        const params = new URLSearchParams(window.location.search);
+        if (e.target.value) params.set("area", e.target.value);
+        else params.delete("area");
+        window.location.search = params.toString();
+      }}
     >
       <option value="">Diện tích</option>
-      {areaRanges.map((a) => (
-        <option key={a.value} value={a.value}>{a.label}</option>
-      ))}
+      <option value="duoi-30">Dưới 30 m²</option>
+      <option value="30-50">30 - 50 m²</option>
+      <option value="50-80">50 - 80 m²</option>
+      <option value="80-100">80 - 100 m²</option>
+      <option value="tren-100">Trên 100 m²</option>
     </select>
   );
 }

@@ -1,35 +1,50 @@
-'use client';
-import { useRouter, usePathname, useSearchParams } from 'next/navigation';
+"use client";
 
-const priceRanges = [
-  { label: 'Dưới 2 tỷ', value: '0-2000000000' },
-  { label: '2 - 4 tỷ', value: '2000000000-4000000000' },
-  { label: '4 - 6 tỷ', value: '4000000000-6000000000' },
-  { label: '6 - 10 tỷ', value: '6000000000-10000000000' },
-  { label: 'Trên 10 tỷ', value: '10000000000-99999999999' },
-];
+interface DropdownProps {
+  filters?: Record<string, string | string[] | undefined>;
+  purpose?: "buy" | "rent";
+}
 
-export default function PriceDropdown() {
-  const router = useRouter();
-  const pathname = usePathname();
-  const searchParams = useSearchParams();
-  const current = searchParams.get('price') || '';
+export default function PriceDropdown({ filters, purpose = "buy" }: DropdownProps) {
+  const currentValue = String(filters?.price || "");
 
-  const handleSelect = (value: string) => {
-    const params = new URLSearchParams(searchParams.toString());
-    params.set('price', value);
-    router.push(`${pathname}?${params.toString()}`);
-  };
+  // Khoảng giá cho mua
+  const buyOptions = [
+    { value: "", label: "Khoảng giá" },
+    { value: "duoi-1-ty", label: "Dưới 1 tỷ" },
+    { value: "1-2-ty", label: "1 - 2 tỷ" },
+    { value: "2-3-ty", label: "2 - 3 tỷ" },
+    { value: "3-5-ty", label: "3 - 5 tỷ" },
+    { value: "tren-5-ty", label: "Trên 5 tỷ" },
+  ];
+
+  // Khoảng giá cho thuê
+  const rentOptions = [
+    { value: "", label: "Khoảng giá" },
+    { value: "duoi-3-trieu", label: "Dưới 3 triệu" },
+    { value: "3-5-trieu", label: "3 - 5 triệu" },
+    { value: "5-10-trieu", label: "5 - 10 triệu" },
+    { value: "10-20-trieu", label: "10 - 20 triệu" },
+    { value: "tren-20-trieu", label: "Trên 20 triệu" },
+  ];
+
+  const options = purpose === "rent" ? rentOptions : buyOptions;
 
   return (
     <select
-      value={current}
-      onChange={(e) => handleSelect(e.target.value)}
-      className="border rounded px-3 py-2"
+      className="border rounded px-2 py-1"
+      defaultValue={currentValue}
+      onChange={(e) => {
+        const params = new URLSearchParams(window.location.search);
+        if (e.target.value) params.set("price", e.target.value);
+        else params.delete("price");
+        window.location.search = params.toString();
+      }}
     >
-      <option value="">Khoảng giá</option>
-      {priceRanges.map((p) => (
-        <option key={p.value} value={p.value}>{p.label}</option>
+      {options.map((opt) => (
+        <option key={opt.value} value={opt.value}>
+          {opt.label}
+        </option>
       ))}
     </select>
   );
