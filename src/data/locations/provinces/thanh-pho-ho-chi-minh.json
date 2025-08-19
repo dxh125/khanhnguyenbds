@@ -1,0 +1,1785 @@
+{
+  "code": "79",
+  "name": "Thành phố Hồ Chí Minh",
+  "slug": "thanh-pho-ho-chi-minh",
+  "districts": [
+    {
+      "code": "760",
+      "name": "Quận 1",
+      "slug": "quan-1",
+      "wards": [
+        {
+          "code": "26734",
+          "name": "Phường Tân Định",
+          "slug": "phuong-tan-dinh"
+        },
+        {
+          "code": "26737",
+          "name": "Phường Đa Kao",
+          "slug": "phuong-da-kao"
+        },
+        {
+          "code": "26740",
+          "name": "Phường Bến Nghé",
+          "slug": "phuong-ben-nghe"
+        },
+        {
+          "code": "26743",
+          "name": "Phường Bến Thành",
+          "slug": "phuong-ben-thanh"
+        },
+        {
+          "code": "26746",
+          "name": "Phường Nguyễn Thái Bình",
+          "slug": "phuong-nguyen-thai-binh"
+        },
+        {
+          "code": "26749",
+          "name": "Phường Phạm Ngũ Lão",
+          "slug": "phuong-pham-ngu-lao"
+        },
+        {
+          "code": "26752",
+          "name": "Phường Cầu Ông Lãnh",
+          "slug": "phuong-cau-ong-lanh"
+        },
+        {
+          "code": "26755",
+          "name": "Phường Cô Giang",
+          "slug": "phuong-co-giang"
+        },
+        {
+          "code": "26758",
+          "name": "Phường Nguyễn Cư Trinh",
+          "slug": "phuong-nguyen-cu-trinh"
+        },
+        {
+          "code": "26761",
+          "name": "Phường Cầu Kho",
+          "slug": "phuong-cau-kho"
+        }
+      ]
+    },
+    {
+      "code": "761",
+      "name": "Quận 12",
+      "slug": "quan-12",
+      "wards": [
+        {
+          "code": "26764",
+          "name": "Phường Thạnh Xuân",
+          "slug": "phuong-thanh-xuan"
+        },
+        {
+          "code": "26767",
+          "name": "Phường Thạnh Lộc",
+          "slug": "phuong-thanh-loc"
+        },
+        {
+          "code": "26770",
+          "name": "Phường Hiệp Thành",
+          "slug": "phuong-hiep-thanh"
+        },
+        {
+          "code": "26773",
+          "name": "Phường Thới An",
+          "slug": "phuong-thoi-an"
+        },
+        {
+          "code": "26776",
+          "name": "Phường Tân Chánh Hiệp",
+          "slug": "phuong-tan-chanh-hiep"
+        },
+        {
+          "code": "26779",
+          "name": "Phường An Phú Đông",
+          "slug": "phuong-an-phu-dong"
+        },
+        {
+          "code": "26782",
+          "name": "Phường Tân Thới Hiệp",
+          "slug": "phuong-tan-thoi-hiep"
+        },
+        {
+          "code": "26785",
+          "name": "Phường Trung Mỹ Tây",
+          "slug": "phuong-trung-my-tay"
+        },
+        {
+          "code": "26787",
+          "name": "Phường Tân Hưng Thuận",
+          "slug": "phuong-tan-hung-thuan"
+        },
+        {
+          "code": "26788",
+          "name": "Phường Đông Hưng Thuận",
+          "slug": "phuong-dong-hung-thuan"
+        },
+        {
+          "code": "26791",
+          "name": "Phường Tân Thới Nhất",
+          "slug": "phuong-tan-thoi-nhat"
+        }
+      ]
+    },
+    {
+      "code": "762",
+      "name": "Quận Thủ Đức",
+      "slug": "quan-thu-duc",
+      "wards": [
+        {
+          "code": "26794",
+          "name": "Phường Linh Xuân",
+          "slug": "phuong-linh-xuan"
+        },
+        {
+          "code": "26797",
+          "name": "Phường Bình Chiểu",
+          "slug": "phuong-binh-chieu"
+        },
+        {
+          "code": "26800",
+          "name": "Phường Linh Trung",
+          "slug": "phuong-linh-trung"
+        },
+        {
+          "code": "26803",
+          "name": "Phường Tam Bình",
+          "slug": "phuong-tam-binh"
+        },
+        {
+          "code": "26806",
+          "name": "Phường Tam Phú",
+          "slug": "phuong-tam-phu"
+        },
+        {
+          "code": "26809",
+          "name": "Phường Hiệp Bình Phước",
+          "slug": "phuong-hiep-binh-phuoc"
+        },
+        {
+          "code": "26812",
+          "name": "Phường Hiệp Bình Chánh",
+          "slug": "phuong-hiep-binh-chanh"
+        },
+        {
+          "code": "26815",
+          "name": "Phường Linh Chiểu",
+          "slug": "phuong-linh-chieu"
+        },
+        {
+          "code": "26818",
+          "name": "Phường Linh Tây",
+          "slug": "phuong-linh-tay"
+        },
+        {
+          "code": "26821",
+          "name": "Phường Linh Đông",
+          "slug": "phuong-linh-dong"
+        },
+        {
+          "code": "26824",
+          "name": "Phường Bình Thọ",
+          "slug": "phuong-binh-tho"
+        },
+        {
+          "code": "26827",
+          "name": "Phường Trường Thọ",
+          "slug": "phuong-truong-tho"
+        }
+      ]
+    },
+    {
+      "code": "763",
+      "name": "Quận 9",
+      "slug": "quan-9",
+      "wards": [
+        {
+          "code": "26830",
+          "name": "Phường Long Bình",
+          "slug": "phuong-long-binh"
+        },
+        {
+          "code": "26833",
+          "name": "Phường Long Thạnh Mỹ",
+          "slug": "phuong-long-thanh-my"
+        },
+        {
+          "code": "26836",
+          "name": "Phường Tân Phú",
+          "slug": "phuong-tan-phu"
+        },
+        {
+          "code": "26839",
+          "name": "Phường Hiệp Phú",
+          "slug": "phuong-hiep-phu"
+        },
+        {
+          "code": "26842",
+          "name": "Phường Tăng Nhơn Phú A",
+          "slug": "phuong-tang-nhon-phu-a"
+        },
+        {
+          "code": "26845",
+          "name": "Phường Tăng Nhơn Phú B",
+          "slug": "phuong-tang-nhon-phu-b"
+        },
+        {
+          "code": "26848",
+          "name": "Phường Phước Long B",
+          "slug": "phuong-phuoc-long-b"
+        },
+        {
+          "code": "26851",
+          "name": "Phường Phước Long A",
+          "slug": "phuong-phuoc-long-a"
+        },
+        {
+          "code": "26854",
+          "name": "Phường Trường Thạnh",
+          "slug": "phuong-truong-thanh"
+        },
+        {
+          "code": "26857",
+          "name": "Phường Long Phước",
+          "slug": "phuong-long-phuoc"
+        },
+        {
+          "code": "26860",
+          "name": "Phường Long Trường",
+          "slug": "phuong-long-truong"
+        },
+        {
+          "code": "26863",
+          "name": "Phường Phước Bình",
+          "slug": "phuong-phuoc-binh"
+        },
+        {
+          "code": "26866",
+          "name": "Phường Phú Hữu",
+          "slug": "phuong-phu-huu"
+        }
+      ]
+    },
+    {
+      "code": "764",
+      "name": "Quận Gò Vấp",
+      "slug": "quan-go-vap",
+      "wards": [
+        {
+          "code": "26869",
+          "name": "Phường 15",
+          "slug": "phuong-15"
+        },
+        {
+          "code": "26872",
+          "name": "Phường 13",
+          "slug": "phuong-13"
+        },
+        {
+          "code": "26875",
+          "name": "Phường 17",
+          "slug": "phuong-17"
+        },
+        {
+          "code": "26876",
+          "name": "Phường 6",
+          "slug": "phuong-6"
+        },
+        {
+          "code": "26878",
+          "name": "Phường 16",
+          "slug": "phuong-16"
+        },
+        {
+          "code": "26881",
+          "name": "Phường 12",
+          "slug": "phuong-12"
+        },
+        {
+          "code": "26882",
+          "name": "Phường 14",
+          "slug": "phuong-14"
+        },
+        {
+          "code": "26884",
+          "name": "Phường 10",
+          "slug": "phuong-10"
+        },
+        {
+          "code": "26887",
+          "name": "Phường 05",
+          "slug": "phuong-05"
+        },
+        {
+          "code": "26890",
+          "name": "Phường 07",
+          "slug": "phuong-07"
+        },
+        {
+          "code": "26893",
+          "name": "Phường 04",
+          "slug": "phuong-04"
+        },
+        {
+          "code": "26896",
+          "name": "Phường 01",
+          "slug": "phuong-01"
+        },
+        {
+          "code": "26897",
+          "name": "Phường 9",
+          "slug": "phuong-9"
+        },
+        {
+          "code": "26898",
+          "name": "Phường 8",
+          "slug": "phuong-8"
+        },
+        {
+          "code": "26899",
+          "name": "Phường 11",
+          "slug": "phuong-11"
+        },
+        {
+          "code": "26902",
+          "name": "Phường 03",
+          "slug": "phuong-03"
+        }
+      ]
+    },
+    {
+      "code": "765",
+      "name": "Quận Bình Thạnh",
+      "slug": "quan-binh-thanh",
+      "wards": [
+        {
+          "code": "26905",
+          "name": "Phường 13",
+          "slug": "phuong-13"
+        },
+        {
+          "code": "26908",
+          "name": "Phường 11",
+          "slug": "phuong-11"
+        },
+        {
+          "code": "26911",
+          "name": "Phường 27",
+          "slug": "phuong-27"
+        },
+        {
+          "code": "26914",
+          "name": "Phường 26",
+          "slug": "phuong-26"
+        },
+        {
+          "code": "26917",
+          "name": "Phường 12",
+          "slug": "phuong-12"
+        },
+        {
+          "code": "26920",
+          "name": "Phường 25",
+          "slug": "phuong-25"
+        },
+        {
+          "code": "26923",
+          "name": "Phường 05",
+          "slug": "phuong-05"
+        },
+        {
+          "code": "26926",
+          "name": "Phường 07",
+          "slug": "phuong-07"
+        },
+        {
+          "code": "26929",
+          "name": "Phường 24",
+          "slug": "phuong-24"
+        },
+        {
+          "code": "26932",
+          "name": "Phường 06",
+          "slug": "phuong-06"
+        },
+        {
+          "code": "26935",
+          "name": "Phường 14",
+          "slug": "phuong-14"
+        },
+        {
+          "code": "26938",
+          "name": "Phường 15",
+          "slug": "phuong-15"
+        },
+        {
+          "code": "26941",
+          "name": "Phường 02",
+          "slug": "phuong-02"
+        },
+        {
+          "code": "26944",
+          "name": "Phường 01",
+          "slug": "phuong-01"
+        },
+        {
+          "code": "26947",
+          "name": "Phường 03",
+          "slug": "phuong-03"
+        },
+        {
+          "code": "26950",
+          "name": "Phường 17",
+          "slug": "phuong-17"
+        },
+        {
+          "code": "26953",
+          "name": "Phường 21",
+          "slug": "phuong-21"
+        },
+        {
+          "code": "26956",
+          "name": "Phường 22",
+          "slug": "phuong-22"
+        },
+        {
+          "code": "26959",
+          "name": "Phường 19",
+          "slug": "phuong-19"
+        },
+        {
+          "code": "26962",
+          "name": "Phường 28",
+          "slug": "phuong-28"
+        }
+      ]
+    },
+    {
+      "code": "766",
+      "name": "Quận Tân Bình",
+      "slug": "quan-tan-binh",
+      "wards": [
+        {
+          "code": "26965",
+          "name": "Phường 02",
+          "slug": "phuong-02"
+        },
+        {
+          "code": "26968",
+          "name": "Phường 04",
+          "slug": "phuong-04"
+        },
+        {
+          "code": "26971",
+          "name": "Phường 12",
+          "slug": "phuong-12"
+        },
+        {
+          "code": "26974",
+          "name": "Phường 13",
+          "slug": "phuong-13"
+        },
+        {
+          "code": "26977",
+          "name": "Phường 01",
+          "slug": "phuong-01"
+        },
+        {
+          "code": "26980",
+          "name": "Phường 03",
+          "slug": "phuong-03"
+        },
+        {
+          "code": "26983",
+          "name": "Phường 11",
+          "slug": "phuong-11"
+        },
+        {
+          "code": "26986",
+          "name": "Phường 07",
+          "slug": "phuong-07"
+        },
+        {
+          "code": "26989",
+          "name": "Phường 05",
+          "slug": "phuong-05"
+        },
+        {
+          "code": "26992",
+          "name": "Phường 10",
+          "slug": "phuong-10"
+        },
+        {
+          "code": "26995",
+          "name": "Phường 06",
+          "slug": "phuong-06"
+        },
+        {
+          "code": "26998",
+          "name": "Phường 08",
+          "slug": "phuong-08"
+        },
+        {
+          "code": "27001",
+          "name": "Phường 09",
+          "slug": "phuong-09"
+        },
+        {
+          "code": "27004",
+          "name": "Phường 14",
+          "slug": "phuong-14"
+        },
+        {
+          "code": "27007",
+          "name": "Phường 15",
+          "slug": "phuong-15"
+        }
+      ]
+    },
+    {
+      "code": "767",
+      "name": "Quận Tân Phú",
+      "slug": "quan-tan-phu",
+      "wards": [
+        {
+          "code": "27010",
+          "name": "Phường Tân Sơn Nhì",
+          "slug": "phuong-tan-son-nhi"
+        },
+        {
+          "code": "27013",
+          "name": "Phường Tây Thạnh",
+          "slug": "phuong-tay-thanh"
+        },
+        {
+          "code": "27016",
+          "name": "Phường Sơn Kỳ",
+          "slug": "phuong-son-ky"
+        },
+        {
+          "code": "27019",
+          "name": "Phường Tân Quý",
+          "slug": "phuong-tan-quy"
+        },
+        {
+          "code": "27022",
+          "name": "Phường Tân Thành",
+          "slug": "phuong-tan-thanh"
+        },
+        {
+          "code": "27025",
+          "name": "Phường Phú Thọ Hòa",
+          "slug": "phuong-phu-tho-hoa"
+        },
+        {
+          "code": "27028",
+          "name": "Phường Phú Thạnh",
+          "slug": "phuong-phu-thanh"
+        },
+        {
+          "code": "27031",
+          "name": "Phường Phú Trung",
+          "slug": "phuong-phu-trung"
+        },
+        {
+          "code": "27034",
+          "name": "Phường Hòa Thạnh",
+          "slug": "phuong-hoa-thanh"
+        },
+        {
+          "code": "27037",
+          "name": "Phường Hiệp Tân",
+          "slug": "phuong-hiep-tan"
+        },
+        {
+          "code": "27040",
+          "name": "Phường Tân Thới Hòa",
+          "slug": "phuong-tan-thoi-hoa"
+        }
+      ]
+    },
+    {
+      "code": "768",
+      "name": "Quận Phú Nhuận",
+      "slug": "quan-phu-nhuan",
+      "wards": [
+        {
+          "code": "27043",
+          "name": "Phường 04",
+          "slug": "phuong-04"
+        },
+        {
+          "code": "27046",
+          "name": "Phường 05",
+          "slug": "phuong-05"
+        },
+        {
+          "code": "27049",
+          "name": "Phường 09",
+          "slug": "phuong-09"
+        },
+        {
+          "code": "27052",
+          "name": "Phường 07",
+          "slug": "phuong-07"
+        },
+        {
+          "code": "27055",
+          "name": "Phường 03",
+          "slug": "phuong-03"
+        },
+        {
+          "code": "27058",
+          "name": "Phường 01",
+          "slug": "phuong-01"
+        },
+        {
+          "code": "27061",
+          "name": "Phường 02",
+          "slug": "phuong-02"
+        },
+        {
+          "code": "27064",
+          "name": "Phường 08",
+          "slug": "phuong-08"
+        },
+        {
+          "code": "27067",
+          "name": "Phường 15",
+          "slug": "phuong-15"
+        },
+        {
+          "code": "27070",
+          "name": "Phường 10",
+          "slug": "phuong-10"
+        },
+        {
+          "code": "27073",
+          "name": "Phường 11",
+          "slug": "phuong-11"
+        },
+        {
+          "code": "27076",
+          "name": "Phường 17",
+          "slug": "phuong-17"
+        },
+        {
+          "code": "27079",
+          "name": "Phường 14",
+          "slug": "phuong-14"
+        },
+        {
+          "code": "27082",
+          "name": "Phường 12",
+          "slug": "phuong-12"
+        },
+        {
+          "code": "27085",
+          "name": "Phường 13",
+          "slug": "phuong-13"
+        }
+      ]
+    },
+    {
+      "code": "769",
+      "name": "Quận 2",
+      "slug": "quan-2",
+      "wards": [
+        {
+          "code": "27088",
+          "name": "Phường Thảo Điền",
+          "slug": "phuong-thao-dien"
+        },
+        {
+          "code": "27091",
+          "name": "Phường An Phú",
+          "slug": "phuong-an-phu"
+        },
+        {
+          "code": "27094",
+          "name": "Phường Bình An",
+          "slug": "phuong-binh-an"
+        },
+        {
+          "code": "27097",
+          "name": "Phường Bình Trưng Đông",
+          "slug": "phuong-binh-trung-dong"
+        },
+        {
+          "code": "27100",
+          "name": "Phường Bình Trưng Tây",
+          "slug": "phuong-binh-trung-tay"
+        },
+        {
+          "code": "27103",
+          "name": "Phường Bình Khánh",
+          "slug": "phuong-binh-khanh"
+        },
+        {
+          "code": "27106",
+          "name": "Phường An Khánh",
+          "slug": "phuong-an-khanh"
+        },
+        {
+          "code": "27109",
+          "name": "Phường Cát Lái",
+          "slug": "phuong-cat-lai"
+        },
+        {
+          "code": "27112",
+          "name": "Phường Thạnh Mỹ Lợi",
+          "slug": "phuong-thanh-my-loi"
+        },
+        {
+          "code": "27115",
+          "name": "Phường An Lợi Đông",
+          "slug": "phuong-an-loi-dong"
+        },
+        {
+          "code": "27118",
+          "name": "Phường Thủ Thiêm",
+          "slug": "phuong-thu-thiem"
+        }
+      ]
+    },
+    {
+      "code": "770",
+      "name": "Quận 3",
+      "slug": "quan-3",
+      "wards": [
+        {
+          "code": "27121",
+          "name": "Phường 08",
+          "slug": "phuong-08"
+        },
+        {
+          "code": "27124",
+          "name": "Phường 07",
+          "slug": "phuong-07"
+        },
+        {
+          "code": "27127",
+          "name": "Phường 14",
+          "slug": "phuong-14"
+        },
+        {
+          "code": "27130",
+          "name": "Phường 12",
+          "slug": "phuong-12"
+        },
+        {
+          "code": "27133",
+          "name": "Phường 11",
+          "slug": "phuong-11"
+        },
+        {
+          "code": "27136",
+          "name": "Phường 13",
+          "slug": "phuong-13"
+        },
+        {
+          "code": "27139",
+          "name": "Phường 06",
+          "slug": "phuong-06"
+        },
+        {
+          "code": "27142",
+          "name": "Phường 09",
+          "slug": "phuong-09"
+        },
+        {
+          "code": "27145",
+          "name": "Phường 10",
+          "slug": "phuong-10"
+        },
+        {
+          "code": "27148",
+          "name": "Phường 04",
+          "slug": "phuong-04"
+        },
+        {
+          "code": "27151",
+          "name": "Phường 05",
+          "slug": "phuong-05"
+        },
+        {
+          "code": "27154",
+          "name": "Phường 03",
+          "slug": "phuong-03"
+        },
+        {
+          "code": "27157",
+          "name": "Phường 02",
+          "slug": "phuong-02"
+        },
+        {
+          "code": "27160",
+          "name": "Phường 01",
+          "slug": "phuong-01"
+        }
+      ]
+    },
+    {
+      "code": "771",
+      "name": "Quận 10",
+      "slug": "quan-10",
+      "wards": [
+        {
+          "code": "27163",
+          "name": "Phường 15",
+          "slug": "phuong-15"
+        },
+        {
+          "code": "27166",
+          "name": "Phường 13",
+          "slug": "phuong-13"
+        },
+        {
+          "code": "27169",
+          "name": "Phường 14",
+          "slug": "phuong-14"
+        },
+        {
+          "code": "27172",
+          "name": "Phường 12",
+          "slug": "phuong-12"
+        },
+        {
+          "code": "27175",
+          "name": "Phường 11",
+          "slug": "phuong-11"
+        },
+        {
+          "code": "27178",
+          "name": "Phường 10",
+          "slug": "phuong-10"
+        },
+        {
+          "code": "27181",
+          "name": "Phường 09",
+          "slug": "phuong-09"
+        },
+        {
+          "code": "27184",
+          "name": "Phường 01",
+          "slug": "phuong-01"
+        },
+        {
+          "code": "27187",
+          "name": "Phường 08",
+          "slug": "phuong-08"
+        },
+        {
+          "code": "27190",
+          "name": "Phường 02",
+          "slug": "phuong-02"
+        },
+        {
+          "code": "27193",
+          "name": "Phường 04",
+          "slug": "phuong-04"
+        },
+        {
+          "code": "27196",
+          "name": "Phường 07",
+          "slug": "phuong-07"
+        },
+        {
+          "code": "27199",
+          "name": "Phường 05",
+          "slug": "phuong-05"
+        },
+        {
+          "code": "27202",
+          "name": "Phường 06",
+          "slug": "phuong-06"
+        },
+        {
+          "code": "27205",
+          "name": "Phường 03",
+          "slug": "phuong-03"
+        }
+      ]
+    },
+    {
+      "code": "772",
+      "name": "Quận 11",
+      "slug": "quan-11",
+      "wards": [
+        {
+          "code": "27208",
+          "name": "Phường 15",
+          "slug": "phuong-15"
+        },
+        {
+          "code": "27211",
+          "name": "Phường 05",
+          "slug": "phuong-05"
+        },
+        {
+          "code": "27214",
+          "name": "Phường 14",
+          "slug": "phuong-14"
+        },
+        {
+          "code": "27217",
+          "name": "Phường 11",
+          "slug": "phuong-11"
+        },
+        {
+          "code": "27220",
+          "name": "Phường 03",
+          "slug": "phuong-03"
+        },
+        {
+          "code": "27223",
+          "name": "Phường 10",
+          "slug": "phuong-10"
+        },
+        {
+          "code": "27226",
+          "name": "Phường 13",
+          "slug": "phuong-13"
+        },
+        {
+          "code": "27229",
+          "name": "Phường 08",
+          "slug": "phuong-08"
+        },
+        {
+          "code": "27232",
+          "name": "Phường 09",
+          "slug": "phuong-09"
+        },
+        {
+          "code": "27235",
+          "name": "Phường 12",
+          "slug": "phuong-12"
+        },
+        {
+          "code": "27238",
+          "name": "Phường 07",
+          "slug": "phuong-07"
+        },
+        {
+          "code": "27241",
+          "name": "Phường 06",
+          "slug": "phuong-06"
+        },
+        {
+          "code": "27244",
+          "name": "Phường 04",
+          "slug": "phuong-04"
+        },
+        {
+          "code": "27247",
+          "name": "Phường 01",
+          "slug": "phuong-01"
+        },
+        {
+          "code": "27250",
+          "name": "Phường 02",
+          "slug": "phuong-02"
+        },
+        {
+          "code": "27253",
+          "name": "Phường 16",
+          "slug": "phuong-16"
+        }
+      ]
+    },
+    {
+      "code": "773",
+      "name": "Quận 4",
+      "slug": "quan-4",
+      "wards": [
+        {
+          "code": "27256",
+          "name": "Phường 12",
+          "slug": "phuong-12"
+        },
+        {
+          "code": "27259",
+          "name": "Phường 13",
+          "slug": "phuong-13"
+        },
+        {
+          "code": "27262",
+          "name": "Phường 09",
+          "slug": "phuong-09"
+        },
+        {
+          "code": "27265",
+          "name": "Phường 06",
+          "slug": "phuong-06"
+        },
+        {
+          "code": "27268",
+          "name": "Phường 08",
+          "slug": "phuong-08"
+        },
+        {
+          "code": "27271",
+          "name": "Phường 10",
+          "slug": "phuong-10"
+        },
+        {
+          "code": "27274",
+          "name": "Phường 05",
+          "slug": "phuong-05"
+        },
+        {
+          "code": "27277",
+          "name": "Phường 18",
+          "slug": "phuong-18"
+        },
+        {
+          "code": "27280",
+          "name": "Phường 14",
+          "slug": "phuong-14"
+        },
+        {
+          "code": "27283",
+          "name": "Phường 04",
+          "slug": "phuong-04"
+        },
+        {
+          "code": "27286",
+          "name": "Phường 03",
+          "slug": "phuong-03"
+        },
+        {
+          "code": "27289",
+          "name": "Phường 16",
+          "slug": "phuong-16"
+        },
+        {
+          "code": "27292",
+          "name": "Phường 02",
+          "slug": "phuong-02"
+        },
+        {
+          "code": "27295",
+          "name": "Phường 15",
+          "slug": "phuong-15"
+        },
+        {
+          "code": "27298",
+          "name": "Phường 01",
+          "slug": "phuong-01"
+        }
+      ]
+    },
+    {
+      "code": "774",
+      "name": "Quận 5",
+      "slug": "quan-5",
+      "wards": [
+        {
+          "code": "27301",
+          "name": "Phường 04",
+          "slug": "phuong-04"
+        },
+        {
+          "code": "27304",
+          "name": "Phường 09",
+          "slug": "phuong-09"
+        },
+        {
+          "code": "27307",
+          "name": "Phường 03",
+          "slug": "phuong-03"
+        },
+        {
+          "code": "27310",
+          "name": "Phường 12",
+          "slug": "phuong-12"
+        },
+        {
+          "code": "27313",
+          "name": "Phường 02",
+          "slug": "phuong-02"
+        },
+        {
+          "code": "27316",
+          "name": "Phường 08",
+          "slug": "phuong-08"
+        },
+        {
+          "code": "27319",
+          "name": "Phường 15",
+          "slug": "phuong-15"
+        },
+        {
+          "code": "27322",
+          "name": "Phường 07",
+          "slug": "phuong-07"
+        },
+        {
+          "code": "27325",
+          "name": "Phường 01",
+          "slug": "phuong-01"
+        },
+        {
+          "code": "27328",
+          "name": "Phường 11",
+          "slug": "phuong-11"
+        },
+        {
+          "code": "27331",
+          "name": "Phường 14",
+          "slug": "phuong-14"
+        },
+        {
+          "code": "27334",
+          "name": "Phường 05",
+          "slug": "phuong-05"
+        },
+        {
+          "code": "27337",
+          "name": "Phường 06",
+          "slug": "phuong-06"
+        },
+        {
+          "code": "27340",
+          "name": "Phường 10",
+          "slug": "phuong-10"
+        },
+        {
+          "code": "27343",
+          "name": "Phường 13",
+          "slug": "phuong-13"
+        }
+      ]
+    },
+    {
+      "code": "775",
+      "name": "Quận 6",
+      "slug": "quan-6",
+      "wards": [
+        {
+          "code": "27346",
+          "name": "Phường 14",
+          "slug": "phuong-14"
+        },
+        {
+          "code": "27349",
+          "name": "Phường 13",
+          "slug": "phuong-13"
+        },
+        {
+          "code": "27352",
+          "name": "Phường 09",
+          "slug": "phuong-09"
+        },
+        {
+          "code": "27355",
+          "name": "Phường 06",
+          "slug": "phuong-06"
+        },
+        {
+          "code": "27358",
+          "name": "Phường 12",
+          "slug": "phuong-12"
+        },
+        {
+          "code": "27361",
+          "name": "Phường 05",
+          "slug": "phuong-05"
+        },
+        {
+          "code": "27364",
+          "name": "Phường 11",
+          "slug": "phuong-11"
+        },
+        {
+          "code": "27367",
+          "name": "Phường 02",
+          "slug": "phuong-02"
+        },
+        {
+          "code": "27370",
+          "name": "Phường 01",
+          "slug": "phuong-01"
+        },
+        {
+          "code": "27373",
+          "name": "Phường 04",
+          "slug": "phuong-04"
+        },
+        {
+          "code": "27376",
+          "name": "Phường 08",
+          "slug": "phuong-08"
+        },
+        {
+          "code": "27379",
+          "name": "Phường 03",
+          "slug": "phuong-03"
+        },
+        {
+          "code": "27382",
+          "name": "Phường 07",
+          "slug": "phuong-07"
+        },
+        {
+          "code": "27385",
+          "name": "Phường 10",
+          "slug": "phuong-10"
+        }
+      ]
+    },
+    {
+      "code": "776",
+      "name": "Quận 8",
+      "slug": "quan-8",
+      "wards": [
+        {
+          "code": "27388",
+          "name": "Phường 08",
+          "slug": "phuong-08"
+        },
+        {
+          "code": "27391",
+          "name": "Phường 02",
+          "slug": "phuong-02"
+        },
+        {
+          "code": "27394",
+          "name": "Phường 01",
+          "slug": "phuong-01"
+        },
+        {
+          "code": "27397",
+          "name": "Phường 03",
+          "slug": "phuong-03"
+        },
+        {
+          "code": "27400",
+          "name": "Phường 11",
+          "slug": "phuong-11"
+        },
+        {
+          "code": "27403",
+          "name": "Phường 09",
+          "slug": "phuong-09"
+        },
+        {
+          "code": "27406",
+          "name": "Phường 10",
+          "slug": "phuong-10"
+        },
+        {
+          "code": "27409",
+          "name": "Phường 04",
+          "slug": "phuong-04"
+        },
+        {
+          "code": "27412",
+          "name": "Phường 13",
+          "slug": "phuong-13"
+        },
+        {
+          "code": "27415",
+          "name": "Phường 12",
+          "slug": "phuong-12"
+        },
+        {
+          "code": "27418",
+          "name": "Phường 05",
+          "slug": "phuong-05"
+        },
+        {
+          "code": "27421",
+          "name": "Phường 14",
+          "slug": "phuong-14"
+        },
+        {
+          "code": "27424",
+          "name": "Phường 06",
+          "slug": "phuong-06"
+        },
+        {
+          "code": "27427",
+          "name": "Phường 15",
+          "slug": "phuong-15"
+        },
+        {
+          "code": "27430",
+          "name": "Phường 16",
+          "slug": "phuong-16"
+        },
+        {
+          "code": "27433",
+          "name": "Phường 07",
+          "slug": "phuong-07"
+        }
+      ]
+    },
+    {
+      "code": "777",
+      "name": "Quận Bình Tân",
+      "slug": "quan-binh-tan",
+      "wards": [
+        {
+          "code": "27436",
+          "name": "Phường Bình Hưng Hòa",
+          "slug": "phuong-binh-hung-hoa"
+        },
+        {
+          "code": "27439",
+          "name": "Phường Bình Hưng Hoà A",
+          "slug": "phuong-binh-hung-hoa-a"
+        },
+        {
+          "code": "27442",
+          "name": "Phường Bình Hưng Hoà B",
+          "slug": "phuong-binh-hung-hoa-b"
+        },
+        {
+          "code": "27445",
+          "name": "Phường Bình Trị Đông",
+          "slug": "phuong-binh-tri-dong"
+        },
+        {
+          "code": "27448",
+          "name": "Phường Bình Trị Đông A",
+          "slug": "phuong-binh-tri-dong-a"
+        },
+        {
+          "code": "27451",
+          "name": "Phường Bình Trị Đông B",
+          "slug": "phuong-binh-tri-dong-b"
+        },
+        {
+          "code": "27454",
+          "name": "Phường Tân Tạo",
+          "slug": "phuong-tan-tao"
+        },
+        {
+          "code": "27457",
+          "name": "Phường Tân Tạo A",
+          "slug": "phuong-tan-tao-a"
+        },
+        {
+          "code": "27460",
+          "name": "Phường  An Lạc",
+          "slug": "phuong-an-lac"
+        },
+        {
+          "code": "27463",
+          "name": "Phường An Lạc A",
+          "slug": "phuong-an-lac-a"
+        }
+      ]
+    },
+    {
+      "code": "778",
+      "name": "Quận 7",
+      "slug": "quan-7",
+      "wards": [
+        {
+          "code": "27466",
+          "name": "Phường Tân Thuận Đông",
+          "slug": "phuong-tan-thuan-dong"
+        },
+        {
+          "code": "27469",
+          "name": "Phường Tân Thuận Tây",
+          "slug": "phuong-tan-thuan-tay"
+        },
+        {
+          "code": "27472",
+          "name": "Phường Tân Kiểng",
+          "slug": "phuong-tan-kieng"
+        },
+        {
+          "code": "27475",
+          "name": "Phường Tân Hưng",
+          "slug": "phuong-tan-hung"
+        },
+        {
+          "code": "27478",
+          "name": "Phường Bình Thuận",
+          "slug": "phuong-binh-thuan"
+        },
+        {
+          "code": "27481",
+          "name": "Phường Tân Quy",
+          "slug": "phuong-tan-quy"
+        },
+        {
+          "code": "27484",
+          "name": "Phường Phú Thuận",
+          "slug": "phuong-phu-thuan"
+        },
+        {
+          "code": "27487",
+          "name": "Phường Tân Phú",
+          "slug": "phuong-tan-phu"
+        },
+        {
+          "code": "27490",
+          "name": "Phường Tân Phong",
+          "slug": "phuong-tan-phong"
+        },
+        {
+          "code": "27493",
+          "name": "Phường Phú Mỹ",
+          "slug": "phuong-phu-my"
+        }
+      ]
+    },
+    {
+      "code": "783",
+      "name": "Huyện Củ Chi",
+      "slug": "huyen-cu-chi",
+      "wards": [
+        {
+          "code": "27496",
+          "name": "Thị trấn Củ Chi",
+          "slug": "thi-tran-cu-chi"
+        },
+        {
+          "code": "27499",
+          "name": "Xã Phú Mỹ Hưng",
+          "slug": "xa-phu-my-hung"
+        },
+        {
+          "code": "27502",
+          "name": "Xã An Phú",
+          "slug": "xa-an-phu"
+        },
+        {
+          "code": "27505",
+          "name": "Xã Trung Lập Thượng",
+          "slug": "xa-trung-lap-thuong"
+        },
+        {
+          "code": "27508",
+          "name": "Xã An Nhơn Tây",
+          "slug": "xa-an-nhon-tay"
+        },
+        {
+          "code": "27511",
+          "name": "Xã Nhuận Đức",
+          "slug": "xa-nhuan-duc"
+        },
+        {
+          "code": "27514",
+          "name": "Xã Phạm Văn Cội",
+          "slug": "xa-pham-van-coi"
+        },
+        {
+          "code": "27517",
+          "name": "Xã Phú Hòa Đông",
+          "slug": "xa-phu-hoa-dong"
+        },
+        {
+          "code": "27520",
+          "name": "Xã Trung Lập Hạ",
+          "slug": "xa-trung-lap-ha"
+        },
+        {
+          "code": "27523",
+          "name": "Xã Trung An",
+          "slug": "xa-trung-an"
+        },
+        {
+          "code": "27526",
+          "name": "Xã Phước Thạnh",
+          "slug": "xa-phuoc-thanh"
+        },
+        {
+          "code": "27529",
+          "name": "Xã Phước Hiệp",
+          "slug": "xa-phuoc-hiep"
+        },
+        {
+          "code": "27532",
+          "name": "Xã Tân An Hội",
+          "slug": "xa-tan-an-hoi"
+        },
+        {
+          "code": "27535",
+          "name": "Xã Phước Vĩnh An",
+          "slug": "xa-phuoc-vinh-an"
+        },
+        {
+          "code": "27538",
+          "name": "Xã Thái Mỹ",
+          "slug": "xa-thai-my"
+        },
+        {
+          "code": "27541",
+          "name": "Xã Tân Thạnh Tây",
+          "slug": "xa-tan-thanh-tay"
+        },
+        {
+          "code": "27544",
+          "name": "Xã Hòa Phú",
+          "slug": "xa-hoa-phu"
+        },
+        {
+          "code": "27547",
+          "name": "Xã Tân Thạnh Đông",
+          "slug": "xa-tan-thanh-dong"
+        },
+        {
+          "code": "27550",
+          "name": "Xã Bình Mỹ",
+          "slug": "xa-binh-my"
+        },
+        {
+          "code": "27553",
+          "name": "Xã Tân Phú Trung",
+          "slug": "xa-tan-phu-trung"
+        },
+        {
+          "code": "27556",
+          "name": "Xã Tân Thông Hội",
+          "slug": "xa-tan-thong-hoi"
+        }
+      ]
+    },
+    {
+      "code": "784",
+      "name": "Huyện Hóc Môn",
+      "slug": "huyen-hoc-mon",
+      "wards": [
+        {
+          "code": "27559",
+          "name": "Thị trấn Hóc Môn",
+          "slug": "thi-tran-hoc-mon"
+        },
+        {
+          "code": "27562",
+          "name": "Xã Tân Hiệp",
+          "slug": "xa-tan-hiep"
+        },
+        {
+          "code": "27565",
+          "name": "Xã Nhị Bình",
+          "slug": "xa-nhi-binh"
+        },
+        {
+          "code": "27568",
+          "name": "Xã Đông Thạnh",
+          "slug": "xa-dong-thanh"
+        },
+        {
+          "code": "27571",
+          "name": "Xã Tân Thới Nhì",
+          "slug": "xa-tan-thoi-nhi"
+        },
+        {
+          "code": "27574",
+          "name": "Xã Thới Tam Thôn",
+          "slug": "xa-thoi-tam-thon"
+        },
+        {
+          "code": "27577",
+          "name": "Xã Xuân Thới Sơn",
+          "slug": "xa-xuan-thoi-son"
+        },
+        {
+          "code": "27580",
+          "name": "Xã Tân Xuân",
+          "slug": "xa-tan-xuan"
+        },
+        {
+          "code": "27583",
+          "name": "Xã Xuân Thới Đông",
+          "slug": "xa-xuan-thoi-dong"
+        },
+        {
+          "code": "27586",
+          "name": "Xã Trung Chánh",
+          "slug": "xa-trung-chanh"
+        },
+        {
+          "code": "27589",
+          "name": "Xã Xuân Thới Thượng",
+          "slug": "xa-xuan-thoi-thuong"
+        },
+        {
+          "code": "27592",
+          "name": "Xã Bà Điểm",
+          "slug": "xa-ba-diem"
+        }
+      ]
+    },
+    {
+      "code": "785",
+      "name": "Huyện Bình Chánh",
+      "slug": "huyen-binh-chanh",
+      "wards": [
+        {
+          "code": "27595",
+          "name": "Thị trấn Tân Túc",
+          "slug": "thi-tran-tan-tuc"
+        },
+        {
+          "code": "27598",
+          "name": "Xã Phạm Văn Hai",
+          "slug": "xa-pham-van-hai"
+        },
+        {
+          "code": "27601",
+          "name": "Xã Vĩnh Lộc A",
+          "slug": "xa-vinh-loc-a"
+        },
+        {
+          "code": "27604",
+          "name": "Xã Vĩnh Lộc B",
+          "slug": "xa-vinh-loc-b"
+        },
+        {
+          "code": "27607",
+          "name": "Xã Bình Lợi",
+          "slug": "xa-binh-loi"
+        },
+        {
+          "code": "27610",
+          "name": "Xã Lê Minh Xuân",
+          "slug": "xa-le-minh-xuan"
+        },
+        {
+          "code": "27613",
+          "name": "Xã Tân Nhựt",
+          "slug": "xa-tan-nhut"
+        },
+        {
+          "code": "27616",
+          "name": "Xã Tân Kiên",
+          "slug": "xa-tan-kien"
+        },
+        {
+          "code": "27619",
+          "name": "Xã Bình Hưng",
+          "slug": "xa-binh-hung"
+        },
+        {
+          "code": "27622",
+          "name": "Xã Phong Phú",
+          "slug": "xa-phong-phu"
+        },
+        {
+          "code": "27625",
+          "name": "Xã An Phú Tây",
+          "slug": "xa-an-phu-tay"
+        },
+        {
+          "code": "27628",
+          "name": "Xã Hưng Long",
+          "slug": "xa-hung-long"
+        },
+        {
+          "code": "27631",
+          "name": "Xã Đa Phước",
+          "slug": "xa-da-phuoc"
+        },
+        {
+          "code": "27634",
+          "name": "Xã Tân Quý Tây",
+          "slug": "xa-tan-quy-tay"
+        },
+        {
+          "code": "27637",
+          "name": "Xã Bình Chánh",
+          "slug": "xa-binh-chanh"
+        },
+        {
+          "code": "27640",
+          "name": "Xã Quy Đức",
+          "slug": "xa-quy-duc"
+        }
+      ]
+    },
+    {
+      "code": "786",
+      "name": "Huyện Nhà Bè",
+      "slug": "huyen-nha-be",
+      "wards": [
+        {
+          "code": "27643",
+          "name": "Thị trấn Nhà Bè",
+          "slug": "thi-tran-nha-be"
+        },
+        {
+          "code": "27646",
+          "name": "Xã Phước Kiển",
+          "slug": "xa-phuoc-kien"
+        },
+        {
+          "code": "27649",
+          "name": "Xã Phước Lộc",
+          "slug": "xa-phuoc-loc"
+        },
+        {
+          "code": "27652",
+          "name": "Xã Nhơn Đức",
+          "slug": "xa-nhon-duc"
+        },
+        {
+          "code": "27655",
+          "name": "Xã Phú Xuân",
+          "slug": "xa-phu-xuan"
+        },
+        {
+          "code": "27658",
+          "name": "Xã Long Thới",
+          "slug": "xa-long-thoi"
+        },
+        {
+          "code": "27661",
+          "name": "Xã Hiệp Phước",
+          "slug": "xa-hiep-phuoc"
+        }
+      ]
+    },
+    {
+      "code": "787",
+      "name": "Huyện Cần Giờ",
+      "slug": "huyen-can-gio",
+      "wards": [
+        {
+          "code": "27664",
+          "name": "Thị trấn Cần Thạnh",
+          "slug": "thi-tran-can-thanh"
+        },
+        {
+          "code": "27667",
+          "name": "Xã Bình Khánh",
+          "slug": "xa-binh-khanh"
+        },
+        {
+          "code": "27670",
+          "name": "Xã Tam Thôn Hiệp",
+          "slug": "xa-tam-thon-hiep"
+        },
+        {
+          "code": "27673",
+          "name": "Xã An Thới Đông",
+          "slug": "xa-an-thoi-dong"
+        },
+        {
+          "code": "27676",
+          "name": "Xã Thạnh An",
+          "slug": "xa-thanh-an"
+        },
+        {
+          "code": "27679",
+          "name": "Xã Long Hòa",
+          "slug": "xa-long-hoa"
+        },
+        {
+          "code": "27682",
+          "name": "Xã Lý Nhơn",
+          "slug": "xa-ly-nhon"
+        }
+      ]
+    }
+  ]
+}

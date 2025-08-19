@@ -1,62 +1,68 @@
+// src/components/filters/FilterBar.tsx
 "use client";
-
+import React from "react";
 import PropertyTypeDropdown from "./PropertyTypeDropdown";
 import PriceDropdown from "./PriceDropdown";
 import AreaDropdown from "./AreaDropdown";
 import Has3DDropdown from "./Has3DDropdown";
-import AdvancedFiltersModal from "./AdvancedFiltersModal";
+import LocationFilter from "./LocationFilter";
+import AdvancedFiltersModal, { AdvancedFiltersValues } from "./AdvancedFiltersModal";
 
 interface FilterBarProps {
-  initialFilters?: Record<string, string | string[] | undefined>;
-  purpose?: "buy" | "rent";
+  initialFilters: Record<string, string | string[] | undefined>;
 }
 
-export default function FilterBar({ initialFilters, purpose = "buy" }: FilterBarProps) {
-  // Nếu đã có propertyType cố định => ẩn dropdown Loại hình
-  const hidePropertyType = Boolean(initialFilters?.propertyType);
+export default function FilterBar({ initialFilters }: FilterBarProps) {
+  const [advancedValues, setAdvancedValues] = React.useState<AdvancedFiltersValues>({
+    bedrooms: "",
+    bathrooms: "",
+    direction: "",
+    status: "",
+  });
 
-  // Hàm áp dụng filter nâng cao
-  const handleAdvancedApply = (vals: any) => {
-    const params = new URLSearchParams(window.location.search);
-    Object.entries(vals).forEach(([key, value]) => {
-      if (value) params.set(key, String(value));
-      else params.delete(key);
-    });
-    window.location.search = params.toString();
-  };
-
-  // Hàm reset filter nâng cao
-  const handleAdvancedReset = () => {
-    const params = new URLSearchParams(window.location.search);
-    ["bedrooms", "bathrooms", "direction", "status"].forEach((key) =>
-      params.delete(key)
-    );
-    window.location.search = params.toString();
-  };
+  // 🎯 Class chung để các filter đồng chiều cao
+  const filterClass = "h-10 text-sm border rounded px-3";
 
   return (
-    <div className="flex flex-wrap gap-2 items-center">
-      {/* Ẩn "Loại hình" khi propertyType đã cố định */}
-      {!hidePropertyType && <PropertyTypeDropdown filters={initialFilters} />}
+    <div className="flex flex-wrap gap-2">
+      {/* Địa chỉ */}
+      <LocationFilter filters={initialFilters} compact className={filterClass} />
 
-      {/* Khoảng giá - hiển thị khác nhau cho mua / thuê */}
-      <PriceDropdown filters={initialFilters} purpose={purpose} />
+      {/* Loại hình */}
+      {/* <PropertyTypeDropdown
+        initialValue={(initialFilters.propertyType as string) || ""}
+        className={filterClass}
+      /> */}
 
-      {/* Các bộ lọc khác */}
-      <AreaDropdown filters={initialFilters} />
-      <Has3DDropdown filters={initialFilters} />
-
-      {/* Bộ lọc nâng cao */}
-      <AdvancedFiltersModal
-        initialValues={{
-          bedrooms: String(initialFilters?.bedrooms || ""),
-          bathrooms: String(initialFilters?.bathrooms || ""),
-          direction: String(initialFilters?.direction || ""),
-          status: String(initialFilters?.status || ""),
-        }}
-        onApply={handleAdvancedApply}
-        onReset={handleAdvancedReset}
+      {/* Khoảng giá */}
+      <PriceDropdown
+        initialValue={(initialFilters.priceRange as string) || ""}
+        className={filterClass}
       />
+
+      {/* Diện tích */}
+      <AreaDropdown
+        initialValue={(initialFilters.areaRange as string) || ""}
+        className={filterClass}
+      />
+
+      {/* 3D */}
+      <Has3DDropdown
+        initialValue={(initialFilters.has3D as string) || ""}
+        className={filterClass}
+      />
+
+      {/* Nút "Thêm" */}
+      <AdvancedFiltersModal
+        buttonLabel="Thêm"
+        className={filterClass}
+        values={advancedValues}
+        onApply={(vals) => setAdvancedValues(vals)}
+        onReset={() =>
+          setAdvancedValues({ bedrooms: "", bathrooms: "", direction: "", status: "" })
+        }
+      />
+
     </div>
   );
 }

@@ -1,0 +1,970 @@
+{
+  "code": "15",
+  "name": "Tỉnh Yên Bái",
+  "slug": "tinh-yen-bai",
+  "districts": [
+    {
+      "code": "132",
+      "name": "Thành phố Yên Bái",
+      "slug": "thanh-pho-yen-bai",
+      "wards": [
+        {
+          "code": "04249",
+          "name": "Phường Yên Thịnh",
+          "slug": "phuong-yen-thinh"
+        },
+        {
+          "code": "04252",
+          "name": "Phường Yên Ninh",
+          "slug": "phuong-yen-ninh"
+        },
+        {
+          "code": "04255",
+          "name": "Phường Minh Tân",
+          "slug": "phuong-minh-tan"
+        },
+        {
+          "code": "04258",
+          "name": "Phường Nguyễn Thái Học",
+          "slug": "phuong-nguyen-thai-hoc"
+        },
+        {
+          "code": "04261",
+          "name": "Phường Đồng Tâm",
+          "slug": "phuong-dong-tam"
+        },
+        {
+          "code": "04264",
+          "name": "Phường Nguyễn Phúc",
+          "slug": "phuong-nguyen-phuc"
+        },
+        {
+          "code": "04267",
+          "name": "Phường Hồng Hà",
+          "slug": "phuong-hong-ha"
+        },
+        {
+          "code": "04270",
+          "name": "Xã Minh Bảo",
+          "slug": "xa-minh-bao"
+        },
+        {
+          "code": "04273",
+          "name": "Phường Nam Cường",
+          "slug": "phuong-nam-cuong"
+        },
+        {
+          "code": "04276",
+          "name": "Xã Tuy Lộc",
+          "slug": "xa-tuy-loc"
+        },
+        {
+          "code": "04279",
+          "name": "Xã Tân Thịnh",
+          "slug": "xa-tan-thinh"
+        },
+        {
+          "code": "04540",
+          "name": "Xã Âu Lâu",
+          "slug": "xa-au-lau"
+        },
+        {
+          "code": "04543",
+          "name": "Xã Giới Phiên",
+          "slug": "xa-gioi-phien"
+        },
+        {
+          "code": "04546",
+          "name": "Phường Hợp Minh",
+          "slug": "phuong-hop-minh"
+        },
+        {
+          "code": "04549",
+          "name": "Xã Văn Tiến",
+          "slug": "xa-van-tien"
+        },
+        {
+          "code": "04552",
+          "name": "Xã Phúc Lộc",
+          "slug": "xa-phuc-loc"
+        },
+        {
+          "code": "04558",
+          "name": "Xã Văn Phú",
+          "slug": "xa-van-phu"
+        }
+      ]
+    },
+    {
+      "code": "133",
+      "name": "Thị xã Nghĩa Lộ",
+      "slug": "thi-xa-nghia-lo",
+      "wards": [
+        {
+          "code": "04282",
+          "name": "Phường Pú Trạng",
+          "slug": "phuong-pu-trang"
+        },
+        {
+          "code": "04285",
+          "name": "Phường Trung Tâm",
+          "slug": "phuong-trung-tam"
+        },
+        {
+          "code": "04288",
+          "name": "Phường Tân An",
+          "slug": "phuong-tan-an"
+        },
+        {
+          "code": "04291",
+          "name": "Phường Cầu Thia",
+          "slug": "phuong-cau-thia"
+        },
+        {
+          "code": "04294",
+          "name": "Xã Nghĩa Lợi",
+          "slug": "xa-nghia-loi"
+        },
+        {
+          "code": "04297",
+          "name": "Xã Nghĩa Phúc",
+          "slug": "xa-nghia-phuc"
+        },
+        {
+          "code": "04300",
+          "name": "Xã Nghĩa An",
+          "slug": "xa-nghia-an"
+        }
+      ]
+    },
+    {
+      "code": "135",
+      "name": "Huyện Lục Yên",
+      "slug": "huyen-luc-yen",
+      "wards": [
+        {
+          "code": "04303",
+          "name": "Thị trấn Yên Thế",
+          "slug": "thi-tran-yen-the"
+        },
+        {
+          "code": "04306",
+          "name": "Xã Tân Phượng",
+          "slug": "xa-tan-phuong"
+        },
+        {
+          "code": "04309",
+          "name": "Xã Lâm Thượng",
+          "slug": "xa-lam-thuong"
+        },
+        {
+          "code": "04312",
+          "name": "Xã Khánh Thiện",
+          "slug": "xa-khanh-thien"
+        },
+        {
+          "code": "04315",
+          "name": "Xã Minh Chuẩn",
+          "slug": "xa-minh-chuan"
+        },
+        {
+          "code": "04318",
+          "name": "Xã Mai Sơn",
+          "slug": "xa-mai-son"
+        },
+        {
+          "code": "04321",
+          "name": "Xã Khai Trung",
+          "slug": "xa-khai-trung"
+        },
+        {
+          "code": "04324",
+          "name": "Xã Mường Lai",
+          "slug": "xa-muong-lai"
+        },
+        {
+          "code": "04327",
+          "name": "Xã An Lạc",
+          "slug": "xa-an-lac"
+        },
+        {
+          "code": "04330",
+          "name": "Xã Minh Xuân",
+          "slug": "xa-minh-xuan"
+        },
+        {
+          "code": "04333",
+          "name": "Xã Tô Mậu",
+          "slug": "xa-to-mau"
+        },
+        {
+          "code": "04336",
+          "name": "Xã Tân Lĩnh",
+          "slug": "xa-tan-linh"
+        },
+        {
+          "code": "04339",
+          "name": "Xã Yên Thắng",
+          "slug": "xa-yen-thang"
+        },
+        {
+          "code": "04342",
+          "name": "Xã Khánh Hoà",
+          "slug": "xa-khanh-hoa"
+        },
+        {
+          "code": "04345",
+          "name": "Xã Vĩnh Lạc",
+          "slug": "xa-vinh-lac"
+        },
+        {
+          "code": "04348",
+          "name": "Xã Liễu Đô",
+          "slug": "xa-lieu-do"
+        },
+        {
+          "code": "04351",
+          "name": "Xã Động Quan",
+          "slug": "xa-dong-quan"
+        },
+        {
+          "code": "04354",
+          "name": "Xã Tân Lập",
+          "slug": "xa-tan-lap"
+        },
+        {
+          "code": "04357",
+          "name": "Xã Minh Tiến",
+          "slug": "xa-minh-tien"
+        },
+        {
+          "code": "04360",
+          "name": "Xã Trúc Lâu",
+          "slug": "xa-truc-lau"
+        },
+        {
+          "code": "04363",
+          "name": "Xã Phúc Lợi",
+          "slug": "xa-phuc-loi"
+        },
+        {
+          "code": "04366",
+          "name": "Xã Phan Thanh",
+          "slug": "xa-phan-thanh"
+        },
+        {
+          "code": "04369",
+          "name": "Xã An Phú",
+          "slug": "xa-an-phu"
+        },
+        {
+          "code": "04372",
+          "name": "Xã Trung Tâm",
+          "slug": "xa-trung-tam"
+        }
+      ]
+    },
+    {
+      "code": "136",
+      "name": "Huyện Văn Yên",
+      "slug": "huyen-van-yen",
+      "wards": [
+        {
+          "code": "04375",
+          "name": "Thị trấn Mậu A",
+          "slug": "thi-tran-mau-a"
+        },
+        {
+          "code": "04378",
+          "name": "Xã Lang Thíp",
+          "slug": "xa-lang-thip"
+        },
+        {
+          "code": "04381",
+          "name": "Xã Lâm Giang",
+          "slug": "xa-lam-giang"
+        },
+        {
+          "code": "04384",
+          "name": "Xã Châu Quế Thượng",
+          "slug": "xa-chau-que-thuong"
+        },
+        {
+          "code": "04387",
+          "name": "Xã Châu Quế Hạ",
+          "slug": "xa-chau-que-ha"
+        },
+        {
+          "code": "04390",
+          "name": "Xã An Bình",
+          "slug": "xa-an-binh"
+        },
+        {
+          "code": "04393",
+          "name": "Xã Quang Minh",
+          "slug": "xa-quang-minh"
+        },
+        {
+          "code": "04396",
+          "name": "Xã Đông An",
+          "slug": "xa-dong-an"
+        },
+        {
+          "code": "04399",
+          "name": "Xã Đông Cuông",
+          "slug": "xa-dong-cuong"
+        },
+        {
+          "code": "04402",
+          "name": "Xã Phong Dụ Hạ",
+          "slug": "xa-phong-du-ha"
+        },
+        {
+          "code": "04405",
+          "name": "Xã Mậu Đông",
+          "slug": "xa-mau-dong"
+        },
+        {
+          "code": "04408",
+          "name": "Xã Ngòi A",
+          "slug": "xa-ngoi-a"
+        },
+        {
+          "code": "04411",
+          "name": "Xã Xuân Tầm",
+          "slug": "xa-xuan-tam"
+        },
+        {
+          "code": "04414",
+          "name": "Xã Tân Hợp",
+          "slug": "xa-tan-hop"
+        },
+        {
+          "code": "04417",
+          "name": "Xã An Thịnh",
+          "slug": "xa-an-thinh"
+        },
+        {
+          "code": "04420",
+          "name": "Xã Yên Thái",
+          "slug": "xa-yen-thai"
+        },
+        {
+          "code": "04423",
+          "name": "Xã Phong Dụ Thượng",
+          "slug": "xa-phong-du-thuong"
+        },
+        {
+          "code": "04426",
+          "name": "Xã Yên Hợp",
+          "slug": "xa-yen-hop"
+        },
+        {
+          "code": "04429",
+          "name": "Xã Đại Sơn",
+          "slug": "xa-dai-son"
+        },
+        {
+          "code": "04432",
+          "name": "Xã Yên Hưng",
+          "slug": "xa-yen-hung"
+        },
+        {
+          "code": "04435",
+          "name": "Xã Đại Phác",
+          "slug": "xa-dai-phac"
+        },
+        {
+          "code": "04438",
+          "name": "Xã Yên Phú",
+          "slug": "xa-yen-phu"
+        },
+        {
+          "code": "04441",
+          "name": "Xã Xuân Ái",
+          "slug": "xa-xuan-ai"
+        },
+        {
+          "code": "04444",
+          "name": "Xã Hoàng Thắng",
+          "slug": "xa-hoang-thang"
+        },
+        {
+          "code": "04447",
+          "name": "Xã Viễn Sơn",
+          "slug": "xa-vien-son"
+        },
+        {
+          "code": "04450",
+          "name": "Xã Mỏ Vàng",
+          "slug": "xa-mo-vang"
+        },
+        {
+          "code": "04453",
+          "name": "Xã Nà Hẩu",
+          "slug": "xa-na-hau"
+        }
+      ]
+    },
+    {
+      "code": "137",
+      "name": "Huyện Mù Căng Chải",
+      "slug": "huyen-mu-cang-chai",
+      "wards": [
+        {
+          "code": "04456",
+          "name": "Thị trấn Mù Căng Chải",
+          "slug": "thi-tran-mu-cang-chai"
+        },
+        {
+          "code": "04459",
+          "name": "Xã Hồ Bốn",
+          "slug": "xa-ho-bon"
+        },
+        {
+          "code": "04462",
+          "name": "Xã Nậm Có",
+          "slug": "xa-nam-co"
+        },
+        {
+          "code": "04465",
+          "name": "Xã Khao Mang",
+          "slug": "xa-khao-mang"
+        },
+        {
+          "code": "04468",
+          "name": "Xã Mồ Dề",
+          "slug": "xa-mo-de"
+        },
+        {
+          "code": "04471",
+          "name": "Xã Chế Cu Nha",
+          "slug": "xa-che-cu-nha"
+        },
+        {
+          "code": "04474",
+          "name": "Xã Lao Chải",
+          "slug": "xa-lao-chai"
+        },
+        {
+          "code": "04477",
+          "name": "Xã Kim Nọi",
+          "slug": "xa-kim-noi"
+        },
+        {
+          "code": "04480",
+          "name": "Xã Cao Phạ",
+          "slug": "xa-cao-pha"
+        },
+        {
+          "code": "04483",
+          "name": "Xã La Pán Tẩn",
+          "slug": "xa-la-pan-tan"
+        },
+        {
+          "code": "04486",
+          "name": "Xã Dế Su Phình",
+          "slug": "xa-de-su-phinh"
+        },
+        {
+          "code": "04489",
+          "name": "Xã Chế Tạo",
+          "slug": "xa-che-tao"
+        },
+        {
+          "code": "04492",
+          "name": "Xã Púng Luông",
+          "slug": "xa-pung-luong"
+        },
+        {
+          "code": "04495",
+          "name": "Xã Nậm Khắt",
+          "slug": "xa-nam-khat"
+        }
+      ]
+    },
+    {
+      "code": "138",
+      "name": "Huyện Trấn Yên",
+      "slug": "huyen-tran-yen",
+      "wards": [
+        {
+          "code": "04498",
+          "name": "Thị trấn Cổ Phúc",
+          "slug": "thi-tran-co-phuc"
+        },
+        {
+          "code": "04501",
+          "name": "Xã Tân Đồng",
+          "slug": "xa-tan-dong"
+        },
+        {
+          "code": "04504",
+          "name": "Xã Báo Đáp",
+          "slug": "xa-bao-dap"
+        },
+        {
+          "code": "04507",
+          "name": "Xã Đào Thịnh",
+          "slug": "xa-dao-thinh"
+        },
+        {
+          "code": "04510",
+          "name": "Xã Việt Thành",
+          "slug": "xa-viet-thanh"
+        },
+        {
+          "code": "04513",
+          "name": "Xã Hòa Cuông",
+          "slug": "xa-hoa-cuong"
+        },
+        {
+          "code": "04516",
+          "name": "Xã Minh Quán",
+          "slug": "xa-minh-quan"
+        },
+        {
+          "code": "04519",
+          "name": "Xã Quy Mông",
+          "slug": "xa-quy-mong"
+        },
+        {
+          "code": "04522",
+          "name": "Xã Cường Thịnh",
+          "slug": "xa-cuong-thinh"
+        },
+        {
+          "code": "04525",
+          "name": "Xã Kiên Thành",
+          "slug": "xa-kien-thanh"
+        },
+        {
+          "code": "04528",
+          "name": "Xã Nga Quán",
+          "slug": "xa-nga-quan"
+        },
+        {
+          "code": "04531",
+          "name": "Xã Y Can",
+          "slug": "xa-y-can"
+        },
+        {
+          "code": "04534",
+          "name": "Xã Minh Tiến",
+          "slug": "xa-minh-tien"
+        },
+        {
+          "code": "04537",
+          "name": "Xã Lương Thịnh",
+          "slug": "xa-luong-thinh"
+        },
+        {
+          "code": "04561",
+          "name": "Xã Bảo Hưng",
+          "slug": "xa-bao-hung"
+        },
+        {
+          "code": "04564",
+          "name": "Xã Việt Cường",
+          "slug": "xa-viet-cuong"
+        },
+        {
+          "code": "04567",
+          "name": "Xã Minh Quân",
+          "slug": "xa-minh-quan"
+        },
+        {
+          "code": "04570",
+          "name": "Xã Hồng Ca",
+          "slug": "xa-hong-ca"
+        },
+        {
+          "code": "04573",
+          "name": "Xã Hưng Thịnh",
+          "slug": "xa-hung-thinh"
+        },
+        {
+          "code": "04576",
+          "name": "Xã Hưng Khánh",
+          "slug": "xa-hung-khanh"
+        },
+        {
+          "code": "04579",
+          "name": "Xã Việt Hồng",
+          "slug": "xa-viet-hong"
+        },
+        {
+          "code": "04582",
+          "name": "Xã Vân Hội",
+          "slug": "xa-van-hoi"
+        }
+      ]
+    },
+    {
+      "code": "139",
+      "name": "Huyện Trạm Tấu",
+      "slug": "huyen-tram-tau",
+      "wards": [
+        {
+          "code": "04585",
+          "name": "Thị trấn Trạm Tấu",
+          "slug": "thi-tran-tram-tau"
+        },
+        {
+          "code": "04588",
+          "name": "Xã Túc Đán",
+          "slug": "xa-tuc-dan"
+        },
+        {
+          "code": "04591",
+          "name": "Xã Pá Lau",
+          "slug": "xa-pa-lau"
+        },
+        {
+          "code": "04594",
+          "name": "Xã Xà Hồ",
+          "slug": "xa-xa-ho"
+        },
+        {
+          "code": "04597",
+          "name": "Xã Phình Hồ",
+          "slug": "xa-phinh-ho"
+        },
+        {
+          "code": "04600",
+          "name": "Xã Trạm Tấu",
+          "slug": "xa-tram-tau"
+        },
+        {
+          "code": "04603",
+          "name": "Xã Tà Si Láng",
+          "slug": "xa-ta-si-lang"
+        },
+        {
+          "code": "04606",
+          "name": "Xã Pá Hu",
+          "slug": "xa-pa-hu"
+        },
+        {
+          "code": "04609",
+          "name": "Xã Làng Nhì",
+          "slug": "xa-lang-nhi"
+        },
+        {
+          "code": "04612",
+          "name": "Xã Bản Công",
+          "slug": "xa-ban-cong"
+        },
+        {
+          "code": "04615",
+          "name": "Xã Bản Mù",
+          "slug": "xa-ban-mu"
+        },
+        {
+          "code": "04618",
+          "name": "Xã Hát Lìu",
+          "slug": "xa-hat-liu"
+        }
+      ]
+    },
+    {
+      "code": "140",
+      "name": "Huyện Văn Chấn",
+      "slug": "huyen-van-chan",
+      "wards": [
+        {
+          "code": "04621",
+          "name": "Thị trấn NT Liên Sơn",
+          "slug": "thi-tran-nt-lien-son"
+        },
+        {
+          "code": "04624",
+          "name": "Thị trấn NT Nghĩa Lộ",
+          "slug": "thi-tran-nt-nghia-lo"
+        },
+        {
+          "code": "04627",
+          "name": "Thị trấn NT Trần Phú",
+          "slug": "thi-tran-nt-tran-phu"
+        },
+        {
+          "code": "04630",
+          "name": "Xã Tú Lệ",
+          "slug": "xa-tu-le"
+        },
+        {
+          "code": "04633",
+          "name": "Xã Nậm Búng",
+          "slug": "xa-nam-bung"
+        },
+        {
+          "code": "04636",
+          "name": "Xã Gia Hội",
+          "slug": "xa-gia-hoi"
+        },
+        {
+          "code": "04639",
+          "name": "Xã Sùng Đô",
+          "slug": "xa-sung-do"
+        },
+        {
+          "code": "04642",
+          "name": "Xã Nậm Mười",
+          "slug": "xa-nam-muoi"
+        },
+        {
+          "code": "04645",
+          "name": "Xã An Lương",
+          "slug": "xa-an-luong"
+        },
+        {
+          "code": "04648",
+          "name": "Xã Nậm Lành",
+          "slug": "xa-nam-lanh"
+        },
+        {
+          "code": "04651",
+          "name": "Xã Sơn Lương",
+          "slug": "xa-son-luong"
+        },
+        {
+          "code": "04654",
+          "name": "Xã Suối Quyền",
+          "slug": "xa-suoi-quyen"
+        },
+        {
+          "code": "04657",
+          "name": "Xã Suối Giàng",
+          "slug": "xa-suoi-giang"
+        },
+        {
+          "code": "04660",
+          "name": "Xã Sơn A",
+          "slug": "xa-son-a"
+        },
+        {
+          "code": "04663",
+          "name": "Xã Phù Nham",
+          "slug": "xa-phu-nham"
+        },
+        {
+          "code": "04666",
+          "name": "Xã Nghĩa Sơn",
+          "slug": "xa-nghia-son"
+        },
+        {
+          "code": "04669",
+          "name": "Xã Suối Bu",
+          "slug": "xa-suoi-bu"
+        },
+        {
+          "code": "04672",
+          "name": "Xã Sơn Thịnh",
+          "slug": "xa-son-thinh"
+        },
+        {
+          "code": "04675",
+          "name": "Xã Thanh Lương",
+          "slug": "xa-thanh-luong"
+        },
+        {
+          "code": "04678",
+          "name": "Xã Hạnh Sơn",
+          "slug": "xa-hanh-son"
+        },
+        {
+          "code": "04681",
+          "name": "Xã Phúc Sơn",
+          "slug": "xa-phuc-son"
+        },
+        {
+          "code": "04684",
+          "name": "Xã Thạch Lương",
+          "slug": "xa-thach-luong"
+        },
+        {
+          "code": "04687",
+          "name": "Xã Đại Lịch",
+          "slug": "xa-dai-lich"
+        },
+        {
+          "code": "04690",
+          "name": "Xã Đồng Khê",
+          "slug": "xa-dong-khe"
+        },
+        {
+          "code": "04693",
+          "name": "Xã Cát Thịnh",
+          "slug": "xa-cat-thinh"
+        },
+        {
+          "code": "04696",
+          "name": "Xã Tân Thịnh",
+          "slug": "xa-tan-thinh"
+        },
+        {
+          "code": "04699",
+          "name": "Xã Chấn Thịnh",
+          "slug": "xa-chan-thinh"
+        },
+        {
+          "code": "04702",
+          "name": "Xã Bình Thuận",
+          "slug": "xa-binh-thuan"
+        },
+        {
+          "code": "04705",
+          "name": "Xã Thượng Bằng La",
+          "slug": "xa-thuong-bang-la"
+        },
+        {
+          "code": "04708",
+          "name": "Xã Minh An",
+          "slug": "xa-minh-an"
+        },
+        {
+          "code": "04711",
+          "name": "Xã Nghĩa Tâm",
+          "slug": "xa-nghia-tam"
+        }
+      ]
+    },
+    {
+      "code": "141",
+      "name": "Huyện Yên Bình",
+      "slug": "huyen-yen-binh",
+      "wards": [
+        {
+          "code": "04555",
+          "name": "Xã Văn Lãng",
+          "slug": "xa-van-lang"
+        },
+        {
+          "code": "04714",
+          "name": "Thị trấn Yên Bình",
+          "slug": "thi-tran-yen-binh"
+        },
+        {
+          "code": "04717",
+          "name": "Thị trấn Thác Bà",
+          "slug": "thi-tran-thac-ba"
+        },
+        {
+          "code": "04720",
+          "name": "Xã Xuân Long",
+          "slug": "xa-xuan-long"
+        },
+        {
+          "code": "04723",
+          "name": "Xã Tích Cốc",
+          "slug": "xa-tich-coc"
+        },
+        {
+          "code": "04726",
+          "name": "Xã Cảm Nhân",
+          "slug": "xa-cam-nhan"
+        },
+        {
+          "code": "04729",
+          "name": "Xã Ngọc Chấn",
+          "slug": "xa-ngoc-chan"
+        },
+        {
+          "code": "04732",
+          "name": "Xã Tân Nguyên",
+          "slug": "xa-tan-nguyen"
+        },
+        {
+          "code": "04735",
+          "name": "Xã Phúc Ninh",
+          "slug": "xa-phuc-ninh"
+        },
+        {
+          "code": "04738",
+          "name": "Xã Bảo Ái",
+          "slug": "xa-bao-ai"
+        },
+        {
+          "code": "04741",
+          "name": "Xã Mỹ Gia",
+          "slug": "xa-my-gia"
+        },
+        {
+          "code": "04744",
+          "name": "Xã Xuân Lai",
+          "slug": "xa-xuan-lai"
+        },
+        {
+          "code": "04747",
+          "name": "Xã Mông Sơn",
+          "slug": "xa-mong-son"
+        },
+        {
+          "code": "04750",
+          "name": "Xã Cảm Ân",
+          "slug": "xa-cam-an"
+        },
+        {
+          "code": "04753",
+          "name": "Xã Yên Thành",
+          "slug": "xa-yen-thanh"
+        },
+        {
+          "code": "04756",
+          "name": "Xã Tân Hương",
+          "slug": "xa-tan-huong"
+        },
+        {
+          "code": "04759",
+          "name": "Xã Phúc An",
+          "slug": "xa-phuc-an"
+        },
+        {
+          "code": "04762",
+          "name": "Xã Bạch Hà",
+          "slug": "xa-bach-ha"
+        },
+        {
+          "code": "04765",
+          "name": "Xã Vũ Linh",
+          "slug": "xa-vu-linh"
+        },
+        {
+          "code": "04768",
+          "name": "Xã Đại Đồng",
+          "slug": "xa-dai-dong"
+        },
+        {
+          "code": "04771",
+          "name": "Xã Vĩnh Kiên",
+          "slug": "xa-vinh-kien"
+        },
+        {
+          "code": "04774",
+          "name": "Xã Yên Bình",
+          "slug": "xa-yen-binh"
+        },
+        {
+          "code": "04777",
+          "name": "Xã Thịnh Hưng",
+          "slug": "xa-thinh-hung"
+        },
+        {
+          "code": "04780",
+          "name": "Xã Hán Đà",
+          "slug": "xa-han-da"
+        },
+        {
+          "code": "04783",
+          "name": "Xã Phú Thịnh",
+          "slug": "xa-phu-thinh"
+        },
+        {
+          "code": "04786",
+          "name": "Xã Đại Minh",
+          "slug": "xa-dai-minh"
+        }
+      ]
+    }
+  ]
+}

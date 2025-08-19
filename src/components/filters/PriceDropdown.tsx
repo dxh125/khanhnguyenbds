@@ -1,46 +1,50 @@
+// src/components/filters/PriceDropdown.tsx
 "use client";
+import React from "react";
 
-interface DropdownProps {
-  filters?: Record<string, string | string[] | undefined>;
+export interface DropdownProps {
+  initialValue: string;
   purpose?: "buy" | "rent";
+  className?: string; // 👈 thêm className
 }
 
-export default function PriceDropdown({ filters, purpose = "buy" }: DropdownProps) {
-  const currentValue = String(filters?.price || "");
+export default function PriceDropdown({
+  initialValue,
+  purpose = "buy",
+  className = "",
+}: DropdownProps) {
+  const [value, setValue] = React.useState(initialValue || "");
 
-  // Khoảng giá cho mua
-  const buyOptions = [
-    { value: "", label: "Khoảng giá" },
-    { value: "duoi-1-ty", label: "Dưới 1 tỷ" },
-    { value: "1-2-ty", label: "1 - 2 tỷ" },
-    { value: "2-3-ty", label: "2 - 3 tỷ" },
-    { value: "3-5-ty", label: "3 - 5 tỷ" },
-    { value: "tren-5-ty", label: "Trên 5 tỷ" },
+  const priceOptionsBuy = [
+    { value: "0-1000000000", label: "Dưới 1 tỷ" },
+    { value: "1000000000-3000000000", label: "1 - 3 tỷ" },
+    { value: "3000000000-5000000000", label: "3 - 5 tỷ" },
+    { value: "5000000000-10000000000", label: "5 - 10 tỷ" },
+    { value: "10000000000-", label: "Trên 10 tỷ" }
   ];
 
-  // Khoảng giá cho thuê
-  const rentOptions = [
-    { value: "", label: "Khoảng giá" },
-    { value: "duoi-3-trieu", label: "Dưới 3 triệu" },
-    { value: "3-5-trieu", label: "3 - 5 triệu" },
-    { value: "5-10-trieu", label: "5 - 10 triệu" },
-    { value: "10-20-trieu", label: "10 - 20 triệu" },
-    { value: "tren-20-trieu", label: "Trên 20 triệu" },
+  const priceOptionsRent = [
+    { value: "0-3000000", label: "Dưới 3 triệu" },
+    { value: "3000000-5000000", label: "3 - 5 triệu" },
+    { value: "5000000-10000000", label: "5 - 10 triệu" },
+    { value: "10000000-20000000", label: "10 - 20 triệu" },
+    { value: "20000000-", label: "Trên 20 triệu" }
   ];
 
-  const options = purpose === "rent" ? rentOptions : buyOptions;
+  const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setValue(e.target.value);
+    // TODO: Trigger filter update (router push or callback)
+  };
+
+  const options = purpose === "rent" ? priceOptionsRent : priceOptionsBuy;
 
   return (
     <select
-      className="border rounded px-2 py-1"
-      defaultValue={currentValue}
-      onChange={(e) => {
-        const params = new URLSearchParams(window.location.search);
-        if (e.target.value) params.set("price", e.target.value);
-        else params.delete("price");
-        window.location.search = params.toString();
-      }}
+      className={`border rounded px-3 py-2 ${className}`} // 👈 dùng className ngoài vào
+      value={value}
+      onChange={handleChange}
     >
+      <option value="">Khoảng giá</option>
       {options.map((opt) => (
         <option key={opt.value} value={opt.value}>
           {opt.label}

@@ -1,0 +1,380 @@
+[
+  {
+    "code": "01",
+    "name": "Thành phố Hà Nội",
+    "slug": "thanh-pho-ha-noi",
+    "file": "provinces/thanh-pho-ha-noi.json"
+  },
+  {
+    "code": "31",
+    "name": "Thành phố Hải Phòng",
+    "slug": "thanh-pho-hai-phong",
+    "file": "provinces/thanh-pho-hai-phong.json"
+  },
+  {
+    "code": "48",
+    "name": "Thành phố Đà Nẵng",
+    "slug": "thanh-pho-da-nang",
+    "file": "provinces/thanh-pho-da-nang.json"
+  },
+  {
+    "code": "79",
+    "name": "Thành phố Hồ Chí Minh",
+    "slug": "thanh-pho-ho-chi-minh",
+    "file": "provinces/thanh-pho-ho-chi-minh.json"
+  },
+  {
+    "code": "92",
+    "name": "Thành phố Cần Thơ",
+    "slug": "thanh-pho-can-tho",
+    "file": "provinces/thanh-pho-can-tho.json"
+  },
+  {
+    "code": "02",
+    "name": "Tỉnh Hà Giang",
+    "slug": "tinh-ha-giang",
+    "file": "provinces/tinh-ha-giang.json"
+  },
+  {
+    "code": "04",
+    "name": "Tỉnh Cao Bằng",
+    "slug": "tinh-cao-bang",
+    "file": "provinces/tinh-cao-bang.json"
+  },
+  {
+    "code": "06",
+    "name": "Tỉnh Bắc Kạn",
+    "slug": "tinh-bac-kan",
+    "file": "provinces/tinh-bac-kan.json"
+  },
+  {
+    "code": "08",
+    "name": "Tỉnh Tuyên Quang",
+    "slug": "tinh-tuyen-quang",
+    "file": "provinces/tinh-tuyen-quang.json"
+  },
+  {
+    "code": "10",
+    "name": "Tỉnh Lào Cai",
+    "slug": "tinh-lao-cai",
+    "file": "provinces/tinh-lao-cai.json"
+  },
+  {
+    "code": "11",
+    "name": "Tỉnh Điện Biên",
+    "slug": "tinh-dien-bien",
+    "file": "provinces/tinh-dien-bien.json"
+  },
+  {
+    "code": "12",
+    "name": "Tỉnh Lai Châu",
+    "slug": "tinh-lai-chau",
+    "file": "provinces/tinh-lai-chau.json"
+  },
+  {
+    "code": "14",
+    "name": "Tỉnh Sơn La",
+    "slug": "tinh-son-la",
+    "file": "provinces/tinh-son-la.json"
+  },
+  {
+    "code": "15",
+    "name": "Tỉnh Yên Bái",
+    "slug": "tinh-yen-bai",
+    "file": "provinces/tinh-yen-bai.json"
+  },
+  {
+    "code": "17",
+    "name": "Tỉnh Hoà Bình",
+    "slug": "tinh-hoa-binh",
+    "file": "provinces/tinh-hoa-binh.json"
+  },
+  {
+    "code": "19",
+    "name": "Tỉnh Thái Nguyên",
+    "slug": "tinh-thai-nguyen",
+    "file": "provinces/tinh-thai-nguyen.json"
+  },
+  {
+    "code": "20",
+    "name": "Tỉnh Lạng Sơn",
+    "slug": "tinh-lang-son",
+    "file": "provinces/tinh-lang-son.json"
+  },
+  {
+    "code": "22",
+    "name": "Tỉnh Quảng Ninh",
+    "slug": "tinh-quang-ninh",
+    "file": "provinces/tinh-quang-ninh.json"
+  },
+  {
+    "code": "24",
+    "name": "Tỉnh Bắc Giang",
+    "slug": "tinh-bac-giang",
+    "file": "provinces/tinh-bac-giang.json"
+  },
+  {
+    "code": "25",
+    "name": "Tỉnh Phú Thọ",
+    "slug": "tinh-phu-tho",
+    "file": "provinces/tinh-phu-tho.json"
+  },
+  {
+    "code": "26",
+    "name": "Tỉnh Vĩnh Phúc",
+    "slug": "tinh-vinh-phuc",
+    "file": "provinces/tinh-vinh-phuc.json"
+  },
+  {
+    "code": "27",
+    "name": "Tỉnh Bắc Ninh",
+    "slug": "tinh-bac-ninh",
+    "file": "provinces/tinh-bac-ninh.json"
+  },
+  {
+    "code": "30",
+    "name": "Tỉnh Hải Dương",
+    "slug": "tinh-hai-duong",
+    "file": "provinces/tinh-hai-duong.json"
+  },
+  {
+    "code": "33",
+    "name": "Tỉnh Hưng Yên",
+    "slug": "tinh-hung-yen",
+    "file": "provinces/tinh-hung-yen.json"
+  },
+  {
+    "code": "34",
+    "name": "Tỉnh Thái Bình",
+    "slug": "tinh-thai-binh",
+    "file": "provinces/tinh-thai-binh.json"
+  },
+  {
+    "code": "35",
+    "name": "Tỉnh Hà Nam",
+    "slug": "tinh-ha-nam",
+    "file": "provinces/tinh-ha-nam.json"
+  },
+  {
+    "code": "36",
+    "name": "Tỉnh Nam Định",
+    "slug": "tinh-nam-dinh",
+    "file": "provinces/tinh-nam-dinh.json"
+  },
+  {
+    "code": "37",
+    "name": "Tỉnh Ninh Bình",
+    "slug": "tinh-ninh-binh",
+    "file": "provinces/tinh-ninh-binh.json"
+  },
+  {
+    "code": "38",
+    "name": "Tỉnh Thanh Hóa",
+    "slug": "tinh-thanh-hoa",
+    "file": "provinces/tinh-thanh-hoa.json"
+  },
+  {
+    "code": "40",
+    "name": "Tỉnh Nghệ An",
+    "slug": "tinh-nghe-an",
+    "file": "provinces/tinh-nghe-an.json"
+  },
+  {
+    "code": "42",
+    "name": "Tỉnh Hà Tĩnh",
+    "slug": "tinh-ha-tinh",
+    "file": "provinces/tinh-ha-tinh.json"
+  },
+  {
+    "code": "44",
+    "name": "Tỉnh Quảng Bình",
+    "slug": "tinh-quang-binh",
+    "file": "provinces/tinh-quang-binh.json"
+  },
+  {
+    "code": "45",
+    "name": "Tỉnh Quảng Trị",
+    "slug": "tinh-quang-tri",
+    "file": "provinces/tinh-quang-tri.json"
+  },
+  {
+    "code": "46",
+    "name": "Tỉnh Thừa Thiên Huế",
+    "slug": "tinh-thua-thien-hue",
+    "file": "provinces/tinh-thua-thien-hue.json"
+  },
+  {
+    "code": "49",
+    "name": "Tỉnh Quảng Nam",
+    "slug": "tinh-quang-nam",
+    "file": "provinces/tinh-quang-nam.json"
+  },
+  {
+    "code": "51",
+    "name": "Tỉnh Quảng Ngãi",
+    "slug": "tinh-quang-ngai",
+    "file": "provinces/tinh-quang-ngai.json"
+  },
+  {
+    "code": "52",
+    "name": "Tỉnh Bình Định",
+    "slug": "tinh-binh-dinh",
+    "file": "provinces/tinh-binh-dinh.json"
+  },
+  {
+    "code": "54",
+    "name": "Tỉnh Phú Yên",
+    "slug": "tinh-phu-yen",
+    "file": "provinces/tinh-phu-yen.json"
+  },
+  {
+    "code": "56",
+    "name": "Tỉnh Khánh Hòa",
+    "slug": "tinh-khanh-hoa",
+    "file": "provinces/tinh-khanh-hoa.json"
+  },
+  {
+    "code": "58",
+    "name": "Tỉnh Ninh Thuận",
+    "slug": "tinh-ninh-thuan",
+    "file": "provinces/tinh-ninh-thuan.json"
+  },
+  {
+    "code": "60",
+    "name": "Tỉnh Bình Thuận",
+    "slug": "tinh-binh-thuan",
+    "file": "provinces/tinh-binh-thuan.json"
+  },
+  {
+    "code": "62",
+    "name": "Tỉnh Kon Tum",
+    "slug": "tinh-kon-tum",
+    "file": "provinces/tinh-kon-tum.json"
+  },
+  {
+    "code": "64",
+    "name": "Tỉnh Gia Lai",
+    "slug": "tinh-gia-lai",
+    "file": "provinces/tinh-gia-lai.json"
+  },
+  {
+    "code": "66",
+    "name": "Tỉnh Đắk Lắk",
+    "slug": "tinh-dak-lak",
+    "file": "provinces/tinh-dak-lak.json"
+  },
+  {
+    "code": "67",
+    "name": "Tỉnh Đắk Nông",
+    "slug": "tinh-dak-nong",
+    "file": "provinces/tinh-dak-nong.json"
+  },
+  {
+    "code": "68",
+    "name": "Tỉnh Lâm Đồng",
+    "slug": "tinh-lam-dong",
+    "file": "provinces/tinh-lam-dong.json"
+  },
+  {
+    "code": "70",
+    "name": "Tỉnh Bình Phước",
+    "slug": "tinh-binh-phuoc",
+    "file": "provinces/tinh-binh-phuoc.json"
+  },
+  {
+    "code": "72",
+    "name": "Tỉnh Tây Ninh",
+    "slug": "tinh-tay-ninh",
+    "file": "provinces/tinh-tay-ninh.json"
+  },
+  {
+    "code": "74",
+    "name": "Tỉnh Bình Dương",
+    "slug": "tinh-binh-duong",
+    "file": "provinces/tinh-binh-duong.json"
+  },
+  {
+    "code": "75",
+    "name": "Tỉnh Đồng Nai",
+    "slug": "tinh-dong-nai",
+    "file": "provinces/tinh-dong-nai.json"
+  },
+  {
+    "code": "77",
+    "name": "Tỉnh Bà Rịa - Vũng Tàu",
+    "slug": "tinh-ba-ria---vung-tau",
+    "file": "provinces/tinh-ba-ria---vung-tau.json"
+  },
+  {
+    "code": "80",
+    "name": "Tỉnh Long An",
+    "slug": "tinh-long-an",
+    "file": "provinces/tinh-long-an.json"
+  },
+  {
+    "code": "82",
+    "name": "Tỉnh Tiền Giang",
+    "slug": "tinh-tien-giang",
+    "file": "provinces/tinh-tien-giang.json"
+  },
+  {
+    "code": "83",
+    "name": "Tỉnh Bến Tre",
+    "slug": "tinh-ben-tre",
+    "file": "provinces/tinh-ben-tre.json"
+  },
+  {
+    "code": "84",
+    "name": "Tỉnh Trà Vinh",
+    "slug": "tinh-tra-vinh",
+    "file": "provinces/tinh-tra-vinh.json"
+  },
+  {
+    "code": "86",
+    "name": "Tỉnh Vĩnh Long",
+    "slug": "tinh-vinh-long",
+    "file": "provinces/tinh-vinh-long.json"
+  },
+  {
+    "code": "87",
+    "name": "Tỉnh Đồng Tháp",
+    "slug": "tinh-dong-thap",
+    "file": "provinces/tinh-dong-thap.json"
+  },
+  {
+    "code": "89",
+    "name": "Tỉnh An Giang",
+    "slug": "tinh-an-giang",
+    "file": "provinces/tinh-an-giang.json"
+  },
+  {
+    "code": "91",
+    "name": "Tỉnh Kiên Giang",
+    "slug": "tinh-kien-giang",
+    "file": "provinces/tinh-kien-giang.json"
+  },
+  {
+    "code": "93",
+    "name": "Tỉnh Hậu Giang",
+    "slug": "tinh-hau-giang",
+    "file": "provinces/tinh-hau-giang.json"
+  },
+  {
+    "code": "94",
+    "name": "Tỉnh Sóc Trăng",
+    "slug": "tinh-soc-trang",
+    "file": "provinces/tinh-soc-trang.json"
+  },
+  {
+    "code": "95",
+    "name": "Tỉnh Bạc Liêu",
+    "slug": "tinh-bac-lieu",
+    "file": "provinces/tinh-bac-lieu.json"
+  },
+  {
+    "code": "96",
+    "name": "Tỉnh Cà Mau",
+    "slug": "tinh-ca-mau",
+    "file": "provinces/tinh-ca-mau.json"
+  }
+]

@@ -1,3 +1,4 @@
+// src/components/filters/AdvancedFiltersModal.tsx
 "use client";
 import React, { useState } from "react";
 
@@ -8,109 +9,115 @@ export interface AdvancedFiltersValues {
   status: string;
 }
 
-interface AdvancedFiltersModalProps {
-  initialValues?: Partial<AdvancedFiltersValues>;
+export interface AdvancedFiltersModalProps {
+  buttonLabel?: string;
+  className?: string; // ✅ Thêm prop className để đồng bộ với các dropdown
+  values: AdvancedFiltersValues;
   onApply: (vals: AdvancedFiltersValues) => void;
   onReset: () => void;
 }
 
 export default function AdvancedFiltersModal({
-  initialValues,
+  buttonLabel = "Bộ lọc nâng cao",
+  className = "",
+  values,
   onApply,
   onReset,
 }: AdvancedFiltersModalProps) {
-  const [isOpen, setIsOpen] = useState(false);
-  const [values, setValues] = useState<AdvancedFiltersValues>({
-    bedrooms: initialValues?.bedrooms || "",
-    bathrooms: initialValues?.bathrooms || "",
-    direction: initialValues?.direction || "",
-    status: initialValues?.status || "",
-  });
+  const [open, setOpen] = useState(false);
+  const [localValues, setLocalValues] = useState(values);
 
-  const handleApply = () => {
-    onApply(values);
-    setIsOpen(false);
+  const handleChange = (key: keyof AdvancedFiltersValues, value: string) => {
+    setLocalValues((prev) => ({ ...prev, [key]: value }));
   };
 
-  const handleReset = () => {
-    setValues({ bedrooms: "", bathrooms: "", direction: "", status: "" });
-    onReset();
+  const handleApply = () => {
+    onApply(localValues);
+    setOpen(false);
   };
 
   return (
-    <div>
+    <>
       {/* Nút mở modal */}
       <button
-        className="border px-3 py-1 rounded"
-        onClick={() => setIsOpen(true)}
+        className={`border px-3 py-1 rounded bg-white hover:bg-gray-100 ${className}`}
+        onClick={() => setOpen(true)}
       >
-        Thêm bộ lọc
+        {buttonLabel}
       </button>
 
       {/* Modal */}
-      {isOpen && (
-        <div className="fixed inset-0 bg-black bg-opacity-30 flex justify-center items-center z-50">
-          <div className="bg-white p-4 rounded shadow-lg w-full max-w-md">
-            <h2 className="text-lg font-semibold mb-4">Bộ lọc nâng cao</h2>
+      {open && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/30">
+          <div className="bg-white w-full max-w-lg rounded-xl p-4 shadow-lg">
+            <div className="flex items-center justify-between mb-4">
+              <h3 className="text-lg font-semibold">Bộ lọc nâng cao</h3>
+              <button
+                className="text-sm text-gray-500 hover:text-black"
+                onClick={() => setOpen(false)}
+              >
+                Đóng
+              </button>
+            </div>
 
-            <input
-              className="border rounded px-2 py-1 w-full mb-2"
-              placeholder="Phòng ngủ"
-              value={values.bedrooms}
-              onChange={(e) =>
-                setValues({ ...values, bedrooms: e.target.value })
-              }
-            />
-
-            <input
-              className="border rounded px-2 py-1 w-full mb-2"
-              placeholder="Phòng tắm"
-              value={values.bathrooms}
-              onChange={(e) =>
-                setValues({ ...values, bathrooms: e.target.value })
-              }
-            />
-
-            <select
-              className="border rounded px-2 py-1 w-full mb-2"
-              value={values.direction}
-              onChange={(e) =>
-                setValues({ ...values, direction: e.target.value })
-              }
-            >
-              <option value="">Hướng nhà</option>
-              <option value="Đông">Đông</option>
-              <option value="Tây">Tây</option>
-              <option value="Nam">Nam</option>
-              <option value="Bắc">Bắc</option>
-              <option value="Đông Bắc">Đông Bắc</option>
-              <option value="Đông Nam">Đông Nam</option>
-              <option value="Tây Bắc">Tây Bắc</option>
-              <option value="Tây Nam">Tây Nam</option>
-            </select>
-
-            <select
-              className="border rounded px-2 py-1 w-full mb-4"
-              value={values.status}
-              onChange={(e) =>
-                setValues({ ...values, status: e.target.value })
-              }
-            >
-              <option value="">Tình trạng</option>
-              <option value="available">Đang bán/cho thuê</option>
-              <option value="sold">Đã bán/đã thuê</option>
-            </select>
+            {/* Nội dung form */}
+            <div className="flex flex-wrap gap-2">
+              <input
+                className="border rounded px-2 py-1 w-24"
+                placeholder="Phòng ngủ"
+                value={localValues.bedrooms}
+                onChange={(e) => handleChange("bedrooms", e.target.value)}
+              />
+              <input
+                className="border rounded px-2 py-1 w-24"
+                placeholder="Phòng tắm"
+                value={localValues.bathrooms}
+                onChange={(e) => handleChange("bathrooms", e.target.value)}
+              />
+              <select
+                className="border rounded px-2 py-1"
+                value={localValues.direction}
+                onChange={(e) => handleChange("direction", e.target.value)}
+              >
+                <option value="">Hướng nhà</option>
+                <option value="Đông">Đông</option>
+                <option value="Tây">Tây</option>
+                <option value="Nam">Nam</option>
+                <option value="Bắc">Bắc</option>
+                <option value="Đông Bắc">Đông Bắc</option>
+                <option value="Đông Nam">Đông Nam</option>
+                <option value="Tây Bắc">Tây Bắc</option>
+                <option value="Tây Nam">Tây Nam</option>
+              </select>
+              <select
+                className="border rounded px-2 py-1"
+                value={localValues.status}
+                onChange={(e) => handleChange("status", e.target.value)}
+              >
+                <option value="">Tình trạng</option>
+                <option value="available">Đang bán/cho thuê</option>
+                <option value="sold">Đã bán/đã thuê</option>
+              </select>
+            </div>
 
             {/* Nút hành động */}
-            <div className="flex justify-end gap-2">
+            <div className="mt-4 flex justify-between">
               <button
-                className="border px-3 py-1 rounded"
-                onClick={handleReset}
+                className="border px-3 py-1 rounded bg-gray-200 hover:bg-gray-300"
+                onClick={() => {
+                  onReset();
+                  setLocalValues({
+                    bedrooms: "",
+                    bathrooms: "",
+                    direction: "",
+                    status: "",
+                  });
+                }}
               >
                 Reset
               </button>
               <button
-                className="bg-blue-500 text-white px-3 py-1 rounded"
+                className="bg-blue-600 text-white px-3 py-1 rounded hover:bg-blue-700"
                 onClick={handleApply}
               >
                 Áp dụng
@@ -119,6 +126,6 @@ export default function AdvancedFiltersModal({
           </div>
         </div>
       )}
-    </div>
+    </>
   );
 }

@@ -1,26 +1,40 @@
+// src/components/filters/Has3DDropdown.tsx
 "use client";
+import React from "react";
 
-interface DropdownProps {
-  filters?: Record<string, string | string[] | undefined>;
+export interface DropdownProps {
+  initialValue: string;
+  className?: string; // 👈 thêm className
 }
 
-export default function Has3DDropdown({ filters }: DropdownProps) {
-  const currentValue = String(filters?.has3D || "");
+export default function Has3DDropdown({
+  initialValue,
+  className = "",
+}: DropdownProps) {
+  const [value, setValue] = React.useState(initialValue || "");
+
+  const options = [
+    { value: "yes", label: "Có 3D" },
+    { value: "no", label: "Không có 3D" },
+  ];
+
+  const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setValue(e.target.value);
+    // TODO: Trigger filter update (router push hoặc callback)
+  };
 
   return (
     <select
-      className="border rounded px-2 py-1"
-      defaultValue={currentValue}
-      onChange={(e) => {
-        const params = new URLSearchParams(window.location.search);
-        if (e.target.value) params.set("has3D", e.target.value);
-        else params.delete("has3D");
-        window.location.search = params.toString();
-      }}
+      className={`border rounded px-3 py-2 ${className}`} // 👈 dùng className ngoài
+      value={value}
+      onChange={handleChange}
     >
-      <option value="">Có 3D</option>
-      <option value="true">Có</option>
-      <option value="false">Không</option>
+      <option value="">3D</option>
+      {options.map((opt) => (
+        <option key={opt.value} value={opt.value}>
+          {opt.label}
+        </option>
+      ))}
     </select>
   );
 }
