@@ -44,12 +44,24 @@ export async function getPropertiesByFilter(filters: SearchParams) {
   }
 
   // 🔎 diện tích
+  // ... trong getPropertiesByFilter
+  // 🔎 diện tích
   if (area) {
-    const [min, max] = area.split('-').map(Number);
-    if (!Number.isNaN(min) && !Number.isNaN(max)) {
-      where.area = { gte: min, lte: max };
+    if (area.includes("-")) {
+      const [minStr, maxStr] = area.split("-");
+      const min = minStr ? Number(minStr) : undefined;
+      const max = maxStr ? Number(maxStr) : undefined;
+
+      if (min != null || max != null) {
+        where.area = {};
+        if (min != null && !Number.isNaN(min)) where.area.gte = min;
+        if (max != null && !Number.isNaN(max)) where.area.lte = max;
+      }
+    } else {
+      // nếu value không hợp lệ thì bỏ qua
     }
   }
+
 
   // 🔎 các option khác
   if (has3D) where.has3D = has3D === 'true';

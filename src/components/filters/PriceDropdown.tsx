@@ -4,9 +4,21 @@ import React from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 
 export interface PriceDropdownProps {
-  initialValue: string;
+  initialValue?: string; // optional: sẽ sync từ URL nếu không truyền
   className?: string;
 }
+
+// Helper: tỷ → VND
+const b = (tbn: number) => tbn * 1_000_000_000;
+
+const OPTIONS = [
+  { value: `0-${b(1)}`, label: "Dưới 1 tỷ" },
+  { value: `${b(1)}-${b(3)}`, label: "1 - 3 tỷ" },
+  { value: `${b(3)}-${b(5)}`, label: "3 - 5 tỷ" },
+  { value: `${b(5)}-${b(7)}`, label: "5 - 7 tỷ" },
+  { value: `${b(7)}-${b(10)}`, label: "7 - 10 tỷ" },
+  { value: `${b(10)}-`, label: "Trên 10 tỷ" }, // dải mở: min-
+];
 
 export default function PriceDropdown({
   initialValue,
@@ -14,28 +26,25 @@ export default function PriceDropdown({
 }: PriceDropdownProps) {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const [value, setValue] = React.useState(initialValue || "");
 
-  const options = [
-    { value: "0-1000", label: "Dưới 1 tỷ" },
-    { value: "1000-3000", label: "1 - 3 tỷ" },
-    { value: "3000-5000", label: "3 - 5 tỷ" },
-    { value: "5000-7000", label: "5 - 7 tỷ" },
-    { value: "7000-10000", label: "7 - 10 tỷ" },
-    { value: "10000+", label: "Trên 10 tỷ" },
-  ];
+  // Ưu tiên giá từ URL (price), fallback initialValue
+  const urlValue = searchParams.get("price") || "";
+  const [value, setValue] = React.useState<string>(urlValue || initialValue || "");
+
+  React.useEffect(() => {
+    setValue(urlValue || initialValue || "");
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [urlValue]);
 
   const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const newValue = e.target.value;
     setValue(newValue);
 
-    // ✅ Giữ các param khác và chỉ cập nhật priceRange
     const params = new URLSearchParams(searchParams.toString());
-    if (newValue) {
-      params.set("priceRange", newValue);
-    } else {
-      params.delete("priceRange");
-    }
+    if (newValue) params.set("price", newValue);
+    else params.delete("price");
+
+    // Giữ nguyên các param khác
     router.push(`?${params.toString()}`);
   };
 
@@ -46,7 +55,7 @@ export default function PriceDropdown({
       onChange={handleChange}
     >
       <option value="">Khoảng giá</option>
-      {options.map((opt) => (
+      {OPTIONS.map((opt) => (
         <option key={opt.value} value={opt.value}>
           {opt.label}
         </option>
