@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams, usePathname } from "next/navigation";
 import provinces from "@/data/locations/index.json";
 
 export interface Filters {
@@ -14,7 +14,7 @@ interface LocationFilterProps {
   compact?: boolean;
   className?: string;
   onChange?: (updated: Filters) => void;
-  mode?: "inline" | "modal";
+  mode?: "inline" | "modal"; // 👈 có thể dùng sau
 }
 
 interface ProvinceMeta {
@@ -32,12 +32,12 @@ interface District {
 
 export default function LocationFilter({
   filters,
-  compact,
   className,
   onChange,
 }: LocationFilterProps) {
   const router = useRouter();
   const searchParams = useSearchParams();
+  const pathname = usePathname();
 
   const [province, setProvince] = useState(filters.city || "");
   const [district, setDistrict] = useState(filters.district || "");
@@ -46,6 +46,7 @@ export default function LocationFilter({
   const [districts, setDistricts] = useState<District[]>([]);
   const [wards, setWards] = useState<{ name: string; slug: string }[]>([]);
 
+  // Load districts khi chọn tỉnh
   useEffect(() => {
     if (!province) {
       setDistricts([]);
@@ -61,6 +62,7 @@ export default function LocationFilter({
     }
   }, [province]);
 
+  // Load wards khi chọn huyện
   useEffect(() => {
     if (!district) {
       setWards([]);
@@ -70,16 +72,39 @@ export default function LocationFilter({
     if (d) setWards(d.wards || []);
   }, [district, districts]);
 
-  const updateFilter = (key: keyof Filters, value: string) => {
-    const newFilters = { city: province, district, ward, ...filters, [key]: value };
-
-    if (onChange) onChange(newFilters);
-
-    const params = new URLSearchParams(searchParams.toString());
-    if (value) params.set(key, value);
-    else params.delete(key);
-    router.push(`?${params.toString()}`);
+ const updateFilter = (key: keyof Filters, value: string) => {
+  // Cập nhật state tạm
+  const newFilters = {
+    city: key === "city" ? value : province,
+    district: key === "district" ? value : district,
+    ward: key === "ward" ? value : ward,
   };
+  if (onChange) onChange(newFilters);
+
+  // Lấy các phần hiện tại từ pathname
+  // Ví dụ: /vi/buy/can-ho/ha-noi/cau-giay
+  const parts = pathname.split("/").filter(Boolean);
+  const [locale, purpose, propertyType] = parts;
+
+  // Xây slug mới từ filter location
+  const locationPath = [
+    newFilters.city || "",
+    newFilters.district || "",
+    newFilters.ward || "",
+  ].filter(Boolean);
+
+  const newPath = [
+    "",
+    locale,
+    purpose,
+    propertyType,
+    ...locationPath,
+  ].join("/");
+
+  // Giữ lại query string (nếu có)
+  const query = searchParams.toString();
+  router.push(query ? `${newPath}?${query}` : newPath);
+};
 
   return (
     <div className="flex gap-2">
