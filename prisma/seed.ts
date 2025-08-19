@@ -2,35 +2,37 @@ import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
 async function main() {
-  // 🔥 Xoá dữ liệu cũ để seed lại cho sạch
   await prisma.property.deleteMany();
   await prisma.project.deleteMany();
 
-  // ✅ Tạo danh sách dự án
+  // === Projects ===
   await prisma.project.createMany({
     data: [
       {
         name: "EcoPark",
         slug: "ecopark",
         description: "Khu đô thị sinh thái xanh tại Hưng Yên.",
-        imageUrl: "https://images.unsplash.com/photo-1564013799919-ab600027ffc6?auto=format&fit=crop&w=1200&q=60",
+        imageUrl:
+          "https://images.unsplash.com/photo-1564013799919-ab600027ffc6?auto=format&fit=crop&w=1200&q=60",
       },
       {
         name: "Vinhomes Riverside",
         slug: "vinhomes-riverside",
         description: "Khu biệt thự cao cấp ven sông tại Long Biên, Hà Nội.",
-        imageUrl: "https://images.unsplash.com/photo-1505691723518-36a5ac3b2d55?auto=format&fit=crop&w=1200&q=60",
+        imageUrl:
+          "https://images.unsplash.com/photo-1505691723518-36a5ac3b2d55?auto=format&fit=crop&w=1200&q=60",
       },
       {
         name: "Masteri Thảo Điền",
         slug: "masteri-thao-dien",
         description: "Căn hộ cao cấp tại Quận 2, TP.HCM.",
-        imageUrl: "https://images.unsplash.com/photo-1494526585095-c41746248156?auto=format&fit=crop&w=1200&q=60",
+        imageUrl:
+          "https://images.unsplash.com/photo-1494526585095-c41746248156?auto=format&fit=crop&w=1200&q=60",
       },
     ],
   });
 
-  // ✅ 12 bất động sản gốc (đã thêm ảnh) + 5 bất động sản mới
+  // === Properties ===
   await prisma.property.createMany({
     data: [
       // === Căn hộ (BUY) ===
@@ -40,17 +42,17 @@ async function main() {
         price: 3200000000,
         area: 85,
         address: "EcoPark, Văn Giang, Hưng Yên",
-        ward: "Xuân Quan",
-        district: "Văn Giang",
-        city: "Hưng Yên",
+        ward: "xa-xuan-quan",
+        district: "huyen-van-giang",
+        city: "tinh-hung-yen",
         propertyType: "can-ho",
         purpose: "buy",
         status: "available",
         bedrooms: 2,
         bathrooms: 2,
         floors: 10,
-        legal: "Sổ hồng",
-        direction: "Đông Nam",
+        legal: "so-hong",
+        direction: "dong-nam",
         images: [
           "https://images.unsplash.com/photo-1600607687920-4ce8c559d8df?auto=format&fit=crop&w=1200&q=60",
           "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1200&q=60",
@@ -64,17 +66,17 @@ async function main() {
         price: 5500000000,
         area: 100,
         address: "159 Xa lộ Hà Nội, Quận 2",
-        ward: "Thảo Điền",
-        district: "Quận 2",
-        city: "TP.HCM",
+        ward: "phuong-thao-dien",
+        district: "quan-2",
+        city: "thanh-pho-ho-chi-minh",
         propertyType: "can-ho",
         purpose: "buy",
         status: "available",
         bedrooms: 3,
         bathrooms: 2,
         floors: 22,
-        legal: "Sổ hồng",
-        direction: "Tây Bắc",
+        legal: "so-hong",
+        direction: "tay-bac",
         images: [
           "https://images.unsplash.com/photo-1505692794403-34d4982d1d50?auto=format&fit=crop&w=1200&q=60",
           "https://images.unsplash.com/photo-1484154218962-a197022b5858?auto=format&fit=crop&w=1200&q=60",
@@ -90,17 +92,17 @@ async function main() {
         price: 12500000000,
         area: 100,
         address: "Long Biên, Hà Nội",
-        ward: "Việt Hưng",
-        district: "Long Biên",
-        city: "Hà Nội",
+        ward: "phuong-viet-hung",
+        district: "quan-long-bien",
+        city: "thanh-pho-ha-noi",
         propertyType: "nha-rieng",
         purpose: "buy",
         status: "available",
         bedrooms: 4,
         bathrooms: 4,
         floors: 3,
-        legal: "Sổ đỏ",
-        direction: "Nam",
+        legal: "so-do",
+        direction: "nam",
         images: [
           "https://images.unsplash.com/photo-1600585154526-990dced4db0d?auto=format&fit=crop&w=1200&q=60",
           "https://images.unsplash.com/photo-1560185127-6ec5d591d07e?auto=format&fit=crop&w=1200&q=60",
@@ -114,17 +116,17 @@ async function main() {
         price: 3900000000,
         area: 75,
         address: "Quận 12, TP.HCM",
-        ward: "Tân Thới Hiệp",
-        district: "Quận 12",
-        city: "TP.HCM",
+        ward: "phuong-tan-thoi-hiep",
+        district: "quan-12",
+        city: "thanh-pho-ho-chi-minh",
         propertyType: "nha-rieng",
         purpose: "buy",
         status: "available",
         bedrooms: 3,
         bathrooms: 2,
         floors: 2,
-        legal: "Sổ hồng",
-        direction: "Đông Bắc",
+        legal: "so-hong",
+        direction: "dong-bac",
         images: [
           "https://images.unsplash.com/photo-1499951360447-b19be8fe80f5?auto=format&fit=crop&w=1200&q=60",
           "https://images.unsplash.com/photo-1502005229762-cf1b2da7c08e?auto=format&fit=crop&w=1200&q=60",
@@ -140,14 +142,14 @@ async function main() {
         price: 2100000000,
         area: 100,
         address: "Long Hậu, Cần Giuộc, Long An",
-        ward: "Long Hậu",
-        district: "Cần Giuộc",
-        city: "Long An",
+        ward: "xa-long-hau",
+        district: "huyen-can-giuoc",
+        city: "tinh-long-an",
         propertyType: "dat-nen",
         purpose: "buy",
         status: "available",
-        legal: "Sổ đỏ",
-        direction: "Tây",
+        legal: "so-do",
+        direction: "tay",
         images: [
           "https://images.unsplash.com/photo-1570126646281-5ec88111777f?auto=format&fit=crop&w=1200&q=60",
           "https://images.unsplash.com/photo-1570126646281-5ec88111777f?auto=format&fit=crop&w=1200&q=60",
@@ -161,11 +163,13 @@ async function main() {
         price: 3300000000,
         area: 120,
         address: "Nhơn Trạch, Đồng Nai",
+        district: "huyen-nhon-trach",
+        city: "tinh-dong-nai",
         propertyType: "dat-nen",
         purpose: "buy",
         status: "available",
-        legal: "Sổ đỏ",
-        direction: "Bắc",
+        legal: "so-do",
+        direction: "bac",
         images: [
           "https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?auto=format&fit=crop&w=1200&q=60",
           "https://images.unsplash.com/photo-1542315192-1f61a1926a61?auto=format&fit=crop&w=1200&q=60",
@@ -181,13 +185,16 @@ async function main() {
         price: 3500000,
         area: 18,
         address: "Đường 3/2, Quận 10",
+        ward: "phuong-12",
+        district: "quan-10",
+        city: "thanh-pho-ho-chi-minh",
         propertyType: "phong-tro",
         purpose: "rent",
         status: "available",
         bedrooms: 1,
         bathrooms: 1,
         floors: 1,
-        direction: "Nam",
+        direction: "nam",
         images: [
           "https://images.unsplash.com/photo-1616594039964-a6b8c2db9253?auto=format&fit=crop&w=1200&q=60",
           "https://images.unsplash.com/photo-1616594039974-c2ff1d6b1c5d?auto=format&fit=crop&w=1200&q=60",
@@ -201,10 +208,13 @@ async function main() {
         price: 2800000,
         area: 16,
         address: "Linh Trung, Thủ Đức",
+        ward: "phuong-linh-trung",
+        district: "quan-thu-duc",
+        city: "thanh-pho-ho-chi-minh",
         propertyType: "phong-tro",
         purpose: "rent",
         status: "available",
-        direction: "Đông",
+        direction: "dong",
         images: [
           "https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=1200&q=60",
           "https://images.unsplash.com/photo-1524758631624-e2822e304c36?auto=format&fit=crop&w=1200&q=60",
@@ -220,12 +230,14 @@ async function main() {
         price: 120000000,
         area: 1000,
         address: "Tân Bình, TP.HCM",
+        district: "quan-tan-binh",
+        city: "thanh-pho-ho-chi-minh",
         propertyType: "nha-xuong",
         purpose: "rent",
         status: "available",
         floors: 1,
-        legal: "Hợp đồng thuê",
-        direction: "Tây Bắc",
+        legal: "hop-dong-thue",
+        direction: "tay-bac",
         images: [
           "https://images.unsplash.com/photo-1581090700227-1e37b190418e?auto=format&fit=crop&w=1200&q=60",
           "https://images.unsplash.com/photo-1581091870622-7b9b4d9e8a0e?auto=format&fit=crop&w=1200&q=60",
@@ -239,11 +251,13 @@ async function main() {
         price: 15000000000,
         area: 2000,
         address: "Dĩ An, Bình Dương",
+        district: "thi-xa-di-an",
+        city: "tinh-binh-duong",
         propertyType: "nha-xuong",
         purpose: "buy",
         status: "available",
-        direction: "Đông Nam",
-        legal: "Sổ đỏ",
+        direction: "dong-nam",
+        legal: "so-do",
         images: [
           "https://images.unsplash.com/photo-1564959123886-7f63b9fbf2b3?auto=format&fit=crop&w=1200&q=60",
           "https://images.unsplash.com/photo-1581091215367-59ab36cd7c86?auto=format&fit=crop&w=1200&q=60",
@@ -259,12 +273,15 @@ async function main() {
         price: 2100000000,
         area: 50,
         address: "Tân Thuận Tây, Quận 7",
+        ward: "phuong-tan-thuan-tay",
+        district: "quan-7",
+        city: "thanh-pho-ho-chi-minh",
         propertyType: "can-ho",
         purpose: "buy",
         status: "available",
         bedrooms: 2,
         bathrooms: 1,
-        direction: "Nam",
+        direction: "nam",
         images: [
           "https://images.unsplash.com/photo-1600585154154-1e7485dff56b?auto=format&fit=crop&w=1200&q=60",
           "https://images.unsplash.com/photo-1494526585095-c41746248156?auto=format&fit=crop&w=1200&q=60",
@@ -273,23 +290,21 @@ async function main() {
         projectSlug: null,
       },
 
-      // ======================
-      // 5 BẤT ĐỘNG SẢN MỚI BỔ SUNG
-      // ======================
-
-      // 1) Căn hộ cho thuê (RENT)
+      // === 5 BĐS mới ===
       {
         title: "Căn hộ studio Quận 1 cho thuê",
         description: "Full nội thất, trung tâm, dọn vào ở ngay.",
         price: 12000000,
         area: 32,
         address: "Nguyễn Thị Minh Khai, Quận 1",
+        district: "quan-1",
+        city: "thanh-pho-ho-chi-minh",
         propertyType: "can-ho",
         purpose: "rent",
         status: "available",
         bedrooms: 1,
         bathrooms: 1,
-        direction: "Đông Nam",
+        direction: "dong-nam",
         images: [
           "https://images.unsplash.com/photo-1600210492486-724fe5c67fb2?auto=format&fit=crop&w=1200&q=60",
           "https://images.unsplash.com/photo-1554995207-c18c203602cb?auto=format&fit=crop&w=1200&q=60",
@@ -297,20 +312,20 @@ async function main() {
         highlights: ["Ngay trung tâm", "Full nội thất"],
         projectSlug: null,
       },
-
-      // 2) Nhà riêng cho thuê (RENT)
       {
         title: "Nhà nguyên căn Gò Vấp cho thuê",
         description: "1 trệt 1 lầu, hẻm xe hơi, gần trường học.",
         price: 17000000,
         area: 80,
         address: "Phan Huy Ích, Gò Vấp",
+        district: "quan-go-vap",
+        city: "thanh-pho-ho-chi-minh",
         propertyType: "nha-rieng",
         purpose: "rent",
         status: "available",
         bedrooms: 3,
         bathrooms: 2,
-        direction: "Tây",
+        direction: "tay",
         images: [
           "https://images.unsplash.com/photo-1560518883-ce09059eeffa?auto=format&fit=crop&w=1200&q=60",
           "https://images.unsplash.com/photo-1484154218962-a197022b5858?auto=format&fit=crop&w=1200&q=60",
@@ -318,19 +333,19 @@ async function main() {
         highlights: ["Hẻm xe hơi", "Khu dân cư an ninh"],
         projectSlug: null,
       },
-
-      // 3) Đất nền (BUY) – thêm mẫu khác
       {
         title: "Đất nền khu dân cư Long Thành",
         description: "Lô đẹp, gần cao tốc, tiềm năng tăng giá.",
         price: 1900000000,
         area: 95,
         address: "Long Thành, Đồng Nai",
+        district: "huyen-long-thanh",
+        city: "tinh-dong-nai",
         propertyType: "dat-nen",
         purpose: "buy",
         status: "available",
-        legal: "Sổ đỏ",
-        direction: "Đông Bắc",
+        legal: "so-do",
+        direction: "dong-bac",
         images: [
           "https://images.unsplash.com/photo-1523419409543-018a9f1d940b?auto=format&fit=crop&w=1200&q=60",
           "https://images.unsplash.com/photo-1542315192-1f61a1926a61?auto=format&fit=crop&w=1200&q=60",
@@ -338,19 +353,19 @@ async function main() {
         highlights: ["Gần cao tốc", "Khu dân cư hiện hữu"],
         projectSlug: null,
       },
-
-      // 4) Nhà xưởng cho thuê (RENT) – bổ sung
       {
         title: "Cho thuê kho xưởng Bình Chánh",
         description: "DT 1500m², PCCC chuẩn, xe container ra vào 24/7.",
         price: 180000000,
         area: 1500,
         address: "Bình Chánh, TP.HCM",
+        district: "huyen-binh-chanh",
+        city: "thanh-pho-ho-chi-minh",
         propertyType: "nha-xuong",
         purpose: "rent",
         status: "available",
         floors: 1,
-        direction: "Bắc",
+        direction: "bac",
         images: [
           "https://images.unsplash.com/photo-1581090123130-5a9d3f1d7bdf?auto=format&fit=crop&w=1200&q=60",
           "https://images.unsplash.com/photo-1581091216770-5d1b5c2e9b2c?auto=format&fit=crop&w=1200&q=60",
@@ -358,23 +373,21 @@ async function main() {
         highlights: ["PCCC chuẩn", "Container 24/7"],
         projectSlug: null,
       },
-
-      // 5) Căn hộ thuộc dự án (BUY) – liên kết Project
       {
         title: "Căn hộ EcoPark 1PN giá tốt",
         description: "Nội thất cơ bản, ban công thoáng, tiện ích đầy đủ.",
         price: 2100000000,
         area: 48,
         address: "EcoPark, Văn Giang, Hưng Yên",
-        ward: "Xuân Quan",
-        district: "Văn Giang",
-        city: "Hưng Yên",
+        ward: "xa-xuan-quan",
+        district: "huyen-van-giang",
+        city: "tinh-hung-yen",
         propertyType: "can-ho",
         purpose: "buy",
         status: "available",
         bedrooms: 1,
         bathrooms: 1,
-        direction: "Nam",
+        direction: "nam",
         images: [
           "https://images.unsplash.com/photo-1582582621958-cdb66f1b1b03?auto=format&fit=crop&w=1200&q=60",
           "https://images.unsplash.com/photo-1600585154526-990dced4db0d?auto=format&fit=crop&w=1200&q=60",
@@ -385,7 +398,7 @@ async function main() {
     ],
   });
 
-  console.log("✅ Seed dữ liệu thành công! (17 bất động sản + 3 dự án)");
+  console.log("✅ Seed dữ liệu thành công! (17 property + 3 project, slug chuẩn)");
 }
 
 main()

@@ -10,6 +10,7 @@ import AdvancedFiltersModal, { AdvancedFiltersValues } from "./AdvancedFiltersMo
 
 interface FilterBarProps {
   initialFilters: Record<string, string | string[] | undefined>;
+  purpose?: string; // 👈 thêm
 }
 
 export default function FilterBar({ initialFilters }: FilterBarProps) {

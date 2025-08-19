@@ -82,16 +82,27 @@ export default function Navbar() {
     setDropdownTimer(timer);
   };
 
-  const handleNavClick = (mainKey: string, slug: string) => {
+  const handleNavClick = (mainKey: string, slug?: string) => {
     const base = `/${currentLocale}`;
-    if (mainKey === "buy") {
-      router.push(`${base}/buy/${slug}`);
-    } else if (mainKey === "rent") {
-      router.push(`${base}/rent/${slug}`);
-    } else if (mainKey === "industry") {
-      router.push(`${base}/industrials/${slug}`);
-    } else if (mainKey === "project") {
-      router.push(`${base}/projects/${slug}`); // ✅ cập nhật đường dẫn mới
+    switch (mainKey) {
+      case "buy":
+        router.push(`${base}/buy/${slug}`);
+        break;
+      case "rent":
+        router.push(`${base}/rent/${slug}`);
+        break;
+      case "industry":
+        router.push(`${base}/industry/${slug}`);
+        break;
+      case "project":
+        router.push(`${base}/projects/${slug}`);
+        break;
+      case "agent":
+        router.push(`${base}/agents`);
+        break;
+      case "about":
+        router.push(`${base}/about`);
+        break;
     }
     setActiveDropdown(null);
     setMobileMenuOpen(false);
@@ -132,6 +143,7 @@ export default function Navbar() {
             </div>
           ))}
 
+          {/* User section */}
           {user ? (
             <div
               className="relative"
@@ -155,7 +167,9 @@ export default function Navbar() {
             </div>
           ) : (
             <>
-              <Link href={`/${currentLocale}/login`} className="hover:text-red-600">{t("login")}</Link>
+              <Link href={`/${currentLocale}/login`} className="hover:text-red-600">
+                {t("login")}
+              </Link>
               <Link
                 href={`/${currentLocale}/register`}
                 className="text-sm px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700 ml-2"
@@ -232,16 +246,26 @@ export default function Navbar() {
           <hr />
           {user ? (
             <>
-              <Link href={`/${currentLocale}/my-properties`} className="block py-1 text-sm">{t("myPosts")}</Link>
-              <button onClick={handleLogout} className="block py-1 text-sm text-left">{t("logout")}</button>
+              <Link href={`/${currentLocale}/my-properties`} className="block py-1 text-sm">
+                {t("myPosts")}
+              </Link>
+              <button onClick={handleLogout} className="block py-1 text-sm text-left">
+                {t("logout")}
+              </button>
             </>
           ) : (
             <>
-              <Link href={`/${currentLocale}/login`} className="block py-1 text-sm">{t("login")}</Link>
-              <Link href={`/${currentLocale}/register`} className="block py-1 text-sm text-red-600 font-medium">{t("register")}</Link>
+              <Link href={`/${currentLocale}/login`} className="block py-1 text-sm">
+                {t("login")}
+              </Link>
+              <Link href={`/${currentLocale}/register`} className="block py-1 text-sm text-red-600 font-medium">
+                {t("register")}
+              </Link>
             </>
           )}
-          <Link href={`/${currentLocale}/post`} className="block py-1 text-sm text-red-600 font-medium">{t("post")}</Link>
+          <Link href={`/${currentLocale}/post`} className="block py-1 text-sm text-red-600 font-medium">
+            {t("post")}
+          </Link>
         </div>
       )}
     </header>

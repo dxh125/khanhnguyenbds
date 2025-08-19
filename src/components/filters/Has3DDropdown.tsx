@@ -1,16 +1,19 @@
 // src/components/filters/Has3DDropdown.tsx
 "use client";
 import React from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 
-export interface DropdownProps {
+export interface Has3DDropdownProps {
   initialValue: string;
-  className?: string; // 👈 thêm className
+  className?: string;
 }
 
 export default function Has3DDropdown({
   initialValue,
   className = "",
-}: DropdownProps) {
+}: Has3DDropdownProps) {
+  const router = useRouter();
+  const searchParams = useSearchParams();
   const [value, setValue] = React.useState(initialValue || "");
 
   const options = [
@@ -19,13 +22,22 @@ export default function Has3DDropdown({
   ];
 
   const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setValue(e.target.value);
-    // TODO: Trigger filter update (router push hoặc callback)
+    const newValue = e.target.value;
+    setValue(newValue);
+
+    // ✅ Giữ các param khác, chỉ update has3D
+    const params = new URLSearchParams(searchParams.toString());
+    if (newValue) {
+      params.set("has3D", newValue);
+    } else {
+      params.delete("has3D");
+    }
+    router.push(`?${params.toString()}`);
   };
 
   return (
     <select
-      className={`border rounded px-3 py-2 ${className}`} // 👈 dùng className ngoài
+      className={`border rounded px-3 py-2 ${className}`}
       value={value}
       onChange={handleChange}
     >

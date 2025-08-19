@@ -1,6 +1,7 @@
 // src/components/filters/AdvancedFiltersModal.tsx
 "use client";
 import React, { useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 
 export interface AdvancedFiltersValues {
   bedrooms: string;
@@ -11,19 +12,21 @@ export interface AdvancedFiltersValues {
 
 export interface AdvancedFiltersModalProps {
   buttonLabel?: string;
-  className?: string; // ✅ Thêm prop className để đồng bộ với các dropdown
   values: AdvancedFiltersValues;
   onApply: (vals: AdvancedFiltersValues) => void;
   onReset: () => void;
+  className?: string;
 }
 
 export default function AdvancedFiltersModal({
   buttonLabel = "Bộ lọc nâng cao",
-  className = "",
   values,
   onApply,
   onReset,
+  className = "",
 }: AdvancedFiltersModalProps) {
+  const router = useRouter();
+  const searchParams = useSearchParams();
   const [open, setOpen] = useState(false);
   const [localValues, setLocalValues] = useState(values);
 
@@ -32,8 +35,27 @@ export default function AdvancedFiltersModal({
   };
 
   const handleApply = () => {
+    // ✅ Update URL với các giá trị lọc nâng cao
+    const params = new URLSearchParams(searchParams.toString());
+    Object.entries(localValues).forEach(([key, value]) => {
+      if (value) params.set(key, value);
+      else params.delete(key);
+    });
+    router.push(`?${params.toString()}`);
+
     onApply(localValues);
     setOpen(false);
+  };
+
+  const handleReset = () => {
+    const params = new URLSearchParams(searchParams.toString());
+    ["bedrooms", "bathrooms", "direction", "status"].forEach((key) =>
+      params.delete(key)
+    );
+    router.push(`?${params.toString()}`);
+
+    onReset();
+    setLocalValues({ bedrooms: "", bathrooms: "", direction: "", status: "" });
   };
 
   return (
@@ -104,15 +126,7 @@ export default function AdvancedFiltersModal({
             <div className="mt-4 flex justify-between">
               <button
                 className="border px-3 py-1 rounded bg-gray-200 hover:bg-gray-300"
-                onClick={() => {
-                  onReset();
-                  setLocalValues({
-                    bedrooms: "",
-                    bathrooms: "",
-                    direction: "",
-                    status: "",
-                  });
-                }}
+                onClick={handleReset}
               >
                 Reset
               </button>

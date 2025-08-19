@@ -1,16 +1,15 @@
-// src/components/filters/AreaDropdown.tsx
 "use client";
 import React from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 
 export interface DropdownProps {
   initialValue: string;
-  className?: string; // 👈 thêm className
+  className?: string;
 }
 
-export default function AreaDropdown({
-  initialValue,
-  className = "",
-}: DropdownProps) {
+export default function AreaDropdown({ initialValue, className = "" }: DropdownProps) {
+  const router = useRouter();
+  const searchParams = useSearchParams();
   const [value, setValue] = React.useState(initialValue || "");
 
   const areaOptions = [
@@ -23,13 +22,22 @@ export default function AreaDropdown({
   ];
 
   const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setValue(e.target.value);
-    // TODO: Trigger filter update (router push hoặc callback)
+    const newValue = e.target.value;
+    setValue(newValue);
+
+    // tạo URL mới giữ nguyên params cũ
+    const params = new URLSearchParams(searchParams.toString());
+    if (newValue) {
+      params.set("areaRange", newValue);
+    } else {
+      params.delete("areaRange");
+    }
+    router.push(`?${params.toString()}`);
   };
 
   return (
     <select
-      className={`border rounded px-3 py-2 ${className}`} // 👈 dùng className ngoài
+      className={`border rounded px-3 py-2 ${className}`}
       value={value}
       onChange={handleChange}
     >

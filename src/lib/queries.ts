@@ -12,28 +12,46 @@ interface SearchParams {
   direction?: string;
   status?: string;
   purpose?: string;
-  project?: string; // slug dự án
+  project?: string;   // slug dự án
+  city?: string;      // slug thành phố
+  district?: string;  // slug quận/huyện
+  ward?: string;      // slug phường/xã
 }
 
 export async function getPropertiesByFilter(filters: SearchParams) {
   const {
     propertyType, price, area, has3D, bedrooms, bathrooms,
-    direction, status, purpose, project,
+    direction, status, purpose, project, city, district, ward
   } = filters;
 
   const where: any = {};
+
+  // 🔎 loại hình + mục đích
   if (propertyType && propertyType !== 'all') where.propertyType = propertyType;
   if (purpose && purpose !== 'all') where.purpose = purpose;
 
+  // 🔎 tỉnh/thành, quận/huyện, phường/xã (slug)
+  if (city) where.city = city;
+  if (district) where.district = district;
+  if (ward) where.ward = ward;
+
+  // 🔎 khoảng giá
   if (price) {
     const [min, max] = price.split('-').map(Number);
-    if (!Number.isNaN(min) && !Number.isNaN(max)) where.price = { gte: min, lte: max };
-  }
-  if (area) {
-    const [min, max] = area.split('-').map(Number);
-    if (!Number.isNaN(min) && !Number.isNaN(max)) where.area = { gte: min, lte: max };
+    if (!Number.isNaN(min) && !Number.isNaN(max)) {
+      where.price = { gte: min, lte: max };
+    }
   }
 
+  // 🔎 diện tích
+  if (area) {
+    const [min, max] = area.split('-').map(Number);
+    if (!Number.isNaN(min) && !Number.isNaN(max)) {
+      where.area = { gte: min, lte: max };
+    }
+  }
+
+  // 🔎 các option khác
   if (has3D) where.has3D = has3D === 'true';
   if (bedrooms) where.bedrooms = Number(bedrooms);
   if (bathrooms) where.bathrooms = Number(bathrooms);
@@ -54,7 +72,6 @@ export async function getIndustrialProperties(purpose: "buy" | "rent" = "buy") {
   });
 }
 
-// ✅ Thêm/đảm bảo 2 hàm dưới được export
 export async function getAllProjects() {
   return prisma.project.findMany({
     orderBy: { createdAt: "desc" },

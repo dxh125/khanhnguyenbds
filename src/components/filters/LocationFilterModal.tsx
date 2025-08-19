@@ -66,7 +66,7 @@ export default function LocationFilterModal({ filters }: { filters?: Filters }) 
               <LocationFilter
                 filters={tempFilters}
                 onChange={(updated) => setTempFilters((prev) => ({ ...prev, ...updated }))}
-                mode="local" // chế độ chọn cục bộ, không filter ngay
+                mode="inline" // chế độ chọn cục bộ, không filter ngay
               />
             </div>
 
