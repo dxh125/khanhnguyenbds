@@ -1,4 +1,4 @@
-// app/[locale]/buy/[type]/page.tsx
+// app/[locale]/rent/[type]/page.tsx
 import { getPropertiesByFilter } from "@/lib/queries";
 import FilterBar from "@/components/filters/FilterBar";
 import PropertyCard from "@/components/PropertyCard";
@@ -8,19 +8,17 @@ interface Props {
   searchParams: Record<string, string | string[] | undefined>;
 }
 
-// Nếu bạn dùng segment location trong URL, file nên là: page.tsx cạnh folder [[...slug]]
-export default async function BuyPage({ params, searchParams }: Props) {
+export default async function RentPage({ params, searchParams }: Props) {
   const { type, slug } = params;
   const [city, district, ward] = slug ?? [];
 
-  // Lấy các key filter hợp lệ từ searchParams (ép về string)
   const sp = searchParams || {};
   const str = (v: unknown) => (typeof v === "string" ? v : "");
 
   const initialFilters = {
     // từ segment
     propertyType: type,
-    purpose: "buy",
+    purpose: "rent",
     ...(city ? { city } : {}),
     ...(district ? { district } : {}),
     ...(ward ? { ward } : {}),

@@ -1,79 +1,86 @@
 // src/lib/queries.ts
-import { PrismaClient } from '@prisma/client';
+import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
-interface SearchParams {
+export interface SearchParams {
   propertyType?: string;
-  price?: string;
-  area?: string;
-  has3D?: string;
-  bedrooms?: string;
-  bathrooms?: string;
-  direction?: string;
-  status?: string;
-  purpose?: string;
-  project?: string;   // slug dự án
-  city?: string;      // slug thành phố
-  district?: string;  // slug quận/huyện
-  ward?: string;      // slug phường/xã
+  price?: string;      // "min-max" | "min-" | "-max" | "min+"
+  area?: string;       // "min-max" | "min-"
+  has3D?: string;      // "true" | "false"
+  bedrooms?: string;   // số
+  bathrooms?: string;  // số
+  direction?: string;  // "dong-nam" ...
+  status?: string;     // "available" | "sold"
+  purpose?: string;    // "buy" | "rent"
+  project?: string;    // slug dự án
+  city?: string;
+  district?: string;
+  ward?: string;
+  legal?: string;      // "so-do" | "so-hong" | "hop-dong-thue"
 }
 
 export async function getPropertiesByFilter(filters: SearchParams) {
   const {
     propertyType, price, area, has3D, bedrooms, bathrooms,
-    direction, status, purpose, project, city, district, ward
+    direction, status, purpose, project, city, district, ward, legal,
   } = filters;
 
   const where: any = {};
 
   // 🔎 loại hình + mục đích
-  if (propertyType && propertyType !== 'all') where.propertyType = propertyType;
-  if (purpose && purpose !== 'all') where.purpose = purpose;
+  if (propertyType && propertyType !== "all") where.propertyType = propertyType;
+  if (purpose && purpose !== "all") where.purpose = purpose;
 
-  // 🔎 tỉnh/thành, quận/huyện, phường/xã (slug)
+  // 🔎 địa lý (slug)
   if (city) where.city = city;
   if (district) where.district = district;
   if (ward) where.ward = ward;
 
-  // 🔎 khoảng giá
+  // 🔎 giá: "min-max" | "min-" | "-max" | "min+"
   if (price) {
-    const [min, max] = price.split('-').map(Number);
-    if (!Number.isNaN(min) && !Number.isNaN(max)) {
-      where.price = { gte: min, lte: max };
-    }
-  }
-
-  // 🔎 diện tích
-  // ... trong getPropertiesByFilter
-  // 🔎 diện tích
-  if (area) {
-    if (area.includes("-")) {
-      const [minStr, maxStr] = area.split("-");
+    if (price.endsWith("+")) {
+      const min = Number(price.slice(0, -1));
+      if (!Number.isNaN(min)) where.price = { gte: min };
+    } else if (price.includes("-")) {
+      const [minStr, maxStr] = price.split("-");
       const min = minStr ? Number(minStr) : undefined;
       const max = maxStr ? Number(maxStr) : undefined;
-
       if (min != null || max != null) {
-        where.area = {};
-        if (min != null && !Number.isNaN(min)) where.area.gte = min;
-        if (max != null && !Number.isNaN(max)) where.area.lte = max;
+        where.price = {};
+        if (min != null && !Number.isNaN(min)) where.price.gte = min;
+        if (max != null && !Number.isNaN(max)) where.price.lte = max;
       }
-    } else {
-      // nếu value không hợp lệ thì bỏ qua
     }
   }
 
+  // 🔎 diện tích: "min-max" | "min-" | "-max"
+  if (area && area.includes("-")) {
+    const [minStr, maxStr] = area.split("-");
+    const min = minStr ? Number(minStr) : undefined;
+    const max = maxStr ? Number(maxStr) : undefined;
+    if (min != null || max != null) {
+      where.area = {};
+      if (min != null && !Number.isNaN(min)) where.area.gte = min;
+      if (max != null && !Number.isNaN(max)) where.area.lte = max;
+    }
+  }
 
-  // 🔎 các option khác
-  if (has3D) where.has3D = has3D === 'true';
-  if (bedrooms) where.bedrooms = Number(bedrooms);
-  if (bathrooms) where.bathrooms = Number(bathrooms);
+  // 🔎 tuỳ chọn khác
+  if (has3D) where.has3D = has3D === "true";
+  if (bedrooms) where.bedrooms = { gte: Number(bedrooms) };
+  if (bathrooms) where.bathrooms = { gte: Number(bathrooms) };
   if (direction) where.direction = direction;
   if (status) where.status = status;
+  if (legal) where.legal = legal;
   if (project) where.projectSlug = project;
+
+  // DEBUG (tuỳ): kiểm tra filters nhận vào
+  // console.log("[filters]", filters);
+  // console.dir(where, { depth: null });
 
   return prisma.property.findMany({
     where,
-    orderBy: { postedAt: 'desc' },
+    orderBy: { postedAt: "desc" },
   });
 }
 
