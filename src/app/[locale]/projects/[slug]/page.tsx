@@ -1,20 +1,21 @@
+// app/[locale]/projects/[slug]/page.tsx  (đúng theo cấu trúc của bạn)
 import { notFound } from "next/navigation";
 import { getProjectBySlug, getPropertiesByFilter } from "@/lib/queries";
 import PropertyCard from "@/components/PropertyCard";
 
+type PageParams = { locale: string; slug: string };
+
 interface Props {
-  params: { locale: string; slug: string };
+  params: Promise<PageParams>; // 👈 Next 15: Promise
 }
 
 export default async function ProjectDetailPage({ params }: Props) {
-  const { slug } = params;
+  const { slug } = await params; // 👈 must await
 
   const project = await getProjectBySlug(slug);
   if (!project) return notFound();
 
-  const properties = await getPropertiesByFilter({
-    project: slug,
-  });
+  const properties = await getPropertiesByFilter({ project: slug });
 
   return (
     <div className="max-w-7xl mx-auto px-4 py-6">
@@ -27,7 +28,7 @@ export default async function ProjectDetailPage({ params }: Props) {
         <p>Chưa có bất động sản nào thuộc dự án này.</p>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {properties.map((property) => (
+          {properties.map((property: any) => (
             <PropertyCard key={property.id} property={property} />
           ))}
         </div>

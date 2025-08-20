@@ -1,29 +1,29 @@
+// app/[locale]/layout.tsx
 import "../globals.css";
 import { ReactNode } from "react";
-import { NextIntlClientProvider } from "next-intl"; 
-import { getMessages } from "next-intl/server";     
+import { NextIntlClientProvider } from "next-intl";
+import { getMessages } from "next-intl/server";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { notFound } from "next/navigation";
 
+type LayoutParams = { locale: string };
+
 interface Props {
   children: ReactNode;
-  params: { locale: string };
+  params: Promise<LayoutParams>; // 👈 Next 15: Promise
 }
 
-export default async function LocaleLayout(props: Props) {
-  // ✅ Giải cấu trúc rõ ràng trong hàm async
-  const { children, params } = props;
+export default async function LocaleLayout({ children, params }: Props) {
+  const { locale } = await params; // 👈 must await
 
-  // ✅ Chỉ xử lý params sau khi có thể await
-  const messages = await getMessages({ locale: params.locale }).catch(() => null);
-
+  const messages = await getMessages({ locale }).catch(() => null);
   if (!messages) notFound();
 
   return (
-    <html lang={params.locale}>
+    <html lang={locale}>
       <body className="min-h-screen flex flex-col bg-gray-100">
-        <NextIntlClientProvider locale={params.locale} messages={messages}>
+        <NextIntlClientProvider locale={locale} messages={messages}>
           <Navbar />
           <main className="flex-1">{children}</main>
           <Footer />

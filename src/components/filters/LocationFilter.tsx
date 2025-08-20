@@ -8,11 +8,12 @@ export interface Filters {
   ward?: string;
 }
 
-interface LocationFilterProps {
+export interface LocationFilterProps {
   filters: Filters;
   compact?: boolean;
   className?: string;
   onChange?: (updated: Filters) => void; // ✅ chỉ emit ra ngoài, KHÔNG push
+  mode?: "inline" | "modal";            // ✅ thêm prop mode cho Modal dùng
 }
 
 interface ProvinceMeta {
@@ -81,6 +82,7 @@ export default function LocationFilter({
   compact,
   className,
   onChange,
+  mode = "inline", // ✅ nhận và có default
 }: LocationFilterProps) {
   const [province, setProvince] = useState(filters.city || "");
   const [district, setDistrict] = useState(filters.district || "");
@@ -91,9 +93,15 @@ export default function LocationFilter({
   useEffect(() => {
     let active = true;
     async function load() {
-      if (!province) { if (active) { setDistricts([]); setWards([]); } return; }
+      if (!province) {
+        if (active) { setDistricts([]); setWards([]); }
+        return;
+      }
       const provMeta = (provinces as ProvinceMeta[]).find((p) => p.slug === province);
-      if (!provMeta) { if (active) { setDistricts([]); setWards([]); } return; }
+      if (!provMeta) {
+        if (active) { setDistricts([]); setWards([]); }
+        return;
+      }
       const mod = await import(`@/data/locations/${provMeta.file}`);
       const normalized = normalizeDistricts((mod as any)?.default ?? mod);
       if (!active) return;
@@ -107,7 +115,8 @@ export default function LocationFilter({
     }
     load();
     return () => { active = false; };
-  }, [province]); // eslint-disable-line
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [province]);
 
   useEffect(() => {
     if (!district) { setWards([]); return; }
@@ -115,7 +124,15 @@ export default function LocationFilter({
     setWards(d?.wards ?? []);
   }, [district, districts]);
 
-  const emit = (updated: Filters) => onChange?.(updated);
+  // Nếu mode===modal, bạn có thể tuỳ chọn đổi hành vi emit (ví dụ: không emit ngay)
+  const emit = (updated: Filters) => {
+    if (mode === "inline") {
+      onChange?.(updated);
+    } else {
+      // modal: vẫn emit để Modal giữ state tạm (đúng với cách bạn đang dùng)
+      onChange?.(updated);
+    }
+  };
 
   const handleProvince = (val: string) => {
     setProvince(val); setDistrict(""); setWard("");
@@ -141,14 +158,22 @@ export default function LocationFilter({
         ))}
       </select>
 
-      <select value={district} onChange={(e) => handleDistrict(e.target.value)}
-              className={selectCls} disabled={!province || districts.length === 0}>
+      <select
+        value={district}
+        onChange={(e) => handleDistrict(e.target.value)}
+        className={selectCls}
+        disabled={!province || districts.length === 0}
+      >
         <option value="">Chọn quận/huyện</option>
         {districts.map((d) => (<option key={d.slug} value={d.slug}>{d.name}</option>))}
       </select>
 
-      <select value={ward} onChange={(e) => handleWard(e.target.value)}
-              className={selectCls} disabled={!district || wards.length === 0}>
+      <select
+        value={ward}
+        onChange={(e) => handleWard(e.target.value)}
+        className={selectCls}
+        disabled={!district || wards.length === 0}
+      >
         <option value="">Chọn phường/xã</option>
         {wards.map((w) => (<option key={w.slug} value={w.slug}>{w.name}</option>))}
       </select>

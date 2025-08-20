@@ -1,24 +1,27 @@
-// app/[locale]/rent/[type]/page.tsx
+// app/[locale]/rent/[type]/[[...slug]]/page.tsx
 import { getPropertiesByFilter } from "@/lib/queries";
 import FilterBar from "@/components/filters/FilterBar";
 import PropertyCard from "@/components/PropertyCard";
 
-interface Props {
-  params: { locale: string; type: string; slug?: string[] };
-  searchParams: Record<string, string | string[] | undefined>;
-}
+type PageParams = { locale: string; type: string; slug?: string[] };
+type PageSearch = { [key: string]: string | string[] | undefined };
 
-export default async function RentPage({ params, searchParams }: Props) {
-  const { type, slug } = params;
+type PageProps = {
+  params: Promise<PageParams>;        // 👈 Next 15: Promise
+  searchParams: Promise<PageSearch>;  // 👈 Next 15: Promise
+};
+
+export default async function RentPage({ params, searchParams }: PageProps) {
+  const { type, slug } = await params;       // 👈 await
   const [city, district, ward] = slug ?? [];
 
-  const sp = searchParams || {};
+  const sp = await searchParams;             // 👈 await
   const str = (v: unknown) => (typeof v === "string" ? v : "");
 
   const initialFilters = {
     // từ segment
     propertyType: type,
-    purpose: "rent",
+    purpose: "rent" as const,
     ...(city ? { city } : {}),
     ...(district ? { district } : {}),
     ...(ward ? { ward } : {}),
@@ -45,7 +48,7 @@ export default async function RentPage({ params, searchParams }: Props) {
       {properties.length === 0 ? (
         <div className="mt-6 text-gray-600">Không tìm thấy BĐS</div>
       ) : (
-        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 mt-6">
+        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 mt-6">
           {properties.map((p) => (
             <PropertyCard key={p.id} property={p} />
           ))}
