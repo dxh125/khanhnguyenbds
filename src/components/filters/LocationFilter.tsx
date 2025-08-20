@@ -1,6 +1,5 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { useRouter, useSearchParams, usePathname } from "next/navigation";
 import provinces from "@/data/locations/index.json";
 
 export interface Filters {
@@ -13,8 +12,7 @@ interface LocationFilterProps {
   filters: Filters;
   compact?: boolean;
   className?: string;
-  onChange?: (updated: Filters) => void;
-  mode?: "inline" | "modal"; // 👈 có thể dùng sau
+  onChange?: (updated: Filters) => void; // ✅ chỉ emit ra ngoài, KHÔNG push
 }
 
 interface ProvinceMeta {
@@ -23,148 +21,136 @@ interface ProvinceMeta {
   slug: string;
   file: string;
 }
+interface Ward { name: string; slug: string; }
+interface District { name: string; slug: string; wards: Ward[]; }
 
-interface District {
-  name: string;
-  slug: string;
-  wards: { name: string; slug: string }[];
+// Chuẩn hoá dữ liệu từ file JSON (tránh .map lỗi)
+function normalizeWards(wards: any): Ward[] {
+  if (!wards) return [];
+  if (Array.isArray(wards)) {
+    return wards.map((w: any) => ({
+      name: w?.name ?? w?.title ?? String(w?.slug ?? w?.code ?? ""),
+      slug: w?.slug ?? (w?.code ? String(w.code) : (w?.name || "")),
+    }));
+  }
+  if (typeof wards === "object") {
+    return Object.entries<any>(wards).map(([slugKey, val]) => ({
+      name: val?.name ?? val?.title ?? String(slugKey),
+      slug: val?.slug ?? String(slugKey),
+    }));
+  }
+  return [];
+}
+function normalizeDistricts(data: any): District[] {
+  if (!data) return [];
+  if (Array.isArray((data as any).districts)) {
+    return (data as any).districts.map((d: any) => ({
+      name: d.name ?? d.title ?? String(d.slug ?? d.code ?? ""),
+      slug: d.slug ?? (d.code ? String(d.code) : (d.name || "")),
+      wards: normalizeWards(d.wards),
+    }));
+  }
+  if (Array.isArray(data)) {
+    return data.map((d: any) => ({
+      name: d.name ?? d.title ?? String(d.slug ?? d.code ?? ""),
+      slug: d.slug ?? (d.code ? String(d.code) : (d.name || "")),
+      wards: normalizeWards(d.wards),
+    }));
+  }
+  if (typeof data === "object") {
+    return Object.entries<any>(data).map(([slugKey, val]) => {
+      if (Array.isArray(val)) {
+        return {
+          name: String(slugKey).replace(/-/g, " "),
+          slug: String(slugKey),
+          wards: normalizeWards(val),
+        };
+      }
+      return {
+        name: val?.name ?? val?.title ?? String(slugKey),
+        slug: val?.slug ?? String(slugKey),
+        wards: normalizeWards(val?.wards),
+      };
+    });
+  }
+  return [];
 }
 
 export default function LocationFilter({
   filters,
+  compact,
   className,
   onChange,
 }: LocationFilterProps) {
-  const router = useRouter();
-  const searchParams = useSearchParams();
-  const pathname = usePathname();
-
   const [province, setProvince] = useState(filters.city || "");
   const [district, setDistrict] = useState(filters.district || "");
   const [ward, setWard] = useState(filters.ward || "");
-
   const [districts, setDistricts] = useState<District[]>([]);
-  const [wards, setWards] = useState<{ name: string; slug: string }[]>([]);
+  const [wards, setWards] = useState<Ward[]>([]);
 
-  // Load districts khi chọn tỉnh
   useEffect(() => {
-    if (!province) {
-      setDistricts([]);
-      setWards([]);
-      return;
+    let active = true;
+    async function load() {
+      if (!province) { if (active) { setDistricts([]); setWards([]); } return; }
+      const provMeta = (provinces as ProvinceMeta[]).find((p) => p.slug === province);
+      if (!provMeta) { if (active) { setDistricts([]); setWards([]); } return; }
+      const mod = await import(`@/data/locations/${provMeta.file}`);
+      const normalized = normalizeDistricts((mod as any)?.default ?? mod);
+      if (!active) return;
+      setDistricts(normalized);
+      if (district) {
+        const d = normalized.find((x) => x.slug === district);
+        setWards(d?.wards ?? []);
+      } else {
+        setWards([]);
+      }
     }
-    const selected = (provinces as ProvinceMeta[]).find((p) => p.slug === province);
-    if (selected) {
-      import(`@/data/locations/${selected.file}`).then((data) => {
-        const provinceData = data.default;
-        setDistricts(provinceData.districts as District[]);
-      });
-    }
-  }, [province]);
+    load();
+    return () => { active = false; };
+  }, [province]); // eslint-disable-line
 
-  // Load wards khi chọn huyện
   useEffect(() => {
-    if (!district) {
-      setWards([]);
-      return;
-    }
+    if (!district) { setWards([]); return; }
     const d = districts.find((x) => x.slug === district);
-    if (d) setWards(d.wards || []);
+    setWards(d?.wards ?? []);
   }, [district, districts]);
 
- const updateFilter = (key: keyof Filters, value: string) => {
-  // Cập nhật state tạm
-  const newFilters = {
-    city: key === "city" ? value : province,
-    district: key === "district" ? value : district,
-    ward: key === "ward" ? value : ward,
+  const emit = (updated: Filters) => onChange?.(updated);
+
+  const handleProvince = (val: string) => {
+    setProvince(val); setDistrict(""); setWard("");
+    emit({ city: val, district: "", ward: "" });
   };
-  if (onChange) onChange(newFilters);
+  const handleDistrict = (val: string) => {
+    setDistrict(val); setWard("");
+    emit({ city: province, district: val, ward: "" });
+  };
+  const handleWard = (val: string) => {
+    setWard(val);
+    emit({ city: province, district, ward: val });
+  };
 
-  // Lấy các phần hiện tại từ pathname
-  // Ví dụ: /vi/buy/can-ho/ha-noi/cau-giay
-  const parts = pathname.split("/").filter(Boolean);
-  const [locale, purpose, propertyType] = parts;
-
-  // Xây slug mới từ filter location
-  const locationPath = [
-    newFilters.city || "",
-    newFilters.district || "",
-    newFilters.ward || "",
-  ].filter(Boolean);
-
-  const newPath = [
-    "",
-    locale,
-    purpose,
-    propertyType,
-    ...locationPath,
-  ].join("/");
-
-  // Giữ lại query string (nếu có)
-  const query = searchParams.toString();
-  router.push(query ? `${newPath}?${query}` : newPath);
-};
+  const selectCls = `border rounded px-2 ${compact ? "h-10" : "h-11"} bg-white`;
 
   return (
-    <div className="flex gap-2">
-      {/* Province */}
-      <select
-        className={`border rounded px-3 py-2 ${className}`}
-        value={province}
-        onChange={(e) => {
-          const val = e.target.value;
-          setProvince(val);
-          setDistrict("");
-          setWard("");
-          updateFilter("city", val);
-        }}
-      >
-        <option value="">Chọn Tỉnh/Thành phố</option>
-        {(provinces as ProvinceMeta[]).map((p) => (
-          <option key={p.code} value={p.slug}>
-            {p.name}
-          </option>
+    <div className={`flex gap-2 ${className || ""}`}>
+      <select value={province} onChange={(e) => handleProvince(e.target.value)} className={selectCls}>
+        <option value="">Chọn tỉnh/thành</option>
+        {Array.isArray(provinces) && (provinces as ProvinceMeta[]).map((p) => (
+          <option key={p.slug} value={p.slug}>{p.name}</option>
         ))}
       </select>
 
-      {/* District */}
-      <select
-        className={`border rounded px-3 py-2 ${className}`}
-        value={district}
-        onChange={(e) => {
-          const val = e.target.value;
-          setDistrict(val);
-          setWard("");
-          updateFilter("district", val);
-        }}
-        disabled={!districts.length}
-      >
-        <option value="">Chọn Quận/Huyện</option>
-        {districts.map((d) => (
-          <option key={d.slug} value={d.slug}>
-            {d.name}
-          </option>
-        ))}
+      <select value={district} onChange={(e) => handleDistrict(e.target.value)}
+              className={selectCls} disabled={!province || districts.length === 0}>
+        <option value="">Chọn quận/huyện</option>
+        {districts.map((d) => (<option key={d.slug} value={d.slug}>{d.name}</option>))}
       </select>
 
-      {/* Ward */}
-      <select
-        className={`border rounded px-3 py-2 ${className}`}
-        value={ward}
-        onChange={(e) => {
-          const val = e.target.value;
-          setWard(val);
-          updateFilter("ward", val);
-        }}
-        disabled={!wards.length}
-      >
-        <option value="">Chọn Phường/Xã</option>
-        {wards.map((w) => (
-          <option key={w.slug} value={w.slug}>
-            {w.name}
-          </option>
-        ))}
+      <select value={ward} onChange={(e) => handleWard(e.target.value)}
+              className={selectCls} disabled={!district || wards.length === 0}>
+        <option value="">Chọn phường/xã</option>
+        {wards.map((w) => (<option key={w.slug} value={w.slug}>{w.name}</option>))}
       </select>
     </div>
   );

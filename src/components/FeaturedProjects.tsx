@@ -36,7 +36,10 @@ export default function FeaturedProjects() {
         <h2 className="text-2xl font-semibold mb-6">Dự án nổi bật</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
           {projects.map((project) => (
-            <div key={project._id} className="relative rounded-lg overflow-hidden shadow-md group">
+            <div
+              key={project._id}
+              className="relative rounded-lg overflow-hidden shadow-md group"
+            >
               <img
                 src={project.image || "/default-project.jpg"}
                 alt={project.name}

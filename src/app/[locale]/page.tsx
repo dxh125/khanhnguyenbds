@@ -5,10 +5,11 @@ import { useTranslations } from "next-intl";
 import { Search } from "lucide-react";
 
 import { fetchProperties } from "@/lib/api";
-import SidebarFilter from "@/components/SidebarFilter";
+// ❌ import SidebarFilter from "@/components/SidebarFilter";
 import PropertyCard from "@/components/PropertyCard";
 import FeatureSection from "@/components/FeatureSection";
 import FeaturedProjects from "@/components/FeaturedProjects";
+import FilterBar from "@/components/filters/FilterBar"; // ✅ dùng FilterBar
 
 interface Property {
   id: string;
@@ -24,12 +25,7 @@ interface Property {
 export default function HomePage() {
   const t = useTranslations("Home");
 
-  const [filter, setFilter] = useState("");
   const [search, setSearch] = useState("");
-  const [priceFrom, setPriceFrom] = useState("");
-  const [priceTo, setPriceTo] = useState("");
-  const [areaFrom, setAreaFrom] = useState("");
-  const [areaTo, setAreaTo] = useState("");
   const [properties, setProperties] = useState<Property[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -40,18 +36,9 @@ export default function HomePage() {
       .finally(() => setLoading(false));
   }, []);
 
-  const parseNumber = (val: string) => parseFloat(val.replace(/[^\d.]/g, "")) || 0;
-
-  const filtered = properties.filter((p) => {
-    return (
-      (!filter || p.propertyType === filter) &&
-      (!search || p.title.toLowerCase().includes(search.toLowerCase())) &&
-      (!priceFrom || p.price >= parseNumber(priceFrom)) &&
-      (!priceTo || p.price <= parseNumber(priceTo)) &&
-      (!areaFrom || p.area >= parseNumber(areaFrom)) &&
-      (!areaTo || p.area <= parseNumber(areaTo))
-    );
-  });
+  const filtered = properties.filter((p) =>
+    !search || p.title.toLowerCase().includes(search.toLowerCase())
+  );
 
   const SkeletonCard = () => (
     <div className="bg-white rounded-2xl shadow p-4 animate-pulse space-y-3">
@@ -65,6 +52,7 @@ export default function HomePage() {
 
   return (
     <main className="flex-1 bg-white">
+      {/* HERO */}
       <section
         className="relative h-[480px] bg-cover bg-center"
         style={{ backgroundImage: "url('/banner.jpg')" }}
@@ -92,14 +80,6 @@ export default function HomePage() {
             </button>
           </div>
 
-          {/* <p className="text-sm mt-4">
-            {t.rich("listingCount", {
-              count: (chunks) => <strong>{chunks}</strong>
-            }, {
-              count: "177,008"
-            })}
-          </p> */}
-
           <div className="mt-2 flex flex-wrap gap-2 justify-center text-sm">
             <span className="bg-white text-black px-3 py-1 rounded-full border">The Global City</span>
             <span className="bg-white text-black px-3 py-1 rounded-full border">Caraworld Cam Ranh</span>
@@ -109,26 +89,13 @@ export default function HomePage() {
         </div>
       </section>
 
-      <FeatureSection />
-      <FeaturedProjects />
+      {/* CONTENT */}
+      <div className="max-w-7xl mx-auto p-4 space-y-6">
+        {/* ✅ FilterBar ngang: truyền initialFilters rỗng hoặc mặc định purpose nếu muốn */}
+        <FilterBar initialFilters={{}} defaultPurpose="buy" defaultType="can-ho" />
 
-      <div className="max-w-7xl mx-auto p-4 grid grid-cols-1 md:grid-cols-4 gap-6">
-        <SidebarFilter
-          filter={filter}
-          setFilter={setFilter}
-          search={search}
-          setSearch={setSearch}
-          priceFrom={priceFrom}
-          setPriceFrom={setPriceFrom}
-          priceTo={priceTo}
-          setPriceTo={setPriceTo}
-          areaFrom={areaFrom}
-          setAreaFrom={setAreaFrom}
-          areaTo={areaTo}
-          setAreaTo={setAreaTo}
-        />
-
-        <section className="md:col-span-3">
+        {/* Danh sách bất động sản */}
+        <section>
           <div className="flex justify-between items-center mb-4">
             <h2 className="text-2xl font-semibold">{t("propertyListTitle")}</h2>
             {!loading && (
@@ -139,15 +106,16 @@ export default function HomePage() {
           </div>
 
           {loading ? (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-              {Array.from({ length: 6 }).map((_, i) => (
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-6">
+              {Array.from({ length: 8 }).map((_, i) => (
                 <SkeletonCard key={i} />
               ))}
             </div>
           ) : filtered.length === 0 ? (
             <p className="text-gray-600">{t("noResult")}</p>
           ) : (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            // ✅ 4 cột trên màn hình lớn, vẫn responsive đẹp
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-6">
               {filtered.map((property) => (
                 <PropertyCard key={property.id} property={property} />
               ))}
@@ -155,6 +123,9 @@ export default function HomePage() {
           )}
         </section>
       </div>
+
+      {/* <FeatureSection />
+      <FeaturedProjects /> */}
     </main>
   );
 }

@@ -82,35 +82,36 @@ export default function Navbar() {
     setDropdownTimer(timer);
   };
 
-const handleNavClick = (mainKey: string, slug?: string) => {
-  const base = `/${currentLocale}`;
-  switch (mainKey) {
-    case "buy":
-      router.push(`${base}/buy/${slug}`); // /vi/buy/can-ho
-      break;
-    case "rent":
-      router.push(`${base}/rent/${slug}`); // /vi/rent/can-ho
-      break;
-    case "industry":
-      router.push(`${base}/industrials/${slug}`);
-      break;
-    case "project":
-      router.push(`${base}/projects/${slug}`);
-      break;
-    case "agent":
-      router.push(`${base}/agents`);
-      break;
-    case "about":
-      router.push(`${base}/about`);
-      break;
-  }
-  setActiveDropdown(null);
-  setMobileMenuOpen(false);
-};
+  const handleNavClick = (mainKey: string, slug?: string) => {
+    const base = `/${currentLocale}`;
+    switch (mainKey) {
+      case "buy":
+        router.push(`${base}/buy/${slug}`); // /vi/buy/can-ho
+        break;
+      case "rent":
+        router.push(`${base}/rent/${slug}`); // /vi/rent/can-ho
+        break;
+      case "industry":
+        router.push(`${base}/industrials/${slug}`);
+        break;
+      case "project":
+        router.push(`${base}/projects/${slug}`);
+        break;
+      case "agent":
+        router.push(`${base}/agents`);
+        break;
+      case "about":
+        router.push(`${base}/about`);
+        break;
+    }
+    setActiveDropdown(null);
+    setMobileMenuOpen(false);
+  };
 
 
   return (
-    <header className="bg-white border-b sticky top-0 z-50">
+    <header className="bg-white/80 backdrop-blur-sm border-b sticky top-0 z-50">
+
       <div className="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
         <Link href={`/${currentLocale}`} className="text-red-600 font-bold text-xl border border-red-600 px-2 py-1">
           R
