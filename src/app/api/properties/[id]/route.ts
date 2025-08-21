@@ -56,3 +56,4 @@ export async function DELETE(
 
 // (tuỳ chọn) Nếu bạn muốn chắc chắn không bị static hoá:
 export const dynamic = "force-dynamic";
+export const runtime = "nodejs";
