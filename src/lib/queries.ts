@@ -102,3 +102,9 @@ export async function getProjectBySlug(slug: string) {
     where: { slug },
   });
 }
+// src/lib/queries.ts
+
+
+export async function getPropertyById(id: string) {
+  return prisma.property.findUnique({ where: { id } });
+}
