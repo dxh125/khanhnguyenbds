@@ -1,3 +1,4 @@
+// src/components/filters/LocationFilter.tsx
 "use client";
 import React, { useEffect, useState } from "react";
 import provinces from "@/data/locations/index.json";
@@ -11,21 +12,18 @@ export interface Filters {
 export interface LocationFilterProps {
   filters: Filters;
   compact?: boolean;
+  /** ✅ Style ÁP DỤNG CHO CÁC Ô SELECT (khớp inputBase ở FilterBar) */
   className?: string;
-  onChange?: (updated: Filters) => void; // ✅ chỉ emit ra ngoài, KHÔNG push
-  mode?: "inline" | "modal";            // ✅ thêm prop mode cho Modal dùng
+  /** (tuỳ chọn) style cho wrapper, tránh xung đột với className của select */
+  containerClassName?: string;
+  onChange?: (updated: Filters) => void;
+  mode?: "inline" | "modal";
 }
 
-interface ProvinceMeta {
-  code: string;
-  name: string;
-  slug: string;
-  file: string;
-}
+interface ProvinceMeta { code: string; name: string; slug: string; file: string; }
 interface Ward { name: string; slug: string; }
 interface District { name: string; slug: string; wards: Ward[]; }
 
-// Chuẩn hoá dữ liệu từ file JSON (tránh .map lỗi)
 function normalizeWards(wards: any): Ward[] {
   if (!wards) return [];
   if (Array.isArray(wards)) {
@@ -81,8 +79,9 @@ export default function LocationFilter({
   filters,
   compact,
   className,
+  containerClassName,
   onChange,
-  mode = "inline", // ✅ nhận và có default
+  mode = "inline",
 }: LocationFilterProps) {
   const [province, setProvince] = useState(filters.city || "");
   const [district, setDistrict] = useState(filters.district || "");
@@ -93,15 +92,9 @@ export default function LocationFilter({
   useEffect(() => {
     let active = true;
     async function load() {
-      if (!province) {
-        if (active) { setDistricts([]); setWards([]); }
-        return;
-      }
+      if (!province) { if (active) { setDistricts([]); setWards([]); } return; }
       const provMeta = (provinces as ProvinceMeta[]).find((p) => p.slug === province);
-      if (!provMeta) {
-        if (active) { setDistricts([]); setWards([]); }
-        return;
-      }
+      if (!provMeta) { if (active) { setDistricts([]); setWards([]); } return; }
       const mod = await import(`@/data/locations/${provMeta.file}`);
       const normalized = normalizeDistricts((mod as any)?.default ?? mod);
       if (!active) return;
@@ -115,8 +108,7 @@ export default function LocationFilter({
     }
     load();
     return () => { active = false; };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [province]);
+  }, [province]); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     if (!district) { setWards([]); return; }
@@ -124,58 +116,63 @@ export default function LocationFilter({
     setWards(d?.wards ?? []);
   }, [district, districts]);
 
-  // Nếu mode===modal, bạn có thể tuỳ chọn đổi hành vi emit (ví dụ: không emit ngay)
-  const emit = (updated: Filters) => {
-    if (mode === "inline") {
-      onChange?.(updated);
-    } else {
-      // modal: vẫn emit để Modal giữ state tạm (đúng với cách bạn đang dùng)
-      onChange?.(updated);
-    }
-  };
+  const emit = (updated: Filters) => onChange?.(updated);
 
-  const handleProvince = (val: string) => {
-    setProvince(val); setDistrict(""); setWard("");
-    emit({ city: val, district: "", ward: "" });
-  };
-  const handleDistrict = (val: string) => {
-    setDistrict(val); setWard("");
-    emit({ city: province, district: val, ward: "" });
-  };
-  const handleWard = (val: string) => {
-    setWard(val);
-    emit({ city: province, district, ward: val });
-  };
+  const handleProvince = (val: string) => { setProvince(val); setDistrict(""); setWard(""); emit({ city: val, district: "", ward: "" }); };
+  const handleDistrict = (val: string) => { setDistrict(val); setWard(""); emit({ city: province, district: val, ward: "" }); };
+  const handleWard = (val: string) => { setWard(val); emit({ city: province, district, ward: val }); };
 
-  const selectCls = `border rounded px-2 ${compact ? "h-10" : "h-11"} bg-white`;
+  // ✅ Style MẶC ĐỊNH cho các ô select (đồng bộ inputBase của FilterBar)
+  const selectBase =
+    className ||
+    `${compact ? "h-10" : "h-11"} text-sm rounded-lg px-3 ` +
+    `border border-black/20 bg-white text-black ` +
+    `focus:outline-none focus:ring-2 focus:ring-black/10 ` +
+    `disabled:bg-gray-50 disabled:text-gray-400 disabled:border-black/10 ` +
+    `appearance-none`;
 
   return (
-    <div className={`flex gap-2 ${className || ""}`}>
-      <select value={province} onChange={(e) => handleProvince(e.target.value)} className={selectCls}>
+    <div className={`flex gap-2 ${containerClassName || ""}`}>
+      <select
+        value={province}
+        onChange={(e) => handleProvince(e.target.value)}
+        className={selectBase}
+      >
         <option value="">Chọn tỉnh/thành</option>
-        {Array.isArray(provinces) && (provinces as ProvinceMeta[]).map((p) => (
-          <option key={p.slug} value={p.slug}>{p.name}</option>
-        ))}
+        {Array.isArray(provinces) &&
+          (provinces as ProvinceMeta[]).map((p) => (
+            <option key={p.slug} value={p.slug}>
+              {p.name}
+            </option>
+          ))}
       </select>
 
       <select
         value={district}
         onChange={(e) => handleDistrict(e.target.value)}
-        className={selectCls}
+        className={selectBase}
         disabled={!province || districts.length === 0}
       >
         <option value="">Chọn quận/huyện</option>
-        {districts.map((d) => (<option key={d.slug} value={d.slug}>{d.name}</option>))}
+        {districts.map((d) => (
+          <option key={d.slug} value={d.slug}>
+            {d.name}
+          </option>
+        ))}
       </select>
 
       <select
         value={ward}
         onChange={(e) => handleWard(e.target.value)}
-        className={selectCls}
+        className={selectBase}
         disabled={!district || wards.length === 0}
       >
         <option value="">Chọn phường/xã</option>
-        {wards.map((w) => (<option key={w.slug} value={w.slug}>{w.name}</option>))}
+        {wards.map((w) => (
+          <option key={w.slug} value={w.slug}>
+            {w.name}
+          </option>
+        ))}
       </select>
     </div>
   );
