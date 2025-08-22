@@ -6,49 +6,24 @@ import PropertyCard from "@/components/PropertyCard";
 import FilterBar from "@/components/filters/FilterBar";
 import { parseSearchIntent } from "@/lib/searchIntent";
 
-type SP = Record<string, string | string[] | undefined>;
+type SP = { [key: string]: string | string[] | undefined };
 
-interface Props {
-  params: { locale: string };
-  searchParams: SP;
-}
+const toStr = (v?: string | string[]) =>
+  typeof v === "string" ? v : Array.isArray(v) ? v[0] : undefined;
 
-function toStr(v: string | string[] | undefined) {
-  return typeof v === "string" ? v : undefined;
-}
+export default async function Page(props: any) {
+  // ✅ Thu hẹp type bên trong để vẫn có IntelliSense
+  const { params, searchParams } = props as {
+    params: { locale?: string };
+    searchParams?: SP;
+  };
 
-function buildUrl(
-  locale: string,
-  sp: SP,
-  overrides?: Record<string, string | number | boolean | null | undefined>
-) {
-  const params = new URLSearchParams();
-  for (const [k, v] of Object.entries(sp)) {
-    if (typeof v === "string") params.set(k, v);
-  }
-  if (overrides) {
-    for (const [k, v] of Object.entries(overrides)) {
-      if (v === null || typeof v === "undefined" || v === "") params.delete(k);
-      else params.set(k, String(v));
-    }
-  }
-  const qs = params.toString();
-  return `/${locale}/search${qs ? `?${qs}` : ""}`;
-}
-
-// chuyển intent.maxPrice -> price string cho filter mới
-function toPriceParam(maxPrice?: number) {
-  if (!maxPrice) return undefined;
-  return `-${maxPrice}`; // nghĩa là <= maxPrice
-}
-
-export default async function SearchPage({ params, searchParams }: Props) {
-  const { locale } = params;
+  const locale = params?.locale;
   if (!locale) notFound();
 
-  const q = toStr(searchParams.q);
+  const q = toStr(searchParams?.q);
   const sort =
-    (toStr(searchParams.sort) as
+    (toStr(searchParams?.sort) as
       | "newest"
       | "oldest"
       | "priceAsc"
@@ -56,16 +31,40 @@ export default async function SearchPage({ params, searchParams }: Props) {
       | "areaAsc"
       | "areaDesc") || "newest";
 
-  // Gợi ý thông minh (không ép)
-  const intent = parseSearchIntent(q);
+  // Gợi ý thông minh từ câu truy vấn tự nhiên (không ép, chỉ đề xuất)
+  const intent = parseSearchIntent?.(q) ?? { reasons: [] as string[] };
 
-  // Lấy dữ liệu theo filter mới (đã hỗ trợ q/sort/page/pageSize)
+  // Gọi hàm phân trang (đã hỗ trợ q/sort/page/pageSize trong queries.ts)
   const { items, total, page, pageSize } = await getPropertiesByFilterPaged({
-    ...searchParams,
+    ...(searchParams || {}),
     sort,
   } as any);
 
   const totalPages = Math.max(1, Math.ceil(total / pageSize));
+
+  const buildUrl = (
+    overrides?: Record<string, string | number | boolean | null | undefined>
+  ) => {
+    const paramsQS = new URLSearchParams();
+    // giữ param hiện có
+    Object.entries(searchParams || {}).forEach(([k, v]) => {
+      if (typeof v === "string") paramsQS.set(k, v);
+    });
+    // apply overrides
+    if (overrides) {
+      Object.entries(overrides).forEach(([k, v]) => {
+        if (v === null || typeof v === "undefined" || v === "") paramsQS.delete(k);
+        else paramsQS.set(k, String(v));
+      });
+    }
+    const qs = paramsQS.toString();
+    return `/${locale}/search${qs ? `?${qs}` : ""}`;
+  };
+
+  const toPriceParam = (maxPrice?: number) => {
+    if (!maxPrice) return undefined;
+    return `-${maxPrice}`;
+  };
 
   return (
     <div className="max-w-7xl mx-auto px-4 py-6 space-y-5">
@@ -77,7 +76,7 @@ export default async function SearchPage({ params, searchParams }: Props) {
           <p className="text-sm text-gray-500">{total} tin phù hợp</p>
         </div>
 
-        {/* Sắp xếp (khớp sort mới) */}
+        {/* Sắp xếp */}
         <div className="flex items-center gap-2">
           <span className="text-sm text-gray-600">Sắp xếp:</span>
           {[
@@ -90,7 +89,7 @@ export default async function SearchPage({ params, searchParams }: Props) {
           ].map((opt) => (
             <Link
               key={opt.key}
-              href={buildUrl(locale, searchParams, { sort: opt.key, page: 1 })}
+              href={buildUrl({ sort: opt.key, page: 1 })}
               className={`text-sm px-2.5 py-1.5 rounded border ${
                 sort === (opt.key as any)
                   ? "bg-gray-900 text-white border-gray-900"
@@ -103,7 +102,7 @@ export default async function SearchPage({ params, searchParams }: Props) {
         </div>
       </div>
 
-      {/* Banner gợi ý dựa trên intent (chuyển đúng key filter mới) */}
+      {/* Banner gợi ý áp dụng intent */}
       {!!q && (
         <div className="rounded-xl border bg-amber-50 p-3 text-amber-900 flex flex-wrap gap-2 items-center">
           <div className="text-sm">
@@ -111,28 +110,23 @@ export default async function SearchPage({ params, searchParams }: Props) {
           </div>
           <div className="flex flex-wrap gap-2">
             <Link
-              href={buildUrl(locale, searchParams, {
-                purpose: intent.purpose ?? undefined,
-                propertyType: intent.type ?? undefined,
-                city: intent.city ?? undefined,
-                district: intent.district ?? undefined,
-                price: toPriceParam(intent.maxPrice), // ✅ dùng "price" thay vì maxPrice
+              href={buildUrl({
+                purpose: (intent as any).purpose ?? undefined,
+                propertyType: (intent as any).type ?? undefined,
+                city: (intent as any).city ?? undefined,
+                district: (intent as any).district ?? undefined,
+                price: toPriceParam((intent as any).maxPrice),
                 page: 1,
               })}
               className="text-xs px-3 py-1.5 rounded-full bg-amber-100 hover:bg-amber-200 border"
             >
               Áp dụng khu vực/loại hình/giá gợi ý
             </Link>
-            {(searchParams.city ||
-              searchParams.district ||
-              searchParams.price) && (
+            {((searchParams?.city && typeof searchParams.city === "string") ||
+              (searchParams?.district && typeof searchParams.district === "string") ||
+              (searchParams?.price && typeof searchParams.price === "string")) && (
               <Link
-                href={buildUrl(locale, searchParams, {
-                  city: null,
-                  district: null,
-                  price: null,
-                  page: 1,
-                })}
+                href={buildUrl({ city: null, district: null, price: null, page: 1 })}
                 className="text-xs px-3 py-1.5 rounded-full bg-white hover:bg-gray-50 border"
               >
                 Xoá khu vực/giá đang áp dụng
@@ -142,14 +136,12 @@ export default async function SearchPage({ params, searchParams }: Props) {
         </div>
       )}
 
-      {/* FilterBar ngang tái sử dụng (đọc & ghi đúng query mới) */}
+      {/* FilterBar ngang (điều hướng trên /search) */}
       <FilterBar
-        initialFilters={searchParams}
-        defaultPurpose={
-          (toStr(searchParams.purpose) as "buy" | "rent") || "buy"
-        }
-        defaultType={toStr(searchParams.propertyType) || "can-ho"}
-        basePath={`/${locale}/search`} // ✅ tất cả thao tác lọc ở /search
+        initialFilters={searchParams || {}}
+        defaultPurpose={(toStr(searchParams?.purpose) as "buy" | "rent") || "buy"}
+        defaultType={toStr(searchParams?.propertyType) || "can-ho"}
+        basePath={`/${locale}/search`}
       />
 
       {/* Kết quả */}
@@ -170,9 +162,7 @@ export default async function SearchPage({ params, searchParams }: Props) {
       {totalPages > 1 && (
         <div className="flex justify-center items-center gap-2 pt-2">
           <Link
-            href={buildUrl(locale, searchParams, {
-              page: Math.max(1, page - 1),
-            })}
+            href={buildUrl({ page: Math.max(1, page - 1) })}
             className={`px-3 py-1.5 rounded border ${
               page <= 1 ? "pointer-events-none opacity-50" : "hover:bg-gray-50"
             }`}
@@ -183,9 +173,7 @@ export default async function SearchPage({ params, searchParams }: Props) {
             Trang {page}/{totalPages}
           </span>
           <Link
-            href={buildUrl(locale, searchParams, {
-              page: Math.min(totalPages, page + 1),
-            })}
+            href={buildUrl({ page: Math.min(totalPages, page + 1) })}
             className={`px-3 py-1.5 rounded border ${
               page >= totalPages
                 ? "pointer-events-none opacity-50"
