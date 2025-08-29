@@ -86,10 +86,10 @@ export default function Navbar() {
     const base = `/${currentLocale}`;
     switch (mainKey) {
       case "buy":
-        router.push(`${base}/buy/${slug}`); // /vi/buy/can-ho
+        router.push(`${base}/buy/${slug}`);
         break;
       case "rent":
-        router.push(`${base}/rent/${slug}`); // /vi/rent/can-ho
+        router.push(`${base}/rent/${slug}`);
         break;
       case "industry":
         router.push(`${base}/industrials/${slug}`);
@@ -108,12 +108,21 @@ export default function Navbar() {
     setMobileMenuOpen(false);
   };
 
+  // 👉 Nút Ký gửi nhà đất (thay nút post)
+  const handleConsignClick = () => {
+    const base = `/${currentLocale}`;
+    router.push(`${base}/consign`);
+    setActiveDropdown(null);
+    setMobileMenuOpen(false);
+  };
 
   return (
     <header className="bg-white/80 backdrop-blur-sm border-b sticky top-0 z-50">
-
       <div className="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
-        <Link href={`/${currentLocale}`} className="text-red-600 font-bold text-xl border border-red-600 px-2 py-1">
+        <Link
+          href={`/${currentLocale}`}
+          className="text-red-600 font-bold text-xl border border-red-600 px-2 py-1"
+        >
           R
         </Link>
 
@@ -155,7 +164,10 @@ export default function Navbar() {
               <button className="hover:text-red-600">👋 {user.name}</button>
               {activeDropdown === "user" && (
                 <div className="absolute right-0 mt-2 w-40 bg-white border shadow rounded z-50">
-                  <Link href={`/${currentLocale}/my-properties`} className="block px-4 py-2 text-sm hover:bg-gray-100">
+                  <Link
+                    href={`/${currentLocale}/my-properties`}
+                    className="block px-4 py-2 text-sm hover:bg-gray-100"
+                  >
                     {t("myPosts")}
                   </Link>
                   <button
@@ -181,17 +193,20 @@ export default function Navbar() {
             </>
           )}
 
-          <Link
-            href={`/${currentLocale}/post`}
+          {/* 👉 CTA Ký gửi nhà đất (thay Link /post) */}
+          <button
+            onClick={handleConsignClick}
             className="border border-red-600 text-red-600 px-4 py-1 rounded hover:bg-red-50"
           >
-            {t("post")}
-          </Link>
+            {t("consign")}
+          </button>
 
           {/* Language switch */}
           <div className="relative">
             <button
-              onClick={() => setActiveDropdown(activeDropdown === "lang" ? null : "lang")}
+              onClick={() =>
+                setActiveDropdown(activeDropdown === "lang" ? null : "lang")
+              }
               className="border px-2 py-1 rounded flex items-center gap-1"
             >
               {currentLocale === "vi" ? "🇻🇳 VI" : "🇺🇸 EN"} ▼
@@ -260,14 +275,22 @@ export default function Navbar() {
               <Link href={`/${currentLocale}/login`} className="block py-1 text-sm">
                 {t("login")}
               </Link>
-              <Link href={`/${currentLocale}/register`} className="block py-1 text-sm text-red-600 font-medium">
+              <Link
+                href={`/${currentLocale}/register`}
+                className="block py-1 text-sm text-red-600 font-medium"
+              >
                 {t("register")}
               </Link>
             </>
           )}
-          <Link href={`/${currentLocale}/post`} className="block py-1 text-sm text-red-600 font-medium">
-            {t("post")}
-          </Link>
+
+          {/* 👉 CTA mobile */}
+          <button
+            onClick={handleConsignClick}
+            className="block w-full text-left py-1 text-sm text-red-600 font-medium"
+          >
+            {t("consign")}
+          </button>
         </div>
       )}
     </header>
