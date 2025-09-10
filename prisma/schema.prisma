@@ -30,6 +30,8 @@ model Property {
   postedAt     DateTime @default(now())
   userId       String?
   projectSlug  String?  // 👈 Dự án mà bất động sản thuộc về (nếu có)
+  // 👇 thêm trường linh hoạt cho công nghiệp (điện, tải sàn, chiều cao…)
+  specs        Json?    // { powerKva, floorLoad, clearHeight, dockDoors, roadWidth, … }
 }
 
 model Project {

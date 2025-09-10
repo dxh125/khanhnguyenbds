@@ -3,6 +3,11 @@ export const PROPERTY_TYPES = [
   { label: "Căn hộ (Chung cư)", value: "can-ho" },
   { label: "Nhà riêng",         value: "nha-rieng" },
   { label: "Đất nền",           value: "dat-nen" },
+    // Nhóm công nghiệp
+  { label: "Nhà xưởng",         value: "nha-xuong" },
+  { label: "Kho xưởng",         value: "kho-xuong" },
+  { label: "Đất công nghiệp",   value: "dat-cong-nghiep" },
+  { label: "Khu công nghiệp",   value: "khu-cong-nghiep" },
 ] as const;
 
 export const PURPOSES = [
@@ -34,6 +39,12 @@ export const LEGALS = [
   { label: "Sổ hồng",  value: "so-hong" },
   { label: "HĐMB",     value: "hdmb" },
   { label: "Giấy tay", value: "giay-tay" },
+] as const;
+export const INDUSTRIAL_TYPES = [
+  "nha-xuong",
+  "kho-xuong",
+  "dat-cong-nghiep",
+  "khu-cong-nghiep",
 ] as const;
 
 // tiện hàm rút values để dùng cho zod enum

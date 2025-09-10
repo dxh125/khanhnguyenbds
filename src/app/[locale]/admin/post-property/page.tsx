@@ -1,12 +1,20 @@
 // src/app/[locale]/admin/post-property/page.tsx
 "use client";
 
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { useRouter, useParams } from "next/navigation";
 import ImageUploader from "@/components/uploader/ImageUploader";
 import LocationFilter from "@/components/filters/LocationFilter";
 import ProjectSelect from "@/components/ProjectSelect";
-import { DIRECTIONS, LEGALS } from "@/constants/bdsOptions";
+import {
+  DIRECTIONS,
+  LEGALS,
+  PROPERTY_TYPES,
+  INDUSTRIAL_TYPES,
+} from "@/constants/bdsOptions";
+
+// Union type cho giá trị propertyType dựa trên PROPERTY_TYPES
+type PropertyTypeValue = (typeof PROPERTY_TYPES)[number]["value"];
 
 type FormState = {
   title: string;
@@ -17,8 +25,8 @@ type FormState = {
   ward?: string;
   district?: string;
   city?: string;
-  propertyType: string;
-  purpose: string;  // buy | rent (hiển thị: Bán | Cho thuê)
+  propertyType: PropertyTypeValue; // dùng union thay vì string
+  purpose: string; // buy | rent (hiển thị: Bán | Cho thuê)
   status: string;
   bedrooms?: string;
   bathrooms?: string;
@@ -28,6 +36,9 @@ type FormState = {
   highlightsText?: string;
   projectSlug?: string;
 };
+
+// Set để check loại công nghiệp (tránh lỗi TS khi dùng includes)
+const INDUSTRIAL_SET = new Set<string>(INDUSTRIAL_TYPES as readonly string[]);
 
 export default function PostPropertyPage() {
   const router = useRouter();
@@ -42,9 +53,9 @@ export default function PostPropertyPage() {
     price: "",
     area: "",
     address: "",
-    propertyType: "can-ho", // slug
-    purpose: "buy",         // lưu buy | rent, hiển thị Bán | Cho thuê
-    status: "available",    // slug
+    propertyType: "can-ho", // slug (nằm trong PROPERTY_TYPES)
+    purpose: "buy", // lưu buy | rent, hiển thị Bán | Cho thuê
+    status: "available", // slug
     legal: "",
     direction: "",
     projectSlug: "",
@@ -53,7 +64,26 @@ export default function PostPropertyPage() {
     ward: "",
   });
 
-  const update = (k: keyof FormState, v: string) =>
+  // Thông số kỹ thuật cho BĐS công nghiệp (UI state)
+  const [specs, setSpecs] = useState({
+    powerKva: "",
+    floorLoad: "",
+    clearHeight: "",
+    dockDoors: "",
+    roadWidth: "",
+    officeRatio: "",
+  });
+
+  const updateSpecs = (k: keyof typeof specs, v: string) =>
+    setSpecs((s) => ({ ...s, [k]: v }));
+
+  const isIndustrial = useMemo(
+    () => INDUSTRIAL_SET.has(form.propertyType),
+    [form.propertyType]
+  );
+
+  // Update state có type-safe
+  const update = <K extends keyof FormState>(k: K, v: FormState[K]) =>
     setForm((s) => ({ ...s, [k]: v }));
 
   const canSubmit =
@@ -65,14 +95,14 @@ export default function PostPropertyPage() {
     !!form.propertyType &&
     !!form.purpose &&
     !!form.status &&
-    !!form.city &&         // bắt buộc chọn Tỉnh/TP
-    !!form.district;       // bắt buộc chọn Quận/Huyện
+    !!form.city && // bắt buộc chọn Tỉnh/TP
+    !!form.district; // bắt buộc chọn Quận/Huyện
 
   const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
     try {
-      const payload = {
+      const payload: any = {
         ...form,
         price: Number(form.price),
         area: Number(form.area),
@@ -92,6 +122,17 @@ export default function PostPropertyPage() {
         district: form.district || undefined,
         ward: form.ward || undefined,
       };
+
+      if (isIndustrial) {
+        payload.specs = {
+          powerKva: specs.powerKva ? Number(specs.powerKva) : undefined,
+          floorLoad: specs.floorLoad ? Number(specs.floorLoad) : undefined,
+          clearHeight: specs.clearHeight ? Number(specs.clearHeight) : undefined,
+          dockDoors: specs.dockDoors ? Number(specs.dockDoors) : undefined,
+          roadWidth: specs.roadWidth ? Number(specs.roadWidth) : undefined,
+          officeRatio: specs.officeRatio ? Number(specs.officeRatio) : undefined,
+        };
+      }
 
       const res = await fetch("/api/properties", {
         method: "POST",
@@ -158,9 +199,9 @@ export default function PostPropertyPage() {
                 ward: form.ward || "",
               }}
               onChange={(loc) => {
-                update("city", loc.city || "");
-                update("district", loc.district || "");
-                update("ward", loc.ward || "");
+                update("city", (loc.city || "") as FormState["city"]);
+                update("district", (loc.district || "") as FormState["district"]);
+                update("ward", (loc.ward || "") as FormState["ward"]);
               }}
             />
           </div>
@@ -184,20 +225,24 @@ export default function PostPropertyPage() {
             required
           />
 
-          {/* Hàng 4+: giữ nguyên logic cũ, chỉ thay text hiển thị cho 'purpose' */}
+          {/* Hàng 4+: Loại hình, Mục đích, Trạng thái, các trường khác */}
           {/* Loại hình (slug) */}
           <select
             className={selectCls}
             value={form.propertyType}
-            onChange={(e) => update("propertyType", e.target.value)}
+            onChange={(e) =>
+              update("propertyType", e.target.value as PropertyTypeValue)
+            }
           >
-            <option value="can-ho">Căn hộ (Chung cư)</option>
-            <option value="nha-rieng">Nhà riêng</option>
-            <option value="dat-nen">Đất nền</option>
+            {PROPERTY_TYPES.map((opt) => (
+              <option key={opt.value} value={opt.value}>
+                {opt.label}
+              </option>
+            ))}
           </select>
 
           {/* Mục đích (label: Bán/Cho thuê → value: buy/rent) */}
-          <select
+           <select
             className={selectCls}
             value={form.purpose}
             onChange={(e) => update("purpose", e.target.value)}
@@ -279,6 +324,90 @@ export default function PostPropertyPage() {
               placeholder="Thuộc dự án (tuỳ chọn)"
             />
           </div>
+
+          {/* ===== Section thông số công nghiệp (chỉ hiện khi chọn loại công nghiệp) ===== */}
+          {isIndustrial && (
+            <div className="md:col-span-2 grid grid-cols-1 md:grid-cols-3 gap-4 border rounded-lg p-4 bg-gray-50">
+              <div>
+                <label className="block text-sm mb-1">Điện 3 pha (kVA)</label>
+                <input
+                  className="border rounded px-3 py-2 w-full"
+                  value={specs.powerKva}
+                  onChange={(e) => updateSpecs("powerKva", e.target.value)}
+                  type="number"
+                  min="0"
+                  step="0.1"
+                  placeholder="Ví dụ: 250"
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm mb-1">Tải sàn (tấn/m²)</label>
+                <input
+                  className="border rounded px-3 py-2 w-full"
+                  value={specs.floorLoad}
+                  onChange={(e) => updateSpecs("floorLoad", e.target.value)}
+                  type="number"
+                  min="0"
+                  step="0.1"
+                  placeholder="Ví dụ: 3"
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm mb-1">Cao thông thuỷ (m)</label>
+                <input
+                  className="border rounded px-3 py-2 w-full"
+                  value={specs.clearHeight}
+                  onChange={(e) => updateSpecs("clearHeight", e.target.value)}
+                  type="number"
+                  min="0"
+                  step="0.1"
+                  placeholder="Ví dụ: 10"
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm mb-1">Số cửa/Dock</label>
+                <input
+                  className="border rounded px-3 py-2 w-full"
+                  value={specs.dockDoors}
+                  onChange={(e) => updateSpecs("dockDoors", e.target.value)}
+                  type="number"
+                  min="0"
+                  step="1"
+                  placeholder="Ví dụ: 4"
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm mb-1">Lộ giới (m)</label>
+                <input
+                  className="border rounded px-3 py-2 w-full"
+                  value={specs.roadWidth}
+                  onChange={(e) => updateSpecs("roadWidth", e.target.value)}
+                  type="number"
+                  min="0"
+                  step="0.1"
+                  placeholder="Ví dụ: 12"
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm mb-1">Tỉ lệ văn phòng (%)</label>
+                <input
+                  className="border rounded px-3 py-2 w-full"
+                  value={specs.officeRatio}
+                  onChange={(e) => updateSpecs("officeRatio", e.target.value)}
+                  type="number"
+                  min="0"
+                  max="100"
+                  step="1"
+                  placeholder="Ví dụ: 15"
+                />
+              </div>
+            </div>
+          )}
         </div>
 
         <textarea
