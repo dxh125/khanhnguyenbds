@@ -40,7 +40,7 @@ const navItems = [
     ],
   },
   { key: "agent" },
-  { key: "about" },
+  
 ];
 
 export default function Navbar() {
