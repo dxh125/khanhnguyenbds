@@ -1,3 +1,4 @@
+// prisma/schema.prisma
 generator client {
   provider = "prisma-client-js"
 }
@@ -26,19 +27,32 @@ model Property {
   legal        String?
   direction    String?
   images       String[]
-  highlights   String[] 
+  highlights   String[]
   postedAt     DateTime @default(now())
-  userId       String?
-  projectSlug  String?  // 👈 Dự án mà bất động sản thuộc về (nếu có)
-  // 👇 thêm trường linh hoạt cho công nghiệp (điện, tải sàn, chiều cao…)
-  specs        Json?    // { powerKva, floorLoad, clearHeight, dockDoors, roadWidth, … }
+  userId       String?                // sẽ lưu firebaseUid
+  projectSlug  String?
+  specs        Json?
+
+  @@index([userId])
 }
 
 model Project {
   id          String   @id @default(auto()) @map("_id") @db.ObjectId
   name        String
-  slug        String   @unique               // ví dụ: ecopark, masteri-thao-dien
+  slug        String   @unique
   description String
-  imageUrl    String?                        // ảnh đại diện dự án (nếu có)
+  imageUrl    String?
   createdAt   DateTime @default(now())
+}
+
+model User {
+  id           String   @id @default(auto()) @map("_id") @db.ObjectId
+  firebaseUid  String   @unique
+  email        String?  @unique
+  name         String?
+  photoUrl     String?
+  phone        String?
+  role         String   @default("user")
+  createdAt    DateTime @default(now())
+  lastLoginAt  DateTime?
 }

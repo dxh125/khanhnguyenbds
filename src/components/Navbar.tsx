@@ -34,7 +34,7 @@ const navItems = [
   {
     key: "industry",
     submenu: [
-      { label: "Đất nền", slug: "dat-nen" },
+      { label: "Đất nền", slug: "dat-cong-nghiep" },
       { label: "Nhà xưởng", slug: "nha-xuong" },
       { label: "Khu công nghiệp", slug: "khu-cong-nghiep" },
     ],

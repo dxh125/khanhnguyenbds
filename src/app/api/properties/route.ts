@@ -77,11 +77,17 @@ const PropertySchema = z.object({
 });
 
 // GET: trả danh sách property mới nhất trước
-export async function GET() {
+// GET: trả danh sách property mới nhất trước, có thể lọc theo ?userId=
+export async function GET(req: NextRequest) {
   try {
+    const { searchParams } = new URL(req.url);
+    const userId = searchParams.get("userId") || undefined;
+
     const properties = await prisma.property.findMany({
+      where: userId ? { userId } : undefined,
       orderBy: { postedAt: "desc" },
     });
+
     return NextResponse.json(properties, { status: 200 });
   } catch (error) {
     console.error("Lỗi khi lấy danh sách bất động sản:", error);
@@ -92,18 +98,54 @@ export async function GET() {
   }
 }
 
+
 // POST: tạo property mới
 export async function POST(req: NextRequest) {
   try {
-    const body = await req.json();
+    const raw = await req.json();
 
-    // Validate & chuẩn hoá dữ liệu theo schema
-    const data = PropertySchema.parse(body);
+    // Lấy userId fallback từ header (nếu client chưa gửi trong body)
+    const headerUserId = req.headers.get("x-user-id") || undefined;
 
+    // Helper: chuyển "" -> undefined cho các field optional
+    const emptyToUndef = (v: any) => (v === "" || v === null ? undefined : v);
+
+    // Chuẩn hoá payload trước khi parse
+    const merged = {
+      ...raw,
+
+      // Ưu tiên userId từ body; nếu thiếu thì dùng header
+      userId: raw.userId ?? headerUserId ?? undefined,
+
+      // Chuẩn hoá các optional string/slugs
+      ward: emptyToUndef(raw.ward),
+      district: emptyToUndef(raw.district),
+      city: emptyToUndef(raw.city),
+      legal: emptyToUndef(raw.legal),
+      direction: emptyToUndef(raw.direction),
+      projectSlug: emptyToUndef(raw.projectSlug),
+
+      // Các số optional (client thường đã Number() rồi, nhưng ta vẫn chấp nhận rỗng)
+      bedrooms: emptyToUndef(raw.bedrooms),
+      bathrooms: emptyToUndef(raw.bathrooms),
+      floors: emptyToUndef(raw.floors),
+
+      // Highlights: đảm bảo là mảng string hoặc để schema xử lý default([])
+      highlights: Array.isArray(raw.highlights) ? raw.highlights : undefined,
+
+      // Nếu client có gửi kèm specs (cho công nghiệp) mà model chưa có field này,
+      // Zod (object mặc định strip unknown) sẽ tự loại bỏ — không cần làm gì thêm.
+    };
+
+    // Validate & chuẩn hoá theo schema hiện có
+    const data = PropertySchema.parse(merged);
+
+    // Tạo bản ghi
     const created = await prisma.property.create({ data });
     return NextResponse.json(created, { status: 201 });
   } catch (err: any) {
     console.error("Create property error:", err);
+    // ZodError: ưu tiên trả message rõ ràng
     const message =
       err?.issues?.[0]?.message || err?.message || "Invalid payload";
     return NextResponse.json({ error: message }, { status: 400 });

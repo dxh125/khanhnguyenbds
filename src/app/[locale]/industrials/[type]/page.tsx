@@ -12,7 +12,7 @@ type Props = {
 };
 
 // Các loại hợp lệ cho khu công nghiệp
-const validIndustrialTypes = ["dat-nen", "nha-xuong", "khu-cong-nghiep"];
+const validIndustrialTypes = ["dat-cong-nghiep", "nha-xuong", "khu-cong-nghiep"];
 
 export default async function IndustrialTypePage({ params, searchParams }: Props) {
   const { type } = await params;              // 👈 await

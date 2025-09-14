@@ -12,6 +12,7 @@ import {
   PROPERTY_TYPES,
   INDUSTRIAL_TYPES,
 } from "@/constants/bdsOptions";
+import { fetchWithAuth } from "@/lib/fetchWithAuth"; // 👈 dùng helper kèm idToken
 
 // Union type cho giá trị propertyType dựa trên PROPERTY_TYPES
 type PropertyTypeValue = (typeof PROPERTY_TYPES)[number]["value"];
@@ -54,8 +55,8 @@ export default function PostPropertyPage() {
     area: "",
     address: "",
     propertyType: "can-ho", // slug (nằm trong PROPERTY_TYPES)
-    purpose: "buy", // lưu buy | rent, hiển thị Bán | Cho thuê
-    status: "available", // slug
+    purpose: "buy",          // lưu buy | rent, hiển thị Bán | Cho thuê
+    status: "available",     // slug
     legal: "",
     direction: "",
     projectSlug: "",
@@ -100,6 +101,8 @@ export default function PostPropertyPage() {
 
   const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!canSubmit || loading) return;
+
     setLoading(true);
     try {
       const payload: any = {
@@ -121,6 +124,7 @@ export default function PostPropertyPage() {
         city: form.city || undefined,
         district: form.district || undefined,
         ward: form.ward || undefined,
+        // ❌ KHÔNG gửi userId — server sẽ gán từ idToken
       };
 
       if (isIndustrial) {
@@ -134,7 +138,7 @@ export default function PostPropertyPage() {
         };
       }
 
-      const res = await fetch("/api/properties", {
+      const res = await fetchWithAuth("/api/properties", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
@@ -242,7 +246,7 @@ export default function PostPropertyPage() {
           </select>
 
           {/* Mục đích (label: Bán/Cho thuê → value: buy/rent) */}
-           <select
+          <select
             className={selectCls}
             value={form.purpose}
             onChange={(e) => update("purpose", e.target.value)}
