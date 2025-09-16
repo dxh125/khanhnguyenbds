@@ -69,24 +69,18 @@ const UpdateSchema = z
     images: z.array(z.string().url()).optional(),
 
     projectSlug: z.string().trim().optional().nullable(),
-    userId: z.string().trim().optional().nullable(), // nếu muốn cho phép đổi chủ
+    userId: z.string().trim().optional().nullable(), // (tuỳ chọn) cho phép đổi chủ
 
     specs: SpecsSchema.optional(),
   })
   .strict();
 
-/** 
- * Nếu bạn *bắt buộc* dùng experimental Next 15 (params là Promise):
- * đổi `{ params }: { params: { id: string } }` thành
- * `{ params }: { params: Promise<{ id: string }> }` và: `const { id } = await params;`
- */
+// 👇 Kiểu context Next 15: params là Promise
+type Ctx = { params: Promise<{ id: string }> };
 
 // GET: Lấy chi tiết 1 property
-export async function GET(
-  _req: NextRequest,
-  { params }: { params: { id: string } }
-) {
-  const { id } = params;
+export async function GET(_req: NextRequest, ctx: Ctx) {
+  const { id } = await ctx.params;
 
   if (!id || !isObjectId(id)) {
     return NextResponse.json({ error: "ID không hợp lệ" }, { status: 400 });
@@ -105,11 +99,8 @@ export async function GET(
 }
 
 // PUT: Cập nhật 1 property
-export async function PUT(
-  req: NextRequest,
-  { params }: { params: { id: string } }
-) {
-  const { id } = params;
+export async function PUT(req: NextRequest, ctx: Ctx) {
+  const { id } = await ctx.params;
 
   if (!id || !isObjectId(id)) {
     return NextResponse.json({ error: "ID không hợp lệ" }, { status: 400 });
@@ -119,16 +110,22 @@ export async function PUT(
     const json = await req.json();
     const data = UpdateSchema.parse(json);
 
-    // Nếu không có trường hợp lệ nào được gửi lên
     if (!Object.keys(data).length) {
       return NextResponse.json({ error: "Payload trống" }, { status: 400 });
     }
+
+    // (Khuyến nghị) Kiểm tra quyền: chỉ cho owner cập nhật
+    // - Lấy userId từ token (nếu bạn đã triển khai verify trên server)
+    // - So sánh với property.userId rồi mới cho update
 
     const updated = await prisma.property.update({ where: { id }, data });
     return NextResponse.json(updated, { status: 200 });
   } catch (error: any) {
     if (error?.name === "ZodError") {
-      return NextResponse.json({ error: error.issues?.[0]?.message || "Dữ liệu không hợp lệ" }, { status: 400 });
+      return NextResponse.json(
+        { error: error.issues?.[0]?.message || "Dữ liệu không hợp lệ" },
+        { status: 400 }
+      );
     }
     if (error?.code === "P2025") {
       return NextResponse.json({ error: "Không tìm thấy tin để cập nhật" }, { status: 404 });
@@ -139,17 +136,18 @@ export async function PUT(
 }
 
 // DELETE: Xoá 1 property
-export async function DELETE(
-  _req: NextRequest,
-  { params }: { params: { id: string } }
-) {
-  const { id } = params;
+export async function DELETE(_req: NextRequest, ctx: Ctx) {
+  const { id } = await ctx.params;
 
   if (!id || !isObjectId(id)) {
     return NextResponse.json({ error: "ID không hợp lệ" }, { status: 400 });
   }
 
   try {
+    // (Khuyến nghị) Kiểm tra quyền: chỉ cho owner xoá
+    // - Lấy userId từ token (nếu đã verify)
+    // - So sánh với property.userId
+
     await prisma.property.delete({ where: { id } });
     return NextResponse.json({ message: "Đã xoá thành công" }, { status: 200 });
   } catch (error: any) {
