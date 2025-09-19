@@ -29,11 +29,17 @@ model Property {
   images       String[]
   highlights   String[]
   postedAt     DateTime @default(now())
-  userId       String?                // sẽ lưu firebaseUid
+  userId       String?                // lưu firebaseUid
   projectSlug  String?
   specs        Json?
 
   @@index([userId])
+  @@index([postedAt])
+  @@index([purpose])
+  @@index([propertyType])
+  @@index([city, district])           // hay dùng để filter theo khu vực
+  @@index([price])
+  @@index([area])
 }
 
 model Project {
@@ -48,11 +54,22 @@ model Project {
 model User {
   id           String   @id @default(auto()) @map("_id") @db.ObjectId
   firebaseUid  String   @unique
-  email        String?  @unique
+  email        String?  @unique   // ⚠️ chỉ set khi có; không set null để tránh trùng unique
   name         String?
   photoUrl     String?
   phone        String?
   role         String   @default("user")
   createdAt    DateTime @default(now())
   lastLoginAt  DateTime?
+}
+
+model SavedSearch {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  userId    String
+  name      String?
+  filters   Json
+  sort      String?
+  createdAt DateTime @default(now())
+
+  @@index([userId])
 }

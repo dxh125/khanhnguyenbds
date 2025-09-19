@@ -70,9 +70,10 @@ export default function SearchBar({
       setLoading(true);
       try {
         const res = await fetch(
-          `/api/search/suggestions?q=${encodeURIComponent(debouncedQ)}`,
+          `/api/search/suggestions?q=${encodeURIComponent(q)}`,
           { cache: "no-store" }
         );
+
         if (!cancel) {
           const data = await res.json();
           setItems(data?.suggestions || []);

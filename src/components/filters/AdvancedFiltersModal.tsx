@@ -16,6 +16,8 @@ export interface AdvancedFiltersValues {
 export interface AdvancedFiltersModalProps {
   buttonLabel?: string;
   className?: string;
+  /** Nếu truyền, component sẽ không tự điều hướng mà trả patch cho bên ngoài */
+  onApply?: (patch: Record<string, string | number | boolean | null | undefined>) => void;
 }
 
 const DIRECTION_OPTIONS = [
@@ -34,6 +36,7 @@ const STATUS_OPTIONS = [
   { value: "", label: "Tình trạng" },
   { value: "available", label: "Đang bán/cho thuê" },
   { value: "sold", label: "Đã bán/đã thuê" },
+  { value: "rented", label: "Đã thuê" },
 ];
 
 const LEGAL_OPTIONS = [
@@ -43,14 +46,16 @@ const LEGAL_OPTIONS = [
   { value: "hop-dong-thue", label: "Hợp đồng thuê" },
 ];
 
+const ALL_KEYS = ["bedrooms", "bathrooms", "direction", "status", "legal", "project"] as const;
+
 export default function AdvancedFiltersModal({
   buttonLabel = "Bộ lọc nâng cao",
   className = "",
+  onApply,
 }: AdvancedFiltersModalProps) {
   const router = useRouter();
   const searchParams = useSearchParams();
 
-  // Đồng bộ state từ URL
   const urlVals: AdvancedFiltersValues = {
     bedrooms: searchParams.get("bedrooms") || "",
     bathrooms: searchParams.get("bathrooms") || "",
@@ -61,7 +66,7 @@ export default function AdvancedFiltersModal({
   };
 
   const [open, setOpen] = useState(false);
-  const [mounted, setMounted] = useState(false); // dùng portal an toàn với SSR
+  const [mounted, setMounted] = useState(false);
   const [localValues, setLocalValues] = useState<AdvancedFiltersValues>(urlVals);
 
   useEffect(() => setMounted(true), []);
@@ -93,30 +98,64 @@ export default function AdvancedFiltersModal({
 
   const handleChange = (key: keyof AdvancedFiltersValues, value: string) => {
     if ((key === "bedrooms" || key === "bathrooms") && value !== "") {
-      if (!/^\d+$/.test(value)) return;
+      if (!/^\d+$/.test(value)) return; // chỉ chấp nhận số nguyên dương
     }
     setLocalValues((prev) => ({ ...prev, [key]: value }));
   };
 
+  // Tạo patch đồng bộ với FilterBar.mergeQuery (null/"" sẽ bị xoá param)
+  const buildPatch = () => {
+    const patch: Record<string, string | number | boolean | null | undefined> = {};
+    ALL_KEYS.forEach((k) => {
+      const v = localValues[k];
+      patch[k] = v ? v : null;
+    });
+    return patch;
+  };
+
   const handleApply = () => {
+    // Nếu FilterBar truyền onApply -> trả patch ra ngoài, không tự navigate
+    if (onApply) {
+      onApply(buildPatch());
+      setOpen(false);
+      return;
+    }
+
+    // Fallback: tự điều hướng (giữ tương thích cũ)
     const params = new URLSearchParams(searchParams.toString());
-    (Object.keys(localValues) as (keyof AdvancedFiltersValues)[]).forEach((k) => {
+    ALL_KEYS.forEach((k) => {
       const v = localValues[k];
       if (v) params.set(k, v);
       else params.delete(k);
     });
-    params.delete("page"); // reset phân trang khi đổi filter
-    router.push(`?${params.toString()}`);
+    params.delete("page");
+    router.replace(`?${params.toString()}`);
     setOpen(false);
   };
 
   const handleReset = () => {
+    if (onApply) {
+      // đẩy mọi key về null -> xoá param
+      const patch: Record<string, null> = {} as any;
+      ALL_KEYS.forEach((k) => (patch[k] = null));
+      onApply(patch);
+      setLocalValues({
+        bedrooms: "",
+        bathrooms: "",
+        direction: "",
+        status: "",
+        legal: "",
+        project: "",
+      });
+      setOpen(false);
+      return;
+    }
+
+    // Fallback: tự điều hướng
     const params = new URLSearchParams(searchParams.toString());
-    ["bedrooms", "bathrooms", "direction", "status", "legal", "project"].forEach((k) =>
-      params.delete(k)
-    );
+    ALL_KEYS.forEach((k) => params.delete(k));
     params.delete("page");
-    router.push(`?${params.toString()}`);
+    router.replace(`?${params.toString()}`);
     setLocalValues({
       bedrooms: "",
       bathrooms: "",
@@ -128,8 +167,7 @@ export default function AdvancedFiltersModal({
   };
 
   const activeCount = useMemo(() => {
-    const keys = ["bedrooms", "bathrooms", "direction", "status", "legal", "project"] as const;
-    return keys.reduce((n, k) => n + (urlVals[k] ? 1 : 0), 0);
+    return ALL_KEYS.reduce((n, k) => n + (urlVals[k] ? 1 : 0), 0);
   }, [urlVals]);
   const active = activeCount > 0;
 
@@ -140,6 +178,8 @@ export default function AdvancedFiltersModal({
           active ? "ring-2 ring-blue-500" : ""
         } ${className}`}
         onClick={handleOpen}
+        aria-haspopup="dialog"
+        aria-expanded={open}
       >
         {buttonLabel}
         {active ? ` (${activeCount})` : ""}
@@ -153,13 +193,13 @@ export default function AdvancedFiltersModal({
             aria-modal="true"
             role="dialog"
           >
-            {/* Overlay tối + mờ nền để che hẳn nội dung phía sau */}
+            {/* Overlay */}
             <div
               className="absolute inset-0 bg-neutral-900/50 backdrop-blur-[2px] backdrop-saturate-75"
               onClick={() => setOpen(false)}
             />
 
-            {/* Modal card: viền đen mờ + shadow đậm + nền dịu */}
+            {/* Modal */}
             <div
               className="relative w-full md:w-[720px] max-h-[90vh] overflow-auto
                          rounded-t-2xl md:rounded-2xl

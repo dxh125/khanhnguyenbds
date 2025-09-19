@@ -6,6 +6,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 export interface Has3DDropdownProps {
   initialValue?: string; // optional, sẽ sync từ URL nếu có
   className?: string;
+  onChange?: (value: string) => void; // optional: FilterBar điều khiển điều hướng
 }
 
 const OPTIONS = [
@@ -16,6 +17,7 @@ const OPTIONS = [
 export default function Has3DDropdown({
   initialValue,
   className = "",
+  onChange,
 }: Has3DDropdownProps) {
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -26,18 +28,23 @@ export default function Has3DDropdown({
 
   React.useEffect(() => {
     setValue(urlValue || initialValue || "");
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [urlValue]);
+  }, [urlValue, initialValue]);
 
   const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const newValue = e.target.value;
     setValue(newValue);
 
+    if (onChange) {
+      // FilterBar sẽ điều hướng => tránh double navigation
+      onChange(newValue);
+      return;
+    }
+
+    // Fallback legacy: tự điều hướng khi KHÔNG có onChange
     const params = new URLSearchParams(searchParams.toString());
     if (newValue) params.set("has3D", newValue);
     else params.delete("has3D");
-
-    router.push(`?${params.toString()}`);
+    router.replace(`?${params.toString()}`);
   };
 
   return (

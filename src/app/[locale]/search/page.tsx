@@ -6,24 +6,40 @@ import PropertyCard from "@/components/PropertyCard";
 import FilterBar from "@/components/filters/FilterBar";
 import { parseSearchIntent } from "@/lib/searchIntent";
 
-type SP = { [key: string]: string | string[] | undefined };
+type SP = Record<string, string | string[] | undefined>;
 
-const toStr = (v?: string | string[]) =>
-  typeof v === "string" ? v : Array.isArray(v) ? v[0] : undefined;
+type PageProps = {
+  params: Promise<{ locale: string }>; // Next 15: Promise
+  searchParams: Promise<SP>;           // Next 15: Promise
+};
 
-export default async function Page(props: any) {
-  // ✅ Thu hẹp type bên trong để vẫn có IntelliSense
-  const { params, searchParams } = props as {
-    params: { locale?: string };
-    searchParams?: SP;
-  };
+// ép về string an toàn
+const toStr = (v: unknown) =>
+  typeof v === "string" ? v : Array.isArray(v) ? (v[0] || "") : "";
 
-  const locale = params?.locale;
+// clone searchParams (object) -> URLSearchParams
+const toURLSearchParams = (sp: SP) => {
+  const p = new URLSearchParams();
+  Object.entries(sp || {}).forEach(([k, v]) => {
+    if (typeof v === "string") {
+      if (v) p.set(k, v);
+    } else if (Array.isArray(v) && v.length) {
+      p.set(k, v[0]); // hoặc append nhiều giá trị nếu bạn cần
+    }
+  });
+  return p;
+};
+
+export default async function Page({ params, searchParams }: PageProps) {
+  // ✅ BẮT BUỘC await khi dùng Next 15
+  const { locale } = await params;
+  const spRaw = await searchParams;
+
   if (!locale) notFound();
 
-  const q = toStr(searchParams?.q);
+  const q = toStr(spRaw.q);
   const sort =
-    (toStr(searchParams?.sort) as
+    (toStr(spRaw.sort) as
       | "newest"
       | "oldest"
       | "priceAsc"
@@ -31,26 +47,22 @@ export default async function Page(props: any) {
       | "areaAsc"
       | "areaDesc") || "newest";
 
-  // Gợi ý thông minh từ câu truy vấn tự nhiên (không ép, chỉ đề xuất)
-  const intent = parseSearchIntent?.(q) ?? { reasons: [] as string[] };
+  // Gợi ý ý định tìm kiếm (nếu có)
+  const intent = parseSearchIntent?.(q || undefined) ?? { reasons: [] as string[] };
 
-  // Gọi hàm phân trang (đã hỗ trợ q/sort/page/pageSize trong queries.ts)
+  // Lấy dữ liệu phân trang
   const { items, total, page, pageSize } = await getPropertiesByFilterPaged({
-    ...(searchParams || {}),
+    ...(spRaw || {}),
     sort,
   } as any);
 
   const totalPages = Math.max(1, Math.ceil(total / pageSize));
 
+  // helper build URL từ spRaw + overrides
   const buildUrl = (
     overrides?: Record<string, string | number | boolean | null | undefined>
   ) => {
-    const paramsQS = new URLSearchParams();
-    // giữ param hiện có
-    Object.entries(searchParams || {}).forEach(([k, v]) => {
-      if (typeof v === "string") paramsQS.set(k, v);
-    });
-    // apply overrides
+    const paramsQS = toURLSearchParams(spRaw);
     if (overrides) {
       Object.entries(overrides).forEach(([k, v]) => {
         if (v === null || typeof v === "undefined" || v === "") paramsQS.delete(k);
@@ -61,10 +73,7 @@ export default async function Page(props: any) {
     return `/${locale}/search${qs ? `?${qs}` : ""}`;
   };
 
-  const toPriceParam = (maxPrice?: number) => {
-    if (!maxPrice) return undefined;
-    return `-${maxPrice}`;
-  };
+  const toPriceParam = (maxPrice?: number) => (maxPrice ? `-${maxPrice}` : undefined);
 
   return (
     <div className="max-w-7xl mx-auto px-4 py-6 space-y-5">
@@ -102,7 +111,6 @@ export default async function Page(props: any) {
         </div>
       </div>
 
-      {/* Banner gợi ý áp dụng intent */}
       {!!q && (
         <div className="rounded-xl border bg-amber-50 p-3 text-amber-900 flex flex-wrap gap-2 items-center">
           <div className="text-sm">
@@ -122,9 +130,10 @@ export default async function Page(props: any) {
             >
               Áp dụng khu vực/loại hình/giá gợi ý
             </Link>
-            {((searchParams?.city && typeof searchParams.city === "string") ||
-              (searchParams?.district && typeof searchParams.district === "string") ||
-              (searchParams?.price && typeof searchParams.price === "string")) && (
+
+            {(!!toStr(spRaw.city) ||
+              !!toStr(spRaw.district) ||
+              !!toStr(spRaw.price)) && (
               <Link
                 href={buildUrl({ city: null, district: null, price: null, page: 1 })}
                 className="text-xs px-3 py-1.5 rounded-full bg-white hover:bg-gray-50 border"
@@ -136,11 +145,11 @@ export default async function Page(props: any) {
         </div>
       )}
 
-      {/* FilterBar ngang (điều hướng trên /search) */}
+      {/* FilterBar (nhận object đã await) */}
       <FilterBar
-        initialFilters={searchParams || {}}
-        defaultPurpose={(toStr(searchParams?.purpose) as "buy" | "rent") || "buy"}
-        defaultType={toStr(searchParams?.propertyType) || "can-ho"}
+        initialFilters={spRaw}
+        defaultPurpose={(toStr(spRaw.purpose) as "buy" | "rent") || "buy"}
+        defaultType={toStr(spRaw.propertyType) || "can-ho"}
         basePath={`/${locale}/search`}
       />
 
@@ -152,8 +161,8 @@ export default async function Page(props: any) {
         </div>
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-6">
-          {items.map((p) => (
-            <PropertyCard key={p.id} property={p as any} />
+          {items.map((p: any) => (
+            <PropertyCard key={p.id} property={p} />
           ))}
         </div>
       )}
