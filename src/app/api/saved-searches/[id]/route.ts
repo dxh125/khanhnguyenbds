@@ -9,29 +9,32 @@ export const dynamic = "force-dynamic";
 
 const isObjectId = (s: string) => /^[a-f\d]{24}$/i.test(s);
 
+// Nhận filters dạng bất kỳ, không cần JsonSchema phức tạp
 const UpdateSchema = z.object({
   name: z.string().trim().min(1).optional().nullable(),
   sort: z
     .enum(["newest", "price-asc", "price-desc", "area-asc", "area-desc"])
     .optional()
     .nullable(),
-  // Cho phép client gửi bất kỳ JSON, hoặc null (ta sẽ xử lý thành {} hoặc bỏ qua)
-  filters: z.unknown().optional().nullable(),
+  filters: z.any().optional().nullable(),
 });
 
 // GET /api/saved-searches/[id]
 export async function GET(
-  _req: NextRequest,
+  req: NextRequest,
   ctx: { params: Promise<{ id: string }> }
 ) {
+  const userId = req.headers.get("x-user-id") || "";
+  if (!userId) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+
   const { id } = await ctx.params;
   if (!isObjectId(id)) {
     return NextResponse.json({ error: "ID không hợp lệ" }, { status: 400 });
   }
 
-  const ss = await prisma.savedSearch.findUnique({ where: { id } });
+  const ss = await prisma.savedSearch.findFirst({ where: { id, userId } });
   if (!ss) return NextResponse.json({ error: "Không tìm thấy" }, { status: 404 });
-  return NextResponse.json(ss);
+  return NextResponse.json(ss, { status: 200 });
 }
 
 // PUT /api/saved-searches/[id]
@@ -39,49 +42,41 @@ export async function PUT(
   req: NextRequest,
   ctx: { params: Promise<{ id: string }> }
 ) {
+  const userId = req.headers.get("x-user-id") || "";
+  if (!userId) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+
   const { id } = await ctx.params;
   if (!isObjectId(id)) {
     return NextResponse.json({ error: "ID không hợp lệ" }, { status: 400 });
   }
 
   try {
-    const body = await req.json();
-    const parsed = UpdateSchema.parse(body);
+    const parsed = UpdateSchema.parse(await req.json());
 
     const data: Prisma.SavedSearchUpdateInput = {};
+    if (typeof parsed.name !== "undefined") data.name = parsed.name;
+    if (typeof parsed.sort !== "undefined" && parsed.sort !== null) data.sort = parsed.sort;
 
-    if (typeof parsed.name !== "undefined") {
-      data.name = parsed.name; // có thể là string hoặc null
-    }
-    if (typeof parsed.sort !== "undefined") {
-      data.sort = parsed.sort as any; // type là string? trong schema -> hợp lệ
-    }
-    if ("filters" in parsed) {
-      // ❗ Tránh set null vì type không cho phép.
-      // Nếu client muốn "xoá", dùng {} làm giá trị rỗng.
-      if (parsed.filters === null) {
-        data.filters = {} as Prisma.InputJsonValue;
-      } else if (typeof parsed.filters !== "undefined") {
-        data.filters = parsed.filters as Prisma.InputJsonValue;
-      }
-      // Nếu muốn "không đổi", đừng gán gì cả (để undefined).
+    if (typeof parsed.filters !== "undefined") {
+      // Không set null vào Prisma — dùng {} nếu muốn “xoá”
+      data.filters =
+        parsed.filters === null
+          ? ({} as Prisma.InputJsonValue)
+          : (parsed.filters as Prisma.InputJsonValue);
     }
 
-    const updated = await prisma.savedSearch.update({
-      where: { id },
-      data,
-    });
-
-    return NextResponse.json(updated);
+    const result = await prisma.savedSearch.updateMany({ where: { id, userId }, data });
+    if (result.count === 0) {
+      return NextResponse.json({ error: "Không tìm thấy" }, { status: 404 });
+    }
+    const updated = await prisma.savedSearch.findFirst({ where: { id, userId } });
+    return NextResponse.json(updated, { status: 200 });
   } catch (e: any) {
     if (e?.name === "ZodError") {
       return NextResponse.json(
         { error: e.issues?.[0]?.message || "Payload không hợp lệ" },
         { status: 400 }
       );
-    }
-    if (e?.code === "P2025") {
-      return NextResponse.json({ error: "Không tìm thấy" }, { status: 404 });
     }
     console.error("Update saved-search error:", e);
     return NextResponse.json({ error: "Không thể cập nhật" }, { status: 500 });
@@ -90,21 +85,24 @@ export async function PUT(
 
 // DELETE /api/saved-searches/[id]
 export async function DELETE(
-  _req: NextRequest,
+  req: NextRequest,
   ctx: { params: Promise<{ id: string }> }
 ) {
+  const userId = req.headers.get("x-user-id") || "";
+  if (!userId) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+
   const { id } = await ctx.params;
   if (!isObjectId(id)) {
     return NextResponse.json({ error: "ID không hợp lệ" }, { status: 400 });
   }
 
   try {
-    await prisma.savedSearch.delete({ where: { id } });
-    return NextResponse.json({ ok: true });
-  } catch (e: any) {
-    if (e?.code === "P2025") {
+    const result = await prisma.savedSearch.deleteMany({ where: { id, userId } });
+    if (result.count === 0) {
       return NextResponse.json({ error: "Không tìm thấy" }, { status: 404 });
     }
+    return NextResponse.json({ ok: true }, { status: 200 });
+  } catch (e: any) {
     console.error("Delete saved-search error:", e);
     return NextResponse.json({ error: "Không thể xoá" }, { status: 500 });
   }

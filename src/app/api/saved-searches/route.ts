@@ -1,52 +1,82 @@
-// src/app/api/saved-searches/route.ts
+// app/api/saved-searches/route.ts
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { z } from "zod";
-import { getUserIdFromRequest } from "@/lib/getUserIdFromRequest";
+import { Prisma } from "@prisma/client";
 
-export const dynamic = "force-dynamic";
 export const runtime = "nodejs";
+export const dynamic = "force-dynamic";
 
-const SavePayload = z.object({
-  name: z.string().trim().optional(),
-  filters: z.record(z.any()),       // lưu raw filter object
-  sort: z.string().trim().optional()
+// Nhận filters dạng bất kỳ (tránh dùng z.record ở Zod v4 classic)
+const SaveSchema = z.object({
+  name: z.string().trim().optional().nullable(),
+  sort: z
+    .enum(["newest", "price-asc", "price-desc", "area-asc", "area-desc"])
+    .optional()
+    .nullable(),
+  filters: z.any().optional().nullable(),
 });
 
-// GET: list theo user
+// GET /api/saved-searches  -> trả danh sách theo userId
 export async function GET(req: NextRequest) {
-  const userId = await getUserIdFromRequest(req);
+  const userId = req.headers.get("x-user-id") || "";
   if (!userId) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
-  const items = await prisma.savedSearch.findMany({
-    where: { userId },
-    orderBy: { createdAt: "desc" },
-  });
-  return NextResponse.json(items);
+  try {
+    const list = await prisma.savedSearch.findMany({
+      where: { userId },
+      orderBy: { createdAt: "desc" },
+    });
+    return NextResponse.json(list, { status: 200 });
+  } catch (e) {
+    console.error("List saved-searches error:", e);
+    return NextResponse.json({ error: "Không thể lấy dữ liệu" }, { status: 500 });
+  }
 }
 
-// POST: tạo saved search
+// POST /api/saved-searches  -> tạo mới
 export async function POST(req: NextRequest) {
-  const userId = await getUserIdFromRequest(req);
+  const userId = req.headers.get("x-user-id") || "";
   if (!userId) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
   try {
     const body = await req.json();
-    const data = SavePayload.parse(body);
+    const parsed = SaveSchema.parse(body);
+
+    // Chuẩn hoá filters thành Prisma.InputJsonValue (không để null)
+    let filtersVal: Prisma.InputJsonValue = {};
+    if (typeof parsed.filters !== "undefined" && parsed.filters !== null) {
+      const f = parsed.filters;
+      if (typeof f === "string") {
+        try {
+          filtersVal = JSON.parse(f) as Prisma.InputJsonValue;
+        } catch {
+          // nếu client gửi string không phải JSON -> lưu string thô
+          filtersVal = f as unknown as Prisma.InputJsonValue;
+        }
+      } else {
+        filtersVal = f as Prisma.InputJsonValue;
+      }
+    }
 
     const created = await prisma.savedSearch.create({
       data: {
         userId,
-        name: data.name,
-        filters: data.filters,
-        sort: data.sort,
+        name: parsed.name ?? undefined,
+        sort: parsed.sort ?? undefined,
+        filters: filtersVal,
       },
     });
+
     return NextResponse.json(created, { status: 201 });
-  } catch (err: any) {
-    return NextResponse.json(
-      { error: err?.issues?.[0]?.message || err?.message || "Invalid payload" },
-      { status: 400 }
-    );
+  } catch (e: any) {
+    if (e?.name === "ZodError") {
+      return NextResponse.json(
+        { error: e.issues?.[0]?.message || "Payload không hợp lệ" },
+        { status: 400 }
+      );
+    }
+    console.error("Create saved-search error:", e);
+    return NextResponse.json({ error: "Không thể tạo" }, { status: 500 });
   }
 }
