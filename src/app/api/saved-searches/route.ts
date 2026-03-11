@@ -1,70 +1,32 @@
-// app/api/saved-searches/route.ts
+// src/app/api/saved-searches/route.ts
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { z } from "zod";
 import { Prisma } from "@prisma/client";
+import { getUserIdFromRequest } from "@/lib/getUserIdFromRequest";
 
-export const runtime = "nodejs";
+export const runtime = "nodejs";       // admin SDK cần Node runtime
 export const dynamic = "force-dynamic";
 
-// Nhận filters dạng bất kỳ (tránh dùng z.record ở Zod v4 classic)
-const SaveSchema = z.object({
-  name: z.string().trim().optional().nullable(),
-  sort: z
-    .enum(["newest", "price-asc", "price-desc", "area-asc", "area-desc"])
-    .optional()
-    .nullable(),
-  filters: z.any().optional().nullable(),
+const CreateSchema = z.object({
+  name: z.string().trim().min(1),
+  sort: z.enum(["newest", "price-asc", "price-desc", "area-asc", "area-desc"]).default("newest"),
+  filters: z.any().default({}),
 });
 
-// GET /api/saved-searches  -> trả danh sách theo userId
-export async function GET(req: NextRequest) {
-  const userId = req.headers.get("x-user-id") || "";
-  if (!userId) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-
-  try {
-    const list = await prisma.savedSearch.findMany({
-      where: { userId },
-      orderBy: { createdAt: "desc" },
-    });
-    return NextResponse.json(list, { status: 200 });
-  } catch (e) {
-    console.error("List saved-searches error:", e);
-    return NextResponse.json({ error: "Không thể lấy dữ liệu" }, { status: 500 });
-  }
-}
-
-// POST /api/saved-searches  -> tạo mới
 export async function POST(req: NextRequest) {
-  const userId = req.headers.get("x-user-id") || "";
+  const userId = await getUserIdFromRequest(req); // ✔️ lấy uid từ Bearer token
   if (!userId) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
   try {
-    const body = await req.json();
-    const parsed = SaveSchema.parse(body);
-
-    // Chuẩn hoá filters thành Prisma.InputJsonValue (không để null)
-    let filtersVal: Prisma.InputJsonValue = {};
-    if (typeof parsed.filters !== "undefined" && parsed.filters !== null) {
-      const f = parsed.filters;
-      if (typeof f === "string") {
-        try {
-          filtersVal = JSON.parse(f) as Prisma.InputJsonValue;
-        } catch {
-          // nếu client gửi string không phải JSON -> lưu string thô
-          filtersVal = f as unknown as Prisma.InputJsonValue;
-        }
-      } else {
-        filtersVal = f as Prisma.InputJsonValue;
-      }
-    }
+    const body = CreateSchema.parse(await req.json());
 
     const created = await prisma.savedSearch.create({
       data: {
         userId,
-        name: parsed.name ?? undefined,
-        sort: parsed.sort ?? undefined,
-        filters: filtersVal,
+        name: body.name,
+        sort: body.sort,
+        filters: body.filters as Prisma.InputJsonValue,
       },
     });
 
@@ -79,4 +41,16 @@ export async function POST(req: NextRequest) {
     console.error("Create saved-search error:", e);
     return NextResponse.json({ error: "Không thể tạo" }, { status: 500 });
   }
+}
+export async function GET(req: NextRequest) {
+  const userId = await getUserIdFromRequest(req);
+  if (!userId) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+
+  const list = await prisma.savedSearch.findMany({
+    where: { userId },
+    orderBy: { createdAt: "desc" },
+    take: 100, // tuỳ bạn
+  });
+
+  return NextResponse.json(list, { status: 200 });
 }
